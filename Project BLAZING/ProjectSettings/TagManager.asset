@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CoreFinder
   - Damageable
+  - MainUI
   layers:
   - Default
   - TransparentFX

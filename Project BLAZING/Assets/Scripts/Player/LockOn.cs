@@ -24,6 +24,10 @@ public class LockOn : MonoBehaviour
         {
             LockButtonPressed();
         }
+        if (isLockedOn)
+        {
+            finder.mainUI.UpdateLockDistance(GetLockedDistance(lockedTarget.transform.position));
+        }
     }
 
     public void LockButtonPressed()
@@ -70,6 +74,7 @@ public class LockOn : MonoBehaviour
         isLockedOn = true;
         lockedTarget = toLock;
         finder.player.GetComponent<PlayerMovement>().SetLockOn(lockedTarget);
+        finder.mainUI.SetLockOn(lockedTarget);
     }
 
     public void EndLock()
@@ -77,5 +82,6 @@ public class LockOn : MonoBehaviour
         lockedTarget = null;
         isLockedOn = false;
         finder.player.GetComponent<PlayerMovement>().RemoveLock();
+        finder.mainUI.EndLockOn();
     }
 }

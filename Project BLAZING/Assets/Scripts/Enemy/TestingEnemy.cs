@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class TestingEnemy : EnemyBehaviour
 {
-
+    public float retreatRange;
+    public float OrbitRange;
 
     // Start is called before the first frame update
     public override void Start()
@@ -16,6 +17,19 @@ public class TestingEnemy : EnemyBehaviour
     void FixedUpdate()
     {
         Rotate();
+        if (GetPlayerDistance() < retreatRange)
+        {
+            Debug.Log("Player In Range");
+            transform.position -= transform.forward * moveSpeed * Time.deltaTime;
+        }
+        else if (GetPlayerDistance() < OrbitRange)
+        {
+            transform.position += transform.right * moveSpeed* Time.deltaTime;
+        }
+        else
+        {
+            transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        }
     }
 
     void Rotate()

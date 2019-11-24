@@ -22,6 +22,13 @@ public class PlayerMovement : MonoBehaviour
     GameObject lockedTarget;
     public bool isLocked;
 
+    bool inSpecialMovement;
+
+    //Dash Attack Variables
+    bool inDashAttack;
+    Vector3 dashAttackTarget;
+    public float dashAttackSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,15 +41,23 @@ public class PlayerMovement : MonoBehaviour
     {
         
         GetInput();
-        if (inEvade)
+        if (!inSpecialMovement)
         {
-            Evade(evadeX, evadeZ);
+            if (inEvade)
+            {
+                Evade(evadeX, evadeZ);
+            }
+            else
+            {
+                Move(xMove, zMove);
+            }
+            Rotate(cameraAxis);
         }
         else
         {
-            Move(xMove, zMove);            
+            SpecialMovement();
         }
-        Rotate(cameraAxis);
+        
 
     }
 
@@ -140,5 +155,23 @@ public class PlayerMovement : MonoBehaviour
     {
         isLocked = false;
         lockedTarget = null;
+    }
+
+    void SpecialMovement()
+    {
+
+    }
+
+    public void StartDash(Vector3 target)
+    {
+        //dashAttackTarget = target;
+        //inDashAttack = true;
+        //transform.LookAt(dashAttackTarget);
+        //moveDistance = Vector3.Distance
+    }
+
+    void DashAttack()
+    {
+        transform.LookAt(dashAttackTarget);
     }
 }

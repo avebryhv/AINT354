@@ -7,6 +7,10 @@ public class PlayerGunBullet : MonoBehaviour
     public float moveSpeed;
     public float killTime;
     public int damage = 1;
+    //Curving Bullet Variables
+    public bool curving;
+    public GameObject target;
+    public float curveSpeed;
 
     // Use this for initialization
     void Start()
@@ -18,11 +22,22 @@ public class PlayerGunBullet : MonoBehaviour
     void Update()
     {
         transform.position += transform.forward * moveSpeed;
+        if (curving && target != null)
+        {
+            LookAtTarget(curveSpeed);
+        }
     }
 
     void Destroy()
     {
         Destroy(gameObject);
+    }    
+
+    public void SetCurving(GameObject t)
+    {
+        target = t;
+        curving = true;
+
     }
 
     void OnTriggerEnter(Collider col)
@@ -38,5 +53,19 @@ public class PlayerGunBullet : MonoBehaviour
         {
             this.Destroy();
         }
+    }
+
+    void LookAtTarget(float speed)
+    {
+        Vector3 targetDir = target.transform.position - transform.position;
+
+        // The step size is equal to speed times frame time.
+        float step = speed * Time.deltaTime;
+
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+        Debug.DrawRay(transform.position, newDir, Color.red);
+
+        // Move our position a step closer to the target.
+        transform.rotation = Quaternion.LookRotation(newDir);
     }
 }
