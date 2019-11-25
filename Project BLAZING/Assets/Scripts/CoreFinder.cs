@@ -5,6 +5,8 @@ using UnityEngine;
 public class CoreFinder : MonoBehaviour
 {
     public GameObject player;
+    public PlayerMovement playerMovement;
+    public PlayerHealth playerHealth;
     public LockOn lockOn;
     public EnemyList enemyList;
     public MainUI mainUI;
@@ -13,6 +15,8 @@ public class CoreFinder : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerHealth = player.GetComponent<PlayerHealth>();
         lockOn = player.GetComponent<LockOn>();
         enemyList = GetComponent<EnemyList>();
         mainUI = GameObject.FindGameObjectWithTag("MainUI").GetComponent<MainUI>();

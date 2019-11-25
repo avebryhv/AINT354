@@ -19,9 +19,9 @@ public class PlayerGunBullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        transform.position += transform.forward * moveSpeed;
+        transform.position += transform.forward * moveSpeed * Time.deltaTime;
         if (curving && target != null)
         {
             LookAtTarget(curveSpeed);
@@ -46,7 +46,7 @@ public class PlayerGunBullet : MonoBehaviour
         if (col.tag == "Damageable")
         {
             Debug.Log("hit");
-            col.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(damage);
+            col.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
             this.Destroy();
         }
         else if (col.tag == "Wall")

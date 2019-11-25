@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    public int maxHealth;
-    public int currentHealth;
     public EnemyHealthBar healthBar;
     public Rigidbody rb;
 
@@ -36,18 +34,7 @@ public class EnemyBehaviour : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        healthBar.Damage(currentHealth, maxHealth, damage);
-        if (currentHealth <= 0)
-        {
-            enemyList.RemoveFromList(gameObject);
-            Destroy(gameObject);
-        }
-    }
+    }    
 
     void OnBecameVisible()
     {

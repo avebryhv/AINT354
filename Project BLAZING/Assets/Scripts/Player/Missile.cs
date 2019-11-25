@@ -31,6 +31,11 @@ public class Missile : MonoBehaviour
     {
         if (state == State.Floating)
         {
+            if (lockedTarget == null)
+            {
+                state = State.NoTarget;
+                
+            }
             floatTimer += Time.deltaTime;
             LookAtTarget(turnSpeed);
             rb.velocity = transform.forward * floatingSpeed;
@@ -83,7 +88,7 @@ public class Missile : MonoBehaviour
         if (col.tag == "Damageable")
         {
             Debug.Log("hit");
-            col.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(damage);
+            col.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
             Destroy(gameObject);
         }
         else if (col.tag == "Wall")

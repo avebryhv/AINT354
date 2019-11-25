@@ -19,11 +19,7 @@ public class LockOn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckLockOn();
-        if (Input.GetButtonDown("Fire2"))
-        {
-            LockButtonPressed();
-        }
+        CheckLockOn();        
         if (isLockedOn)
         {
             finder.mainUI.UpdateLockDistance(GetLockedDistance(lockedTarget.transform.position));

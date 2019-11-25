@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f086897519ade4d9b02bc7405a57ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 2
   timeBeforeLockOn: 1
   initialDirection: {x: 0, y: 2, z: 0}
   lockedTarget: {fileID: 0}

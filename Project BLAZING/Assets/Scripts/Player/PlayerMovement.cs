@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    CoreFinder finder;
     Camera mainCam;
     Rigidbody rb;
     //Movement Variables
@@ -18,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     public float evadeTime; //Duration of evade
     float evadeX;
     float evadeZ;
+    public float maxEvasionCharge;
+    float evasionCharge;
+    public ParticleSystem evadeParticles;
     //LockOn Variables
     GameObject lockedTarget;
     public bool isLocked;
@@ -34,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
     {
         mainCam = Camera.main;
         rb = GetComponent<Rigidbody>();
+        evasionCharge = maxEvasionCharge;
+        finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
     }
 
     // Update is called once per frame
@@ -49,6 +55,12 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                if (evasionCharge <= maxEvasionCharge)
+                {
+                    evasionCharge += Time.deltaTime;
+                    evasionCharge = Mathf.Clamp(evasionCharge, 0, maxEvasionCharge);
+                    finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
+                }
                 Move(xMove, zMove);
             }
             Rotate(cameraAxis);
@@ -85,10 +97,7 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<LockOn>().EndLock();
         }
 
-        if (Input.GetButtonDown("Evade"))
-        {
-            EvadePressed(xMove, zMove);
-        }
+        
     }
 
 
@@ -115,11 +124,16 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    void EvadePressed(float x, float z)
+    public void EvadePressed()
     {
-        if (!inEvade)
+        if (!inEvade && evasionCharge >= 1.0f)
         {
+            evasionCharge -= 1.0f;
+            finder.playerHealth.canTakeDamage = false;
+            float x = xMove;
+            float z = zMove;
             inEvade = true;
+            evadeParticles.Play();
             Invoke("EndEvade", evadeTime);
             if (x == 0 && z == 0)
             {
@@ -127,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
             }
             evadeX = x;
             evadeZ = z;
+            finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
         }
     }
 
@@ -143,6 +158,8 @@ public class PlayerMovement : MonoBehaviour
     void EndEvade()
     {
         inEvade = false;
+        evadeParticles.Stop();
+        finder.playerHealth.canTakeDamage = true;
     }
 
     public void SetLockOn(GameObject target)
