@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float zMove; //Vertical Input
     public float cameraAxis;
     public float cameraSpeed;
+    public float playerWidth;
     //Evasion Variables
     public bool inEvade;
     public float evadeModifier; //Multiplier applied to speed during evade
@@ -22,11 +23,13 @@ public class PlayerMovement : MonoBehaviour
     public float maxEvasionCharge;
     float evasionCharge;
     public ParticleSystem evadeParticles;
+    public MeshRenderer mesh;
     //LockOn Variables
     GameObject lockedTarget;
     public bool isLocked;
 
-    bool inSpecialMovement;
+    public bool inSpecialMovement;
+    public bool targetable;
 
     //Dash Attack Variables
     bool inDashAttack;
@@ -40,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         evasionCharge = maxEvasionCharge;
         finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
+        playerWidth = GetComponent<BoxCollider>().size.z / 2.0f;
+        targetable = true;
     }
 
     // Update is called once per frame
@@ -176,7 +181,28 @@ public class PlayerMovement : MonoBehaviour
 
     void SpecialMovement()
     {
+        rb.velocity = new Vector3();
+    }
 
+    public void TeleportBehindPressed()
+    {
+        if (isLocked)
+        {            
+            inSpecialMovement = true;
+            mesh.enabled = false;
+            targetable = false;
+            Invoke("TeleportBehind", 1f);
+        }
+        
+    }
+
+    public void TeleportBehind()
+    {
+        mesh.enabled = true;
+        Vector3 location = finder.lockOn.ReturnTargetBehind();
+        transform.position = location;
+        inSpecialMovement = false;
+        Invoke("SetPlayerTargetable", 1f);
     }
 
     public void StartDash(Vector3 target)
@@ -190,5 +216,10 @@ public class PlayerMovement : MonoBehaviour
     void DashAttack()
     {
         transform.LookAt(dashAttackTarget);
+    }
+
+    void SetPlayerTargetable()
+    {
+        targetable = true;
     }
 }

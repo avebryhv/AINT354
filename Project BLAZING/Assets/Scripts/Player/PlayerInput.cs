@@ -16,7 +16,7 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("LockOn"))
         {
             finder.lockOn.LockButtonPressed();
         }
@@ -25,5 +25,10 @@ public class PlayerInput : MonoBehaviour
         {
             finder.playerMovement.EvadePressed();
         }
+
+        //if (Input.GetButtonDown("Fire4"))
+        //{
+        //    finder.playerMovement.TeleportBehindPressed();
+        //}
     }
 }

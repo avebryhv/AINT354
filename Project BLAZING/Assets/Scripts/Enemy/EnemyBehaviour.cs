@@ -13,7 +13,7 @@ public class EnemyBehaviour : MonoBehaviour
     float xMove;
     float zMove;
 
-    CoreFinder finder;
+    public CoreFinder finder;
     public GameObject player;
     public EnemyList enemyList;
 

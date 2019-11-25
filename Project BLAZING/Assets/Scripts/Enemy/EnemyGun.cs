@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyGun : MonoBehaviour
 {
+    CoreFinder finder;
     public GameObject bulletPrefab;
     public float fireTime;
     bool firing;
@@ -12,6 +13,7 @@ public class EnemyGun : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
         firing = false;
     }
 
@@ -20,7 +22,7 @@ public class EnemyGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!firing)
+        if (!firing && finder.playerMovement.targetable)
         {
             Fire();
         }

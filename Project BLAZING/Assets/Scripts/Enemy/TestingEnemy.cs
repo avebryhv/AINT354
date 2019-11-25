@@ -34,6 +34,9 @@ public class TestingEnemy : EnemyBehaviour
 
     void Rotate()
     {
-        transform.LookAt(player.transform);
+        if (finder.playerMovement.targetable)
+        {
+            transform.LookAt(player.transform);
+        }
     }
 }

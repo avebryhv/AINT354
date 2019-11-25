@@ -9,11 +9,13 @@ public class LockOn : MonoBehaviour
     public bool isLockedOn;
     public GameObject lockedTarget;
     public float maxLockDistance;
+    PlayerMovement playerMovement;
 
     // Start is called before the first frame update
     void Start()
     {
         finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
+        playerMovement = finder.playerMovement;
     }
 
     // Update is called once per frame
@@ -79,5 +81,21 @@ public class LockOn : MonoBehaviour
         isLockedOn = false;
         finder.player.GetComponent<PlayerMovement>().RemoveLock();
         finder.mainUI.EndLockOn();
+    }
+
+    public Vector3 ReturnTargetBehind()
+    {
+        float playerWidth = playerMovement.playerWidth;
+        float dist = playerWidth * 3;
+        if (lockedTarget != null)
+        {
+            Vector3 toReturn = lockedTarget.transform.position;
+            toReturn -= lockedTarget.transform.forward * dist;
+            return toReturn;
+        }
+        else
+        {
+            return new Vector3();
+        }
     }
 }
