@@ -12,6 +12,7 @@ public class PlayerGun : MonoBehaviour
 
     //Missile Data for testing
     public GameObject missilePrefab;
+    public int missileCount;
 
     // Use this for initialization
     void Start()
@@ -33,7 +34,7 @@ public class PlayerGun : MonoBehaviour
         {
             if (lockOn.isLockedOn)
             {
-                Missile(lockOn.lockedTarget);
+                MissileBarrage(lockOn.lockedTarget, missileCount);
             }
         }
     }
@@ -58,5 +59,23 @@ public class PlayerGun : MonoBehaviour
     {
         GameObject newMissile = Instantiate(missilePrefab, transform.position, transform.rotation);
         newMissile.GetComponent<Missile>().FireMissile(target);
+    }
+
+    void MissileBarrage(GameObject target, int amount)
+    {
+        Vector3 dir = new Vector3(); ;
+        GameObject[] missiles = new GameObject[amount];
+        float deltaDir = 1.0f / (float)amount;
+        for (int i = 0; i < missiles.Length; i++)
+        {
+            dir = new Vector3((-0.5f + deltaDir * i), 1, 1);
+            missiles[i] = Instantiate(missilePrefab, transform.position, transform.rotation);
+            Vector3 toLookAt = new Vector3();
+            toLookAt += dir.x * transform.right;
+            toLookAt += dir.y * transform.up;
+            toLookAt += dir.z * transform.forward;
+            Debug.Log(toLookAt);
+            missiles[i].GetComponent<Missile>().FireMissile(target, toLookAt);
+        }
     }
 }

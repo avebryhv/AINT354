@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
     public float xMove; //Horizontal Input
     public float zMove; //Vertical Input
+    public float hMove;
     public float cameraAxis;
     public float cameraSpeed;
     public float playerWidth;
@@ -102,15 +103,29 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<LockOn>().EndLock();
         }
 
+        // Get Height Axis
+        //float heightAxis = Input.GetAxis("HeightAxis");
+        //hMove = heightAxis * moveSpeed;
+
         
     }
 
+
+    void Move(float x, float z, float h)
+    {
+        Vector3 xVec = x * transform.right;
+        Vector3 zVec = z * transform.forward;
+        Vector3 hVec = h * transform.up;
+        
+        rb.velocity = (xVec + zVec + hVec);
+    }
 
     void Move(float x, float z)
     {
         Vector3 xVec = x * transform.right;
         Vector3 zVec = z * transform.forward;
         
+
         rb.velocity = (xVec + zVec);
     }
 
@@ -118,6 +133,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isLocked)
         {
+            //Vector3 toLookAt = lockedTarget.transform.position;
+            //toLookAt.Set(toLookAt.x, transform.position.y, toLookAt.z);
+            //transform.LookAt(toLookAt);
             transform.LookAt(lockedTarget.transform);
         }
         else if (!inEvade)

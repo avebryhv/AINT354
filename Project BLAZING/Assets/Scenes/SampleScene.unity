@@ -5225,6 +5225,7 @@ MonoBehaviour:
   fireTime: 0.2
   missilePrefab: {fileID: 4680147822703091888, guid: 6b3e407f7a7f2e54d86fb35eb9616074,
     type: 3}
+  missileCount: 9
 --- !u!1 &553726813 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2534866581884222612, guid: 25998393a4f834d44a54901bde313fab,
@@ -5615,6 +5616,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2416733968201007103, guid: b3a31e7df21206e4aa2fe85a2f6cc2de,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -6368497348584167054, guid: b3a31e7df21206e4aa2fe85a2f6cc2de,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3a31e7df21206e4aa2fe85a2f6cc2de, type: 3}
 --- !u!1 &857043677
@@ -5765,7 +5772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92dcd52b9edcc4041825937b71b2f321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 1000
   stunThreshold: 0
 --- !u!1 &930092508
 GameObject:
@@ -5805,6 +5812,7 @@ MonoBehaviour:
   moveSpeed: 20
   xMove: 0
   zMove: 0
+  hMove: 0
   cameraAxis: 0
   cameraSpeed: 200
   playerWidth: 0
@@ -5908,7 +5916,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &930092515
 MonoBehaviour:
@@ -5924,7 +5932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLockedOn: 0
   lockedTarget: {fileID: 0}
-  maxLockDistance: 30
+  maxLockDistance: 50
 --- !u!114 &930092516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6301,6 +6309,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2416733968201007103, guid: 25998393a4f834d44a54901bde313fab,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -6368497348584167054, guid: 25998393a4f834d44a54901bde313fab,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25998393a4f834d44a54901bde313fab, type: 3}
 --- !u!1 &1390872423
@@ -12286,12 +12300,12 @@ PrefabInstance:
     - target: {fileID: 4680147822703091901, guid: 6b3e407f7a7f2e54d86fb35eb9616074,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.559
       objectReference: {fileID: 0}
     - target: {fileID: 4680147822703091901, guid: 6b3e407f7a7f2e54d86fb35eb9616074,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 8.05
       objectReference: {fileID: 0}
     - target: {fileID: 4680147822703091901, guid: 6b3e407f7a7f2e54d86fb35eb9616074,
         type: 3}

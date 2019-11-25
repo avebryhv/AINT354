@@ -37,7 +37,8 @@ public class Missile : MonoBehaviour
                 
             }
             floatTimer += Time.deltaTime;
-            LookAtTarget(turnSpeed);
+            //LookAtTarget(turnSpeed);
+            transform.rotation = Quaternion.LookRotation(initialDirection);
             rb.velocity = transform.forward * floatingSpeed;
             if (floatTimer >= timeBeforeLockOn)
             {
@@ -61,10 +62,17 @@ public class Missile : MonoBehaviour
         {
             rb.velocity = transform.forward * lockedSpeed;
         }
-    }
+    }    
 
     public void FireMissile(GameObject target)
     {
+        lockedTarget = target;
+    }
+
+    public void FireMissile(GameObject target, Vector3 dir)
+    {
+        transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+        initialDirection = dir;
         lockedTarget = target;
     }
 
