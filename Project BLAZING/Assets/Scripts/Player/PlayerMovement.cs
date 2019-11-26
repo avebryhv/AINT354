@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     CoreFinder finder;
     Camera mainCam;
     Rigidbody rb;
+    public enum mechType { Normal, Fast, Slow};
+    public mechType type;
     //Movement Variables
     public float moveSpeed;
     public float xMove; //Horizontal Input
@@ -36,6 +38,10 @@ public class PlayerMovement : MonoBehaviour
     bool inDashAttack;
     Vector3 dashAttackTarget;
     public float dashAttackSpeed;
+    public int dashDirection;
+
+    public Material speedCamoTest;
+    Material baseMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -46,12 +52,18 @@ public class PlayerMovement : MonoBehaviour
         finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
         playerWidth = GetComponent<BoxCollider>().size.z / 2.0f;
         targetable = true;
+        if (type == null)
+        {
+            type = mechType.Normal;
+        }
+        SetTypeStats(type);
+        baseMaterial = mesh.material;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         GetInput();
         if (!inSpecialMovement)
         {
@@ -200,6 +212,7 @@ public class PlayerMovement : MonoBehaviour
     void SpecialMovement()
     {
         rb.velocity = new Vector3();
+        DashAttack();
     }
 
     public void TeleportBehindPressed()
@@ -231,13 +244,82 @@ public class PlayerMovement : MonoBehaviour
         //moveDistance = Vector3.Distance
     }
 
+    public void DashPressed()
+    {
+        if (isLocked && evasionCharge == maxEvasionCharge)
+        {
+            inSpecialMovement = true;
+            evasionCharge = 0;
+            finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
+            float dir = Input.GetAxis("Horizontal");            
+            if (dir != 0)
+            {
+                dashDirection = (int)Mathf.Sign(dir);
+            }
+            else
+            {
+                dashDirection = 0;
+            }
+            evadeParticles.Play();
+            dashAttackTarget = finder.lockOn.ReturnTargetHorizontalPoint(dashDirection);
+        }
+        
+        
+    }
+
     void DashAttack()
     {
         transform.LookAt(dashAttackTarget);
+        dashAttackTarget = finder.lockOn.ReturnTargetHorizontalPoint(dashDirection);
+        transform.position = Vector3.MoveTowards(transform.position, dashAttackTarget, dashAttackSpeed * Time.deltaTime);
+        float dist = Vector3.Distance(transform.position, lockedTarget.transform.position);
+        if (dist <= 3f)
+        {
+            StopDash();
+        }
+    }
+
+    void StopDash()
+    {
+        inSpecialMovement = false;
+        evadeParticles.Stop();
     }
 
     void SetPlayerTargetable()
     {
         targetable = true;
     }
+
+    public void SetTypeStats(mechType t)
+    {
+        switch (t)
+        {
+            case mechType.Normal:
+                moveSpeed = 20;
+                maxEvasionCharge = 3;
+                finder.playerHealth.SetMaxHealth(3);                
+                break;
+            case mechType.Fast:
+                moveSpeed = 25;
+                maxEvasionCharge = 4;
+                finder.playerHealth.SetMaxHealth(2);
+                break;
+            case mechType.Slow:
+                moveSpeed = 15;
+                maxEvasionCharge = 2;
+                finder.playerHealth.SetMaxHealth(5);
+                break;
+            default:
+                break;
+        }
+        finder.playerGun.SetStats(t);
+        finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
+    }
+
+    public void SpeedCamoTest()
+    {
+        mesh.material = speedCamoTest;
+    }
+
+    
 }

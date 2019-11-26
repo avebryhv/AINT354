@@ -26,9 +26,21 @@ public class PlayerInput : MonoBehaviour
             finder.playerMovement.EvadePressed();
         }
 
-        //if (Input.GetButtonDown("Fire4"))
-        //{
-        //    finder.playerMovement.TeleportBehindPressed();
-        //}
+        if (Input.GetButtonDown("Special"))
+        {
+            switch (finder.playerMovement.type)
+            {
+                case PlayerMovement.mechType.Normal:
+                    break;
+                case PlayerMovement.mechType.Fast:
+                    finder.playerMovement.SpeedCamoTest();
+                    break;
+                case PlayerMovement.mechType.Slow:
+                    finder.playerGun.MissileBarragePressed();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

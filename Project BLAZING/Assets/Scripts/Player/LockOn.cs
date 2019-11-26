@@ -98,4 +98,33 @@ public class LockOn : MonoBehaviour
             return new Vector3();
         }
     }
+
+    public Vector3 ReturnTargetHorizontalPoint(int location)
+    {
+        float dist = 1;
+        if (lockedTarget != null)
+        {
+            Vector3 toReturn = lockedTarget.transform.position;
+            switch (location)
+            {
+                case 0: //Return Middle                  
+                    toReturn += lockedTarget.transform.forward * dist;
+                    break;
+                case 1: //Return Left
+                    toReturn += -lockedTarget.transform.right * dist + lockedTarget.transform.forward * dist * 2;
+                    break;
+                case -1: //Return Right
+                    toReturn += lockedTarget.transform.right * dist + lockedTarget.transform.forward * dist * 2;
+                    break;
+                default:
+                    break;
+            }
+            
+            return toReturn;
+        }
+        else
+        {
+            return finder.player.transform.position;
+        }
+    }
 }

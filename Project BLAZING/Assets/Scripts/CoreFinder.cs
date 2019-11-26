@@ -10,6 +10,8 @@ public class CoreFinder : MonoBehaviour
     public LockOn lockOn;
     public EnemyList enemyList;
     public MainUI mainUI;
+    public DisplayLockOnSquares lockOnSquare;
+    public PlayerGun playerGun;
 
     // Start is called before the first frame update
     void Awake()
@@ -20,6 +22,8 @@ public class CoreFinder : MonoBehaviour
         lockOn = player.GetComponent<LockOn>();
         enemyList = GetComponent<EnemyList>();
         mainUI = GameObject.FindGameObjectWithTag("MainUI").GetComponent<MainUI>();
+        lockOnSquare = GameObject.FindGameObjectWithTag("MainUI").GetComponentInChildren<DisplayLockOnSquares>();
+        playerGun = GameObject.FindGameObjectWithTag("PlayerGun").GetComponent<PlayerGun>();
     }
 
     // Update is called once per frame

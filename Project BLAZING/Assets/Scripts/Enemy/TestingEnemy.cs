@@ -11,6 +11,7 @@ public class TestingEnemy : EnemyBehaviour
     public override void Start()
     {
         base.Start();
+        finder.lockOnSquare.CreateNewLockOn(gameObject);
     }
 
     // Update is called once per frame

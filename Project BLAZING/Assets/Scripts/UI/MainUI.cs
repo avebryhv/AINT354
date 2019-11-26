@@ -8,6 +8,7 @@ public class MainUI : MonoBehaviour
 {
     public TextMeshProUGUI lockStatus;
     public TextMeshProUGUI lockDistance;
+    public TextMeshProUGUI missileCount;
 
     public Image healthBar;
     public Image evadeBar;
@@ -41,6 +42,7 @@ public class MainUI : MonoBehaviour
 
     public void UpdateHealthBar(int current, int max)
     {
+        max = 5;
         float amount = ((float)current / (float)max);
         healthBar.fillAmount = amount;
     }
@@ -50,4 +52,11 @@ public class MainUI : MonoBehaviour
         float amount = (current / max);
         evadeBar.fillAmount = amount;
     }
+
+    public void UpdateMissileCounter(float amount)
+    {
+        missileCount.text = "Missiles: " + amount.ToString();
+    }
+
+    
 }

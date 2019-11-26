@@ -23,7 +23,7 @@ public class Missile : MonoBehaviour
         state = State.Floating;
         floatTimer = 0;
         rb = GetComponent<Rigidbody>();
-        transform.rotation = Quaternion.LookRotation(initialDirection);
+        transform.rotation = Quaternion.LookRotation(initialDirection);        
     }
 
     // Update is called once per frame
@@ -39,7 +39,10 @@ public class Missile : MonoBehaviour
             floatTimer += Time.deltaTime;
             //LookAtTarget(turnSpeed);
             transform.rotation = Quaternion.LookRotation(initialDirection);
-            rb.velocity = transform.forward * floatingSpeed;
+            
+            rb.velocity = (transform.forward * floatingSpeed);
+            
+            
             if (floatTimer >= timeBeforeLockOn)
             {
                 state = State.Locked;
@@ -54,8 +57,17 @@ public class Missile : MonoBehaviour
             else
             {
                 turnSpeed += Time.deltaTime;
-                LookAtTarget(turnSpeed);
-                rb.velocity = transform.forward * lockedSpeed;
+                Vector3 dirtoTarget = lockedTarget.transform.position - transform.position;
+                if (Vector3.Dot(dirtoTarget, transform.forward) > 0)
+                {
+                    LookAtTarget(turnSpeed);
+                    rb.velocity = transform.forward * lockedSpeed;
+                }
+                else
+                {
+                    state = State.NoTarget;
+                }
+                
             }
         }
         else
@@ -74,6 +86,14 @@ public class Missile : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
         initialDirection = dir;
         lockedTarget = target;
+    }
+
+    public void FireMissile(GameObject target, Vector3 dir, float t)
+    {
+        transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+        initialDirection = dir;
+        lockedTarget = target;
+        timeBeforeLockOn = t;
     }
 
     void LookAtTarget(float speed)
@@ -103,5 +123,10 @@ public class Missile : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void RemoveParent()
+    {
+        transform.parent = null;
     }
 }

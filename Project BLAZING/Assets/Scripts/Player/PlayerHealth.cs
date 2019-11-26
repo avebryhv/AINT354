@@ -17,12 +17,20 @@ public class PlayerHealth : MonoBehaviour
         finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
         ui = finder.mainUI;
         canTakeDamage = true;
+        ui.UpdateHealthBar(currentHealth, maxHealth);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void SetMaxHealth(int amount)
+    {
+        maxHealth = amount;
+        currentHealth = maxHealth;
+        //ui.UpdateHealthBar(currentHealth, maxHealth);
     }
 
     public void TakeDamage(int damage)
