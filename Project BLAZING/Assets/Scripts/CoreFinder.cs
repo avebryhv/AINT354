@@ -44,6 +44,7 @@ public class CoreFinder : MonoBehaviour
         playerCam = GameObject.FindGameObjectWithTag("P1Camera").GetComponent<Camera>();
         playerInput = player.GetComponentInChildren<PlayerInput>();
         playerInput.SetFinder(this);
+        playerInput.SetInputString(true);
     }
 
     public void Player2Pointers()
@@ -63,5 +64,6 @@ public class CoreFinder : MonoBehaviour
         playerCam = GameObject.FindGameObjectWithTag("P2Camera").GetComponent<Camera>();
         playerInput = player.GetComponentInChildren<PlayerInput>();
         playerInput.SetFinder(this);
+        playerInput.SetInputString(false);
     }
 }
