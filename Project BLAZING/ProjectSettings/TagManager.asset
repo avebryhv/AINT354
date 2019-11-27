@@ -10,6 +10,8 @@ TagManager:
   - PlayerGun
   - Wall
   - P1Camera
+  - Player2
+  - P2Camera
   layers:
   - Default
   - TransparentFX
@@ -27,8 +29,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - P1 Cam
+  - P2 Cam
   - 
   - 
   - 
