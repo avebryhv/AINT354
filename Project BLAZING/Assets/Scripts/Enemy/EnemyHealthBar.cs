@@ -29,7 +29,7 @@ public class EnemyHealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(cam.transform);
+        //transform.LookAt(cam.transform);
         if (active)
         {
             lingerCounter -= Time.deltaTime;

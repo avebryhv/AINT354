@@ -12,7 +12,7 @@ public class LockOnSquare : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canvas = GameObject.FindGameObjectWithTag("MainUI").GetComponent<Canvas>();
+        canvas = GetComponentInParent<Canvas>();
     }
 
     // Update is called once per frame

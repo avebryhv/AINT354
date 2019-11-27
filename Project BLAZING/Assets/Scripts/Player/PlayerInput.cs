@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     public CoreFinder finder;
-
+    PlayerMovement playerMovement;
 
     // Start is called before the first frame update
     void Start()
     {
-        finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
+        //finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
+        playerMovement = finder.playerMovement;
     }
 
     // Update is called once per frame
@@ -52,5 +53,10 @@ public class PlayerInput : MonoBehaviour
     public void SetFinder(CoreFinder f)
     {
         finder = f;
+    }
+
+    void SendStickMovement()
+    {
+
     }
 }

@@ -11,6 +11,9 @@ public class LockOn : MonoBehaviour
     public float maxLockDistance;
     PlayerMovement playerMovement;
 
+    public bool testCanLockOn;
+    public GameObject otherPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,24 +33,28 @@ public class LockOn : MonoBehaviour
 
     public void LockButtonPressed()
     {
-        if (isLockedOn)
+        if (testCanLockOn)
         {
-            EndLock();
+            if (isLockedOn)
+            {
+                EndLock();
+            }
+            else
+            {
+                GetClosest();
+            }
         }
-        else
-        {
-            GetClosest();
-        }
+        
     }
 
     void GetClosest()
     {
-        GameObject closest;
-        closest = finder.enemyList.ReturnClosest(finder.player.transform.position);
-        if (GetLockedDistance(closest.transform.position) <= maxLockDistance)
+        //GameObject closest;
+        //closest = finder.enemyList.ReturnClosest(finder.player.transform.position);
+        if (GetLockedDistance(otherPlayer.transform.position) <= maxLockDistance)
         {
             isLockedOn = true;
-            lockedTarget = closest;
+            lockedTarget = otherPlayer;
             StartLock(lockedTarget);
         }
     }

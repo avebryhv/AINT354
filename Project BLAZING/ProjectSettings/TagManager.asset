@@ -12,6 +12,8 @@ TagManager:
   - P1Camera
   - Player2
   - P2Camera
+  - P2CoreFinder
+  - P2UI
   layers:
   - Default
   - TransparentFX

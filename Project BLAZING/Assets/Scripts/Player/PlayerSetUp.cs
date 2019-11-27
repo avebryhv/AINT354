@@ -8,15 +8,18 @@ public class PlayerSetUp : MonoBehaviour
     public PlayerMovement.mechType p1Type;
     public Vector3 p1StartPosition;
 
+    public PlayerMovement.mechType p2Type;
+    public Vector3 p2StartPosition;
 
-    public enum Player { Player1, Player2};
-    public Player player;
+
+    
     public CoreFinder p1Finder;
     public CoreFinder p2Finder;
 
     void Awake()
     {
         SetUpPlayer1();
+        SetUpPlayer2();
     }
 
     // Start is called before the first frame update
@@ -33,7 +36,7 @@ public class PlayerSetUp : MonoBehaviour
 
     void SetUpPlayer1()
     {
-        p1Finder = GetComponent<CoreFinder>();
+        p1Finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
         if (p1Finder != null)
         {
             p1Finder.Player1Pointers();
@@ -48,11 +51,22 @@ public class PlayerSetUp : MonoBehaviour
 
     void SetUpPlayer2()
     {
-
+        p2Finder = GameObject.FindGameObjectWithTag("P2CoreFinder").GetComponent<CoreFinder>();
+        if (p2Finder != null)
+        {
+            p2Finder.Player2Pointers();
+        }
+        else
+        {
+            p2Finder = GetComponentInChildren<CoreFinder>();
+            p2Finder.Player2Pointers();
+        }
+        SetPlayerType(p2Finder, p2Type);
     }
 
     void SetPlayerType(CoreFinder f, PlayerMovement.mechType type)
     {
-        f.playerMovement.type = type;
+        //f.playerMovement.type = type;
+        f.playerMovement.SetTypeStats(type);
     }
 }

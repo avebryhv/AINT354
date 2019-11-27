@@ -13,6 +13,7 @@ public class CoreFinder : MonoBehaviour
     public DisplayLockOnSquares lockOnSquare;
     public PlayerGun playerGun;
     public Camera playerCam;
+    public PlayerInput playerInput;
 
     // Start is called before the first frame update
     void Awake()
@@ -38,13 +39,29 @@ public class CoreFinder : MonoBehaviour
         enemyList = GetComponent<EnemyList>();
         mainUI = GameObject.FindGameObjectWithTag("MainUI").GetComponent<MainUI>();
         lockOnSquare = GameObject.FindGameObjectWithTag("MainUI").GetComponentInChildren<DisplayLockOnSquares>();
-        playerGun = GameObject.FindGameObjectWithTag("PlayerGun").GetComponent<PlayerGun>();
+        playerGun = player.GetComponentInChildren<PlayerGun>();
         playerGun.SetFinder(this);
         playerCam = GameObject.FindGameObjectWithTag("P1Camera").GetComponent<Camera>();
+        playerInput = player.GetComponentInChildren<PlayerInput>();
+        playerInput.SetFinder(this);
     }
 
     public void Player2Pointers()
     {
-
+        player = GameObject.FindGameObjectWithTag("Player2");
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerMovement.SetFinder(this);
+        playerHealth = player.GetComponent<PlayerHealth>();
+        playerHealth.SetFinder(this);
+        lockOn = player.GetComponent<LockOn>();
+        lockOn.SetFinder(this);
+        enemyList = GetComponent<EnemyList>();
+        mainUI = GameObject.FindGameObjectWithTag("P2UI").GetComponent<MainUI>();
+        lockOnSquare = GameObject.FindGameObjectWithTag("P2UI").GetComponentInChildren<DisplayLockOnSquares>();
+        playerGun = player.GetComponentInChildren<PlayerGun>();
+        playerGun.SetFinder(this);
+        playerCam = GameObject.FindGameObjectWithTag("P2Camera").GetComponent<Camera>();
+        playerInput = player.GetComponentInChildren<PlayerInput>();
+        playerInput.SetFinder(this);
     }
 }

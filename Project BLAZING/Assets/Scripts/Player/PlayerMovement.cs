@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     public mechType type;
     //Movement Variables
     public float moveSpeed;
+    float horizontalAxis;
+    float verticalAxis;
+
     public float xMove; //Horizontal Input
     public float zMove; //Vertical Input
     public float hMove;
@@ -56,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         {
             type = mechType.Normal;
         }
-        SetTypeStats(type);
+        //SetTypeStats(type);
         baseMaterial = mesh.material;
     }
 
@@ -91,11 +94,16 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    void RecieveAxisInput(float hor, float ver, float camX)
+    {
+
+    }
+
     void GetInput()
     {
         //Get Movement Axis
-        float horizontalAxis = Input.GetAxis("Horizontal");
-        float verticalAxis = Input.GetAxis("Vertical");
+        horizontalAxis = Input.GetAxis("Horizontal");
+        verticalAxis = Input.GetAxis("Vertical");
 
         xMove = horizontalAxis * moveSpeed;
         zMove = verticalAxis * moveSpeed;
