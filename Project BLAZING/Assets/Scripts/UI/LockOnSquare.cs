@@ -7,6 +7,7 @@ public class LockOnSquare : MonoBehaviour
     public GameObject target;
     Canvas canvas;
     public float deltaRotate;
+    public Camera cam;
 
     // Start is called before the first frame update
     void Start()
@@ -19,22 +20,23 @@ public class LockOnSquare : MonoBehaviour
     {
         if (target != null)
         {
-            Vector3 screenPos = Camera.main.ScreenToWorldPoint(target.transform.position);
+            Vector3 screenPos = cam.ScreenToWorldPoint(target.transform.position);
             transform.position = worldToUISpace(canvas, target.transform.position);
             transform.Rotate(new Vector3(0, 0, deltaRotate));
         }
         
     }
 
-    public void SetTarget(GameObject t)
+    public void SetTarget(GameObject t, Camera c)
     {
+        cam = c;
         target = t;
     }
 
     public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos)
     {
         //Convert the world for screen point so that it can be used with ScreenPointToLocalPointInRectangle function
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
+        Vector3 screenPos = cam.WorldToScreenPoint(worldPos);
         Vector2 movePos;
 
         //Convert the screenpoint to ui rectangle local point
@@ -42,4 +44,5 @@ public class LockOnSquare : MonoBehaviour
         //Convert the local point to world point
         return parentCanvas.transform.TransformPoint(movePos);
     }
+    
 }

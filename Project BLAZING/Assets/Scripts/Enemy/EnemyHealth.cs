@@ -11,6 +11,7 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth;
     int currentHealth;
 
+
     public int stunThreshold;
     int stunBuildup;
 
@@ -23,6 +24,7 @@ public class EnemyHealth : MonoBehaviour
         finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
         enemyList = finder.enemyList;
         currentHealth = maxHealth;
+        
     }
 
     // Update is called once per frame
@@ -33,12 +35,19 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        healthBar.Damage(currentHealth, maxHealth, damage);
-        if (currentHealth <= 0)
-        {
-            enemyList.RemoveFromList(gameObject);
-            Destroy(gameObject);
-        }
+        
+            
+            currentHealth -= damage;
+            healthBar.Damage(currentHealth, maxHealth, damage);
+            if (currentHealth <= 0)
+            {
+                enemyList.RemoveFromList(gameObject);
+                Destroy(gameObject);
+            }
+            
+        
+        
     }
+
+    
 }

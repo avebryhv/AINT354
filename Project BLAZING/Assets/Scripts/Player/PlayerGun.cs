@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerGun : MonoBehaviour
 {
-    CoreFinder finder;
+    public CoreFinder finder;
     LockOn lockOn;
     public GameObject bulletPrefab;
     public float fireTime;
@@ -20,14 +20,21 @@ public class PlayerGun : MonoBehaviour
     public int maxMissiles;
     int currentMissiles;
 
+    //Shield Data
+    public GameObject shieldObject;
+    bool shieldUp;
+
+    
+
     // Use this for initialization
     void Start()
     {
         firing = false;
-        finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
+        //finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
         lockOn = finder.lockOn;
         currentMissiles = maxMissiles;
         finder.mainUI.UpdateMissileCounter(currentMissiles);
+        shieldUp = false;
     }
 
     // Update is called once per frame
@@ -46,6 +53,8 @@ public class PlayerGun : MonoBehaviour
                 Missile(lockOn.lockedTarget);
             }
         }
+
+
     }
 
     void Fire()
@@ -98,7 +107,7 @@ public class PlayerGun : MonoBehaviour
             toLookAt += dir.y * transform.up;
             toLookAt += dir.z * transform.forward;
             Debug.Log(toLookAt);
-            missiles[i].GetComponent<Missile>().FireMissile(target, toLookAt, 2f);
+            missiles[i].GetComponent<Missile>().FireMissile(target, toLookAt, 1f);
         }
     }
 
@@ -131,5 +140,34 @@ public class PlayerGun : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void ShieldButtonPressed()
+    {
+        if (shieldUp)
+        {
+            HideShield();
+        }
+        else
+        {
+            CreateShield();
+        }
+    }
+
+    void CreateShield()
+    {
+        shieldObject.SetActive(true);
+        shieldUp = true;
+    }
+
+    void HideShield()
+    {
+        shieldObject.SetActive(false);
+        shieldUp = false;
+    }
+
+    public void SetFinder(CoreFinder f)
+    {
+        finder = f;
     }
 }

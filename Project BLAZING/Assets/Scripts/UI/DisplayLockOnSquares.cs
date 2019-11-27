@@ -6,6 +6,8 @@ public class DisplayLockOnSquares : MonoBehaviour
 {
     public List<LockOnSquare> list;
     public GameObject lockOnSquarePrefab;
+    public Camera cam;
+    GameObject newSqu;
 
     private void Awake()
     {
@@ -33,12 +35,18 @@ public class DisplayLockOnSquares : MonoBehaviour
     public void RemoveFromList(LockOnSquare toRemove)
     {
         list.Remove(toRemove);
+        Destroy(toRemove);
     }
 
-    public void CreateNewLockOn(GameObject obj)
+    public void CreateNewLockOn(GameObject obj, Camera c)
     {
-        GameObject newSqu = Instantiate(lockOnSquarePrefab, transform);
-        newSqu.GetComponent<LockOnSquare>().SetTarget(obj);
+        newSqu = Instantiate(lockOnSquarePrefab, transform);
+        newSqu.GetComponent<LockOnSquare>().SetTarget(obj, c);
         AddToList(newSqu.GetComponent<LockOnSquare>());
+    }
+
+    public void RemoveLockOnSquare()
+    {
+        Destroy(newSqu);
     }
 }

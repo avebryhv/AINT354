@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    CoreFinder finder;
+    public CoreFinder finder;
     Camera mainCam;
     Rigidbody rb;
     public enum mechType { Normal, Fast, Slow};
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         mainCam = Camera.main;
         rb = GetComponent<Rigidbody>();
         evasionCharge = maxEvasionCharge;
-        finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
+        //finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
         playerWidth = GetComponent<BoxCollider>().size.z / 2.0f;
         targetable = true;
         if (type == null)
@@ -321,5 +321,20 @@ public class PlayerMovement : MonoBehaviour
         mesh.material = speedCamoTest;
     }
 
-    
+    public void CamoButtonPressed()
+    {
+        mesh.material = speedCamoTest;
+        Invoke("RemoveCamo", 5f);
+    }
+
+    void RemoveCamo()
+    {
+        mesh.material = baseMaterial;
+    }
+    public void SetFinder(CoreFinder f)
+    {
+        finder = f;
+    }
+
+
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    CoreFinder finder;
+    public CoreFinder finder;
 
 
     // Start is called before the first frame update
@@ -28,19 +28,29 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetButtonDown("Special"))
         {
-            switch (finder.playerMovement.type)
+            if (finder.playerHealth.ReturnCanUseSpecial())
             {
-                case PlayerMovement.mechType.Normal:
-                    break;
-                case PlayerMovement.mechType.Fast:
-                    finder.playerMovement.SpeedCamoTest();
-                    break;
-                case PlayerMovement.mechType.Slow:
-                    finder.playerGun.MissileBarragePressed();
-                    break;
-                default:
-                    break;
+                switch (finder.playerMovement.type)
+                {
+                    case PlayerMovement.mechType.Normal:
+                        finder.playerGun.ShieldButtonPressed();
+                        break;
+                    case PlayerMovement.mechType.Fast:
+                        finder.playerMovement.CamoButtonPressed();
+                        break;
+                    case PlayerMovement.mechType.Slow:
+                        finder.playerGun.MissileBarragePressed();
+                        break;
+                    default:
+                        break;
+                }
+                finder.playerHealth.ResetSpecialCharge();
             }
+            
         }
+    }
+    public void SetFinder(CoreFinder f)
+    {
+        finder = f;
     }
 }

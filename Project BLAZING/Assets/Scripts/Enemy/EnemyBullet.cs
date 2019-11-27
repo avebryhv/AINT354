@@ -42,10 +42,10 @@ public class EnemyBullet : MonoBehaviour
             if (col.gameObject.GetComponent<PlayerHealth>().canTakeDamage)
             {
                 col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
-                this.Destroy();
+                
             }
-            
-            
+            this.Destroy();
+
         }
 
         else if (col.tag == "Wall")

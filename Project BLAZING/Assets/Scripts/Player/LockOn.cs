@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LockOn : MonoBehaviour
 {
-    CoreFinder finder;
+    public CoreFinder finder;
 
     public bool isLockedOn;
     public GameObject lockedTarget;
@@ -14,7 +14,7 @@ public class LockOn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
+        //finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
         playerMovement = finder.playerMovement;
     }
 
@@ -72,6 +72,7 @@ public class LockOn : MonoBehaviour
         isLockedOn = true;
         lockedTarget = toLock;
         finder.player.GetComponent<PlayerMovement>().SetLockOn(lockedTarget);
+        finder.lockOnSquare.CreateNewLockOn(lockedTarget, finder.playerCam);
         finder.mainUI.SetLockOn(lockedTarget);
     }
 
@@ -80,6 +81,7 @@ public class LockOn : MonoBehaviour
         lockedTarget = null;
         isLockedOn = false;
         finder.player.GetComponent<PlayerMovement>().RemoveLock();
+        finder.lockOnSquare.RemoveLockOnSquare();
         finder.mainUI.EndLockOn();
     }
 
@@ -126,5 +128,10 @@ public class LockOn : MonoBehaviour
         {
             return finder.player.transform.position;
         }
+    }
+
+    public void SetFinder(CoreFinder f)
+    {
+        finder = f;
     }
 }
