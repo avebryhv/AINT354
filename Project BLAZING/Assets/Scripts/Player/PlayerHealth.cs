@@ -25,6 +25,9 @@ public class PlayerHealth : MonoBehaviour
         ui.UpdateHealthBar(currentHealth, maxHealth);
         canSpecialCharge = true;
         canTakeDamage = true;
+
+        //Set charge to full for test
+        specialCharge = maxSpecialCharge;
     }
 
     // Update is called once per frame
@@ -35,6 +38,7 @@ public class PlayerHealth : MonoBehaviour
             specialCharge += Time.deltaTime;
             specialCharge = Mathf.Clamp(specialCharge, 0, maxSpecialCharge);
         }
+        ui.UpdateSpecialBar(specialCharge, maxSpecialCharge);
     }
 
     public void SetMaxHealth(int amount)

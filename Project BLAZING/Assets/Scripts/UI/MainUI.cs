@@ -12,6 +12,7 @@ public class MainUI : MonoBehaviour
 
     public Image healthBar;
     public Image evadeBar;
+    public Image specialBar;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +57,12 @@ public class MainUI : MonoBehaviour
     public void UpdateMissileCounter(float amount)
     {
         missileCount.text = "Missiles: " + amount.ToString();
+    }
+
+    public void UpdateSpecialBar(float current, float max)
+    {
+        float amount = current / max;
+        specialBar.fillAmount = amount;
     }
 
     

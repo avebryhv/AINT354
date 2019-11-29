@@ -53,15 +53,19 @@ public class LockOn : MonoBehaviour
         //closest = finder.enemyList.ReturnClosest(finder.player.transform.position);
         if (GetLockedDistance(otherPlayer.transform.position) <= maxLockDistance)
         {
-            isLockedOn = true;
-            lockedTarget = otherPlayer;
-            StartLock(lockedTarget);
+            if (otherPlayer.GetComponent<PlayerMovement>().targetable)
+            {
+                isLockedOn = true;
+                lockedTarget = otherPlayer;
+                StartLock(lockedTarget);
+            }
+            
         }
     }
 
     void CheckLockOn()
     {
-        if (lockedTarget == null || GetLockedDistance(lockedTarget.transform.position) > maxLockDistance)
+        if (lockedTarget == null || GetLockedDistance(lockedTarget.transform.position) > maxLockDistance || !lockedTarget.GetComponent<PlayerMovement>().targetable)
         {
             EndLock();
         }

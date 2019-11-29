@@ -40,21 +40,38 @@ public class PlayerGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Shoot") && !firing && !finder.playerMovement.inSpecialMovement)
+        //if (Input.GetButton("Shoot") && !firing && !finder.playerMovement.inSpecialMovement)
+        //{
+        //    Fire();
+        //}
+
+        //if (Input.GetButtonDown("Missile"))
+        //{
+        //    if (lockOn.isLockedOn)
+        //    {
+        //        //MissileBarrage(lockOn.lockedTarget, missileBarrageCount);
+        //        Missile(lockOn.lockedTarget);
+        //    }
+        //}
+
+
+    }
+
+    public void FireButtonPressed()
+    {
+        if (!firing && !finder.playerMovement.inSpecialMovement)
         {
             Fire();
         }
+    }
 
-        if (Input.GetButtonDown("Missile"))
+    public void MissileButtonPressed()
+    {
+        if (lockOn.isLockedOn)
         {
-            if (lockOn.isLockedOn)
-            {
-                //MissileBarrage(lockOn.lockedTarget, missileBarrageCount);
-                Missile(lockOn.lockedTarget);
-            }
+            //MissileBarrage(lockOn.lockedTarget, missileBarrageCount);
+            Missile(lockOn.lockedTarget);
         }
-
-
     }
 
     void Fire()
@@ -144,20 +161,14 @@ public class PlayerGun : MonoBehaviour
 
     public void ShieldButtonPressed()
     {
-        if (shieldUp)
-        {
-            HideShield();
-        }
-        else
-        {
-            CreateShield();
-        }
+        CreateShield();
     }
 
     void CreateShield()
     {
         shieldObject.SetActive(true);
         shieldUp = true;
+        Invoke("HideShield", 5.0f);
     }
 
     void HideShield()

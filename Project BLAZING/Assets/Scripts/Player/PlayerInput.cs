@@ -17,9 +17,15 @@ public class PlayerInput : MonoBehaviour
     public string evadeButton;
     public string lockOnButton;
 
-    public bool isTestPressed;
 
     public Gamepad gamepad;
+
+    public void SetGamePadNum()
+    {
+
+    }
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,27 +33,37 @@ public class PlayerInput : MonoBehaviour
         //finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
         playerMovement = finder.playerMovement;
         gamepad = Gamepad.current;
-        string[] attachedControllers = Input.GetJoystickNames();
-        for (int i = 0; i < attachedControllers.Length; i++)
+        //string[] attachedControllers = Input.GetJoystickNames();
+        //for (int i = 0; i < attachedControllers.Length; i++)
+        //{
+        //    Debug.Log("Controller " + i + " " + attachedControllers[i]);
+        //}
+
+        List<string> gamePadNames = new List<string>();
+        for (int i = 0; i < Gamepad.all.Count; i++)
         {
-            Debug.Log("Controller " + i + " " + attachedControllers[i]);
+            gamePadNames.Add(Gamepad.all[i].name);
+            Debug.Log(Gamepad.all[i].name);
         }
+        //gamepad = Gamepad.all[0];
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown(lockOnButton))
+        SendAxisInput();
+
+        if (/*Input.GetButtonDown(lockOnButton)*/gamepad.rightStickButton.wasPressedThisFrame)
         {
             finder.lockOn.LockButtonPressed();
         }
 
-        if (Input.GetButtonDown(evadeButton))
+        if (/*Input.GetButtonDown(evadeButton)*/gamepad.rightShoulder.wasPressedThisFrame)
         {
             finder.playerMovement.EvadePressed();
         }
 
-        if (Input.GetButtonDown(specialButton))
+        if (/*Input.GetButtonDown(specialButton)*/gamepad.bButton.wasPressedThisFrame)
         {
             if (finder.playerHealth.ReturnCanUseSpecial())
             {
@@ -70,8 +86,27 @@ public class PlayerInput : MonoBehaviour
             
         }
 
-        isTestPressed = Input.GetButton(evadeButton);
+        if (gamepad.xButton.isPressed)
+        {
+            finder.playerGun.FireButtonPressed();
+        }
+
+        if (gamepad.yButton.wasPressedThisFrame)
+        {
+            finder.playerGun.MissileButtonPressed();
+        }
+
     }
+
+    void SendAxisInput()
+    {
+        Vector2 leftStick = gamepad.leftStick.ReadValue();
+        float hori = leftStick.x;
+        float verti = leftStick.y;
+        float camAxis = gamepad.rightStick.ReadValue().x;
+        finder.playerMovement.RecieveAxisInput(hori, verti, camAxis);
+    }
+
     public void SetFinder(CoreFinder f)
     {
         finder = f;

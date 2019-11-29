@@ -94,16 +94,18 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void RecieveAxisInput(float hor, float ver, float camX)
+    public void RecieveAxisInput(float hor, float ver, float camX)
     {
-
+        horizontalAxis = hor;
+        verticalAxis = ver;
+        cameraAxis = camX;
     }
 
     void GetInput()
     {
         //Get Movement Axis
-        horizontalAxis = Input.GetAxis("Horizontal");
-        verticalAxis = Input.GetAxis("Vertical");
+        //horizontalAxis = Input.GetAxis("Horizontal");
+        //verticalAxis = Input.GetAxis("Vertical");
 
         xMove = horizontalAxis * moveSpeed;
         zMove = verticalAxis * moveSpeed;
@@ -117,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Get Rotation Axis
-        cameraAxis = Input.GetAxis("CameraX");
+        //cameraAxis = Input.GetAxis("CameraX");
         if (cameraAxis != 0)
         {
             GetComponent<LockOn>().EndLock();
@@ -322,6 +324,7 @@ public class PlayerMovement : MonoBehaviour
         }
         finder.playerGun.SetStats(t);
         finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
+        type = t;
     }
 
     public void SpeedCamoTest()
@@ -332,11 +335,13 @@ public class PlayerMovement : MonoBehaviour
     public void CamoButtonPressed()
     {
         mesh.material = speedCamoTest;
+        targetable = false;
         Invoke("RemoveCamo", 5f);
     }
 
     void RemoveCamo()
     {
+        targetable = true;
         mesh.material = baseMaterial;
     }
     public void SetFinder(CoreFinder f)
