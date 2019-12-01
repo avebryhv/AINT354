@@ -8,6 +8,7 @@ public class DisplayLockOnSquares : MonoBehaviour
     public GameObject lockOnSquarePrefab;
     public Camera cam;
     GameObject newSqu;
+    LockOnSquare squScript;
 
     private void Awake()
     {
@@ -17,7 +18,8 @@ public class DisplayLockOnSquares : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        newSqu = Instantiate(lockOnSquarePrefab, transform);
+        squScript = newSqu.GetComponent<LockOnSquare>();
     }
 
     // Update is called once per frame
@@ -40,13 +42,29 @@ public class DisplayLockOnSquares : MonoBehaviour
 
     public void CreateNewLockOn(GameObject obj, Camera c)
     {
-        newSqu = Instantiate(lockOnSquarePrefab, transform);
-        newSqu.GetComponent<LockOnSquare>().SetTarget(obj, c);
-        AddToList(newSqu.GetComponent<LockOnSquare>());
+        //newSqu = Instantiate(lockOnSquarePrefab, transform);
+        squScript.SetTarget(obj, c);
+        //AddToList(newSqu.GetComponent<LockOnSquare>());
+    }
+
+    public void ShowLockOnSquare()
+    {
+        squScript.Show();
     }
 
     public void RemoveLockOnSquare()
     {
-        Destroy(newSqu);
+        squScript.Hide();
+        UpdateColour(false);
+    }
+
+    public void UpdateSquareSize(float size)
+    {
+        squScript.SetSquareSize(size);
+    }
+
+    public void UpdateColour(bool isLock)
+    {
+        squScript.SetLockedColour(isLock);
     }
 }

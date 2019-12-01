@@ -12,6 +12,7 @@ public class CoreFinder : MonoBehaviour
     public MainUI mainUI;
     public DisplayLockOnSquares lockOnSquare;
     public PlayerGun playerGun;
+    public PlayerGunLeft playerGun2;
     public Camera playerCam;
     public PlayerInput playerInput;
 
@@ -41,6 +42,8 @@ public class CoreFinder : MonoBehaviour
         lockOnSquare = GameObject.FindGameObjectWithTag("MainUI").GetComponentInChildren<DisplayLockOnSquares>();
         playerGun = player.GetComponentInChildren<PlayerGun>();
         playerGun.SetFinder(this);
+        playerGun2 = player.GetComponentInChildren<PlayerGunLeft>();
+        playerGun2.SetFinder(this);
         playerCam = GameObject.FindGameObjectWithTag("P1Camera").GetComponent<Camera>();
         playerInput = player.GetComponentInChildren<PlayerInput>();
         playerInput.SetFinder(this);

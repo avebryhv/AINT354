@@ -10,6 +10,8 @@ public class PlayerGun : MonoBehaviour
     public float fireTime;
     bool firing;
 
+    public float accuracy;
+
     public GameObject fastBullet;
     public GameObject normalBullet;
     public GameObject slowBullet;
@@ -70,13 +72,17 @@ public class PlayerGun : MonoBehaviour
         if (lockOn.isLockedOn)
         {
             //MissileBarrage(lockOn.lockedTarget, missileBarrageCount);
-            Missile(lockOn.lockedTarget);
+            Missile(lockOn.softLockTarget);
         }
     }
 
     void Fire()
     {
         GameObject newBullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        float randomX = Random.Range(-accuracy, accuracy);
+        float randomY = Random.Range(-accuracy, accuracy);
+        float randomZ = Random.Range(-accuracy, accuracy);
+        newBullet.transform.Rotate(new Vector3(randomX, randomY, randomZ));
         if (lockOn.isLockedOn)
         {
             newBullet.GetComponent<PlayerGunBullet>().SetCurving(lockOn.lockedTarget);
@@ -106,7 +112,7 @@ public class PlayerGun : MonoBehaviour
     {
         if (lockOn.isLockedOn)
         {
-            MissileBarrage(lockOn.lockedTarget, 9);
+            MissileBarrage(lockOn.softLockTarget, 9);
         }
     }
 
@@ -146,7 +152,7 @@ public class PlayerGun : MonoBehaviour
                 break;
             case PlayerMovement.mechType.Fast:
                 bulletPrefab = fastBullet;
-                fireTime = 0.15f;
+                fireTime = 0.3f;
                 SetMaxMissiles(2);
                 break;
             case PlayerMovement.mechType.Slow:
@@ -166,6 +172,7 @@ public class PlayerGun : MonoBehaviour
 
     void CreateShield()
     {
+        finder.playerHealth.canSpecialCharge = false;
         shieldObject.SetActive(true);
         shieldUp = true;
         Invoke("HideShield", 5.0f);
@@ -173,6 +180,7 @@ public class PlayerGun : MonoBehaviour
 
     void HideShield()
     {
+        finder.playerHealth.canSpecialCharge = true;
         shieldObject.SetActive(false);
         shieldUp = false;
     }

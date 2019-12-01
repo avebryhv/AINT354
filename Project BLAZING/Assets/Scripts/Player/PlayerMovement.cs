@@ -120,10 +120,10 @@ public class PlayerMovement : MonoBehaviour
 
         //Get Rotation Axis
         //cameraAxis = Input.GetAxis("CameraX");
-        if (cameraAxis != 0)
-        {
-            GetComponent<LockOn>().EndLock();
-        }
+        //if (cameraAxis != 0)
+        //{
+        //    GetComponent<LockOn>().EndLock();
+        //}
 
         // Get Height Axis
         //float heightAxis = Input.GetAxis("HeightAxis");
@@ -187,6 +187,7 @@ public class PlayerMovement : MonoBehaviour
             evadeX = x;
             evadeZ = z;
             finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
+            mesh.material = speedCamoTest;
         }
     }
 
@@ -205,6 +206,7 @@ public class PlayerMovement : MonoBehaviour
         inEvade = false;
         evadeParticles.Stop();
         finder.playerHealth.canTakeDamage = true;
+        mesh.material = baseMaterial;
     }
 
     public void SetLockOn(GameObject target)
@@ -334,6 +336,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void CamoButtonPressed()
     {
+        finder.playerHealth.canSpecialCharge = false;
         mesh.material = speedCamoTest;
         targetable = false;
         Invoke("RemoveCamo", 5f);
@@ -341,6 +344,7 @@ public class PlayerMovement : MonoBehaviour
 
     void RemoveCamo()
     {
+        finder.playerHealth.canSpecialCharge = true;
         targetable = true;
         mesh.material = baseMaterial;
     }

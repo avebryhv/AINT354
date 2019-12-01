@@ -14,6 +14,14 @@ public class LockOn : MonoBehaviour
     public bool testCanLockOn;
     public GameObject otherPlayer;
 
+    public Vector3 targetViewPos;
+
+    //--Soft LockOn Variables--
+    public bool isSoftLocked;
+    public GameObject softLockTarget;
+    public float timeSoftLocked;
+    public float softLockActiveTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,52 +32,132 @@ public class LockOn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckLockOn();        
-        if (isLockedOn)
+        CheckSoftLock();
+        if (isSoftLocked)
         {
-            finder.mainUI.UpdateLockDistance(GetLockedDistance(lockedTarget.transform.position));
+            timeSoftLocked += Time.deltaTime;
+            if (timeSoftLocked >= softLockActiveTime)
+            {
+                finder.lockOnSquare.UpdateColour(true);
+                isLockedOn = true;
+            }
+            CalculateLockOnBoxSize();
         }
+        //CheckLockOn();        
+        //if (isLockedOn)
+        //{
+        //    finder.mainUI.UpdateLockDistance(GetLockedDistance(lockedTarget.transform.position));
+        //}
     }
 
-    public void LockButtonPressed()
-    {
-        if (testCanLockOn)
-        {
-            if (isLockedOn)
-            {
-                EndLock();
-            }
-            else
-            {
-                GetClosest();
-            }
-        }
+    //public void LockButtonPressed()
+    //{
+    //    if (testCanLockOn)
+    //    {
+    //        if (isLockedOn)
+    //        {
+    //            EndLock();
+    //        }
+    //        else
+    //        {
+    //            CheckIfCanLockOn();
+    //        }
+    //    }
         
-    }
+    //}
 
-    void GetClosest()
+    //void CheckIfCanLockOn()
+    //{
+    //    //GameObject closest;
+    //    //closest = finder.enemyList.ReturnClosest(finder.player.transform.position);
+    //    if (GetLockedDistance(otherPlayer.transform.position) <= maxLockDistance)
+    //    {
+    //        targetViewPos = finder.playerCam.WorldToViewportPoint(otherPlayer.transform.position);
+    //        if (targetViewPos.x > 0.2f && targetViewPos.x < 0.8f)
+    //        {
+    //            if (otherPlayer.GetComponent<PlayerMovement>().targetable)
+    //            {
+    //                isLockedOn = true;
+    //                lockedTarget = otherPlayer;
+    //                StartLock(lockedTarget);
+    //            }
+    //        }
+            
+            
+    //    }
+    //}
+
+    void CheckSoftLock()
     {
-        //GameObject closest;
-        //closest = finder.enemyList.ReturnClosest(finder.player.transform.position);
         if (GetLockedDistance(otherPlayer.transform.position) <= maxLockDistance)
         {
-            if (otherPlayer.GetComponent<PlayerMovement>().targetable)
+            targetViewPos = finder.playerCam.WorldToViewportPoint(otherPlayer.transform.position);
+            if (targetViewPos.x >= 0.2f && targetViewPos.x <= 0.8f)
             {
-                isLockedOn = true;
-                lockedTarget = otherPlayer;
-                StartLock(lockedTarget);
+                if (otherPlayer.GetComponent<PlayerMovement>().targetable)
+                {
+                    Vector3 dirtoTarget = otherPlayer.transform.position - transform.position;
+                    if (Vector3.Dot(dirtoTarget, transform.forward) > 0)
+                    {
+                        if (!isSoftLocked)
+                        {
+                            StartSoftLock();
+                        }
+                    }                   
+                    
+                }
+                else if (isSoftLocked)
+                {
+                    EndSoftLock();
+                }
             }
-            
+            else if (isSoftLocked)
+            {
+                EndSoftLock();
+            }
+
+
+        }
+        else if (isSoftLocked)
+        {
+            EndSoftLock();
         }
     }
 
-    void CheckLockOn()
+    void StartSoftLock()
     {
-        if (lockedTarget == null || GetLockedDistance(lockedTarget.transform.position) > maxLockDistance || !lockedTarget.GetComponent<PlayerMovement>().targetable)
-        {
-            EndLock();
-        }
+        isSoftLocked = true;
+        softLockTarget = otherPlayer;
+        finder.lockOnSquare.CreateNewLockOn(otherPlayer, finder.playerCam);
+        Debug.Log("Soft lock ON");
     }
+
+    void EndSoftLock()
+    {
+        isSoftLocked = false;
+        softLockTarget = null;
+        finder.lockOnSquare.RemoveLockOnSquare();
+        Debug.Log("Soft lock OFF");
+        timeSoftLocked = 0;
+        finder.lockOnSquare.UpdateColour(false);
+        isLockedOn = false;
+    }
+
+    void CalculateLockOnBoxSize()
+    {
+        float otherDist = GetLockedDistance(softLockTarget.transform.position);
+        float distPercent = otherDist / maxLockDistance;
+        float widthP = 80.0f * (1 -distPercent);
+        finder.lockOnSquare.UpdateSquareSize(widthP + 20);
+    }
+
+    //void CheckLockOn()
+    //{
+    //    if (lockedTarget == null || GetLockedDistance(lockedTarget.transform.position) > maxLockDistance || !lockedTarget.GetComponent<PlayerMovement>().targetable)
+    //    {
+    //        EndLock();
+    //    }
+    //}
 
     float GetLockedDistance(Vector3 other)
     {
@@ -78,23 +166,23 @@ public class LockOn : MonoBehaviour
         return dist;
     }
 
-    public void StartLock(GameObject toLock)
-    {
-        isLockedOn = true;
-        lockedTarget = toLock;
-        finder.player.GetComponent<PlayerMovement>().SetLockOn(lockedTarget);
-        finder.lockOnSquare.CreateNewLockOn(lockedTarget, finder.playerCam);
-        finder.mainUI.SetLockOn(lockedTarget);
-    }
+    //public void StartLock(GameObject toLock)
+    //{
+    //    isLockedOn = true;
+    //    lockedTarget = toLock;
+    //    finder.player.GetComponent<PlayerMovement>().SetLockOn(lockedTarget);
+    //    finder.lockOnSquare.CreateNewLockOn(lockedTarget, finder.playerCam);
+    //    finder.mainUI.SetLockOn(lockedTarget);
+    //}
 
-    public void EndLock()
-    {
-        lockedTarget = null;
-        isLockedOn = false;
-        finder.player.GetComponent<PlayerMovement>().RemoveLock();
-        finder.lockOnSquare.RemoveLockOnSquare();
-        finder.mainUI.EndLockOn();
-    }
+    //public void EndLock()
+    //{
+    //    lockedTarget = null;
+    //    isLockedOn = false;
+    //    finder.player.GetComponent<PlayerMovement>().RemoveLock();
+    //    finder.lockOnSquare.RemoveLockOnSquare();
+    //    finder.mainUI.EndLockOn();
+    //}
 
     public Vector3 ReturnTargetBehind()
     {

@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.53521687, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -90,3 +90,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   deltaRotate: 1
+  cam: {fileID: 0}
+  warmUpColour: {r: 1, g: 0.49019608, b: 0, a: 1}
+  lockedColour: {r: 1, g: 0, b: 0, a: 1}

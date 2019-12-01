@@ -105,8 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99f3c496c9d02142ad9d0b86e5f380e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 50
-  killTime: 1
+  moveSpeed: 70
+  killTime: 3
   damage: 1
   curving: 0
   target: {fileID: 0}

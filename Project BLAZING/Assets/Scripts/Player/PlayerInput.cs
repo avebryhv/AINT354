@@ -20,9 +20,13 @@ public class PlayerInput : MonoBehaviour
 
     public Gamepad gamepad;
 
-    public void SetGamePadNum()
+    public void SetGamePadNum(int num)
     {
-
+        if (Gamepad.all.Count >= num)
+        {
+            gamepad = Gamepad.all[num - 1];
+        }
+        
     }
 
 
@@ -32,7 +36,7 @@ public class PlayerInput : MonoBehaviour
     {
         //finder = GameObject.FindGameObjectWithTag("CoreFinder").GetComponent<CoreFinder>();
         playerMovement = finder.playerMovement;
-        gamepad = Gamepad.current;
+        //gamepad = Gamepad.current;
         //string[] attachedControllers = Input.GetJoystickNames();
         //for (int i = 0; i < attachedControllers.Length; i++)
         //{
@@ -53,10 +57,10 @@ public class PlayerInput : MonoBehaviour
     {
         SendAxisInput();
 
-        if (/*Input.GetButtonDown(lockOnButton)*/gamepad.rightStickButton.wasPressedThisFrame)
-        {
-            finder.lockOn.LockButtonPressed();
-        }
+        //if (/*Input.GetButtonDown(lockOnButton)*/gamepad.rightStickButton.wasPressedThisFrame)
+        //{
+        //    finder.lockOn.LockButtonPressed();
+        //}
 
         if (/*Input.GetButtonDown(evadeButton)*/gamepad.rightShoulder.wasPressedThisFrame)
         {
@@ -71,24 +75,35 @@ public class PlayerInput : MonoBehaviour
                 {
                     case PlayerMovement.mechType.Normal:
                         finder.playerGun.ShieldButtonPressed();
+                        finder.playerHealth.ResetSpecialCharge();
                         break;
                     case PlayerMovement.mechType.Fast:
                         finder.playerMovement.CamoButtonPressed();
+                        finder.playerHealth.ResetSpecialCharge();
                         break;
                     case PlayerMovement.mechType.Slow:
-                        finder.playerGun.MissileBarragePressed();
+                        if (finder.lockOn.isLockedOn)
+                        {
+                            finder.playerGun.MissileBarragePressed();
+                            finder.playerHealth.ResetSpecialCharge();
+                        }                        
                         break;
                     default:
                         break;
                 }
-                finder.playerHealth.ResetSpecialCharge();
+                
             }
             
         }
 
-        if (gamepad.xButton.isPressed)
+        if (gamepad.rightTrigger.isPressed)
         {
             finder.playerGun.FireButtonPressed();
+        }
+
+        if (gamepad.leftTrigger.isPressed)
+        {
+            finder.playerGun2.FireButtonPressed();
         }
 
         if (gamepad.yButton.wasPressedThisFrame)
@@ -129,6 +144,7 @@ public class PlayerInput : MonoBehaviour
             specialButton = "Special";
             evadeButton = "Evade";
             lockOnButton = "LockOn";
+            SetGamePadNum(1);
         }
         else
         {
@@ -140,6 +156,7 @@ public class PlayerInput : MonoBehaviour
             specialButton = "Special" + "P2";
             evadeButton = "Evade" + "P2";
             lockOnButton = "LockOn" + "P2";
+            SetGamePadNum(2);
         }
     }
 }

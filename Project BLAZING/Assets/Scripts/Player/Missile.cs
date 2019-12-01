@@ -58,7 +58,7 @@ public class Missile : MonoBehaviour
             {
                 turnSpeed += Time.deltaTime;
                 Vector3 dirtoTarget = lockedTarget.transform.position - transform.position;
-                if (Vector3.Dot(dirtoTarget, transform.forward) > 0)
+                if (Vector3.Dot(dirtoTarget, transform.forward) > -0.2f)
                 {
                     LookAtTarget(turnSpeed);
                     rb.velocity = transform.forward * lockedSpeed;
