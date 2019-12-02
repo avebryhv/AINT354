@@ -67,31 +67,35 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        GetInput();
-        if (!inSpecialMovement)
+        if (!GameFunctions.isPaused)
         {
-            if (inEvade)
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            GetInput();
+            if (!inSpecialMovement)
             {
-                Evade(evadeX, evadeZ);
+                if (inEvade)
+                {
+                    Evade(evadeX, evadeZ);
+                }
+                else
+                {
+                    if (evasionCharge <= maxEvasionCharge)
+                    {
+                        evasionCharge += Time.deltaTime * 0.5f;
+                        evasionCharge = Mathf.Clamp(evasionCharge, 0, maxEvasionCharge);
+                        finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
+                    }
+                    Move(xMove, zMove);
+                }
+                Rotate(cameraAxis);
             }
             else
             {
-                if (evasionCharge <= maxEvasionCharge)
-                {
-                    evasionCharge += Time.deltaTime * 0.5f;
-                    evasionCharge = Mathf.Clamp(evasionCharge, 0, maxEvasionCharge);
-                    finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
-                }
-                Move(xMove, zMove);
+                SpecialMovement();
             }
-            Rotate(cameraAxis);
+
+
         }
-        else
-        {
-            SpecialMovement();
-        }
-        
 
     }
 

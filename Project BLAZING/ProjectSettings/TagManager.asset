@@ -15,6 +15,7 @@ TagManager:
   - P2CoreFinder
   - P2UI
   - PlayerGun2
+  - GameUI
   layers:
   - Default
   - TransparentFX
@@ -31,13 +32,13 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Player
   - P1 Cam
   - P2 Cam
   - 
   - Wall
-  - Cam1Hidden
-  - Cam2Hidden
+  - 
+  - 
   - 
   - 
   - 

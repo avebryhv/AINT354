@@ -33,17 +33,21 @@ public class LockOn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckSoftLock();
-        if (isSoftLocked)
+        if (!GameFunctions.isPaused)
         {
-            timeSoftLocked += Time.deltaTime;
-            if (timeSoftLocked >= softLockActiveTime)
+            CheckSoftLock();
+            if (isSoftLocked)
             {
-                finder.lockOnSquare.UpdateColour(true);
-                isLockedOn = true;
+                timeSoftLocked += Time.deltaTime;
+                if (timeSoftLocked >= softLockActiveTime)
+                {
+                    finder.lockOnSquare.UpdateColour(true);
+                    isLockedOn = true;
+                }
+                CalculateLockOnBoxSize();
             }
-            CalculateLockOnBoxSize();
         }
+        
         //CheckLockOn();        
         //if (isLockedOn)
         //{

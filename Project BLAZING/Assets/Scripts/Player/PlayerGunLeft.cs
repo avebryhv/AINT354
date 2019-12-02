@@ -65,6 +65,10 @@ public class PlayerGunLeft : MonoBehaviour
         float randomZ = Random.Range(-accuracy, accuracy);
         newBullet.transform.Rotate(new Vector3(randomX, randomY, randomZ));
         newBullet.GetComponent<PlayerGunBullet>().SetParent(finder.playerMovement.isPlayer1);
+        if (finder.lockOn.isLockedOn)
+        {
+            newBullet.GetComponent<PlayerGunBullet>().SetCurving(finder.lockOn.softLockTarget);
+        }
         firing = true;
         Invoke("CoolDown", fireTime);
     }

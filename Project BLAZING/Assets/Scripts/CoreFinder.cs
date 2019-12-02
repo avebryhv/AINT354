@@ -15,6 +15,7 @@ public class CoreFinder : MonoBehaviour
     public PlayerGunLeft playerGun2;
     public Camera playerCam;
     public PlayerInput playerInput;
+    public Crosshair crosshair;
 
     // Start is called before the first frame update
     void Awake()
@@ -49,6 +50,8 @@ public class CoreFinder : MonoBehaviour
         playerInput = player.GetComponentInChildren<PlayerInput>();
         playerInput.SetFinder(this);
         playerInput.SetInputString(true);
+        crosshair = player.GetComponentInChildren<Crosshair>();
+        crosshair.SetFinder(this);
     }
 
     public void Player2Pointers()

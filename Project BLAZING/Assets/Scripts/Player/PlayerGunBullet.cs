@@ -6,29 +6,49 @@ public class PlayerGunBullet : MonoBehaviour
 {
     public float moveSpeed;
     public float killTime;
+    float killCounter;
     public int damage = 1;
     //Curving Bullet Variables
     public GameObject target;
+    public bool isCurving;
+    public float curveSpeed;
+
     public bool isP1Bullet;
     public LayerMask hitLayer;
 
     // Use this for initialization
     void Start()
     {
-        Invoke("Destroy", killTime);
+        //isCurving = false;
+        //Invoke("Destroy", killTime);
+        killCounter = 0;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position += transform.forward * moveSpeed * Time.deltaTime;
-        Vector3 toMove = transform.forward * moveSpeed * Time.deltaTime;
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, toMove.magnitude, hitLayer))
+        if (!GameFunctions.isPaused)
         {
-            Debug.Log("hit wall");
-            Destroy(gameObject);
+            transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            Vector3 toMove = transform.forward * moveSpeed * Time.deltaTime;
+            if (isCurving && target != null)
+            {
+                LookAtTarget(curveSpeed);
+            }
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit, toMove.magnitude, hitLayer))
+            {
+                Debug.Log("hit wall");
+                Destroy(gameObject);
+            }
+
+            killCounter += Time.deltaTime;
+            if (killCounter >= killTime)
+            {
+                Destroy();
+            }
         }
+        
     }
 
     void Destroy()
@@ -39,6 +59,12 @@ public class PlayerGunBullet : MonoBehaviour
     public void SetParent(bool b)
     {
         isP1Bullet = b;
+    }
+
+    public void SetCurving(GameObject t)
+    {
+        isCurving = true;
+        target = t;
     }
 
     void OnTriggerEnter(Collider col)
@@ -62,17 +88,17 @@ public class PlayerGunBullet : MonoBehaviour
         }
     }
 
-    //void LookAtTarget(float speed)
-    //{
-    //    Vector3 targetDir = target.transform.position - transform.position;
+    void LookAtTarget(float speed)
+    {
+        Vector3 targetDir = target.transform.position - transform.position;
 
-    //    // The step size is equal to speed times frame time.
-    //    float step = speed * Time.deltaTime;
+        // The step size is equal to speed times frame time.
+        float step = speed * Time.deltaTime;
 
-    //    Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-    //    Debug.DrawRay(transform.position, newDir, Color.red);
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+        Debug.DrawRay(transform.position, newDir, Color.red);
 
-    //    // Move our position a step closer to the target.
-    //    transform.rotation = Quaternion.LookRotation(newDir);
-    //}
+        // Move our position a step closer to the target.
+        transform.rotation = Quaternion.LookRotation(newDir);
+    }
 }

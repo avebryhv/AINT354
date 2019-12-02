@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
+    public GameObject explosionPrefab;
+
     public int damage;
     public float timeBeforeLockOn;
     float floatTimer;
@@ -30,51 +32,56 @@ public class Missile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (state == State.Floating)
+        if (!GameFunctions.isPaused)
         {
-            if (lockedTarget == null)
+            if (state == State.Floating)
             {
-                state = State.NoTarget;
-                
-            }
-            floatTimer += Time.deltaTime;
-            //LookAtTarget(turnSpeed);
-            transform.rotation = Quaternion.LookRotation(initialDirection);
-            
-            rb.velocity = (transform.forward * floatingSpeed);
-            
-            
-            if (floatTimer >= timeBeforeLockOn)
-            {
-                state = State.Locked;
-            }
-        }
-        else if (state == State.Locked)
-        {
-            if (lockedTarget == null)
-            {
-                state = State.NoTarget;
-            }
-            else
-            {
-                turnSpeed += Time.deltaTime;
-                Vector3 dirtoTarget = lockedTarget.transform.position - transform.position;
-                if (Vector3.Dot(dirtoTarget, transform.forward) > -0.2f)
+                if (lockedTarget == null)
                 {
-                    LookAtTarget(turnSpeed);
-                    rb.velocity = transform.forward * lockedSpeed;
+                    state = State.NoTarget;
+
                 }
-                else
+                floatTimer += Time.deltaTime;
+                //LookAtTarget(turnSpeed);
+                transform.rotation = Quaternion.LookRotation(initialDirection);
+
+                rb.velocity = (transform.forward * floatingSpeed);
+
+
+                if (floatTimer >= timeBeforeLockOn)
+                {
+                    state = State.Locked;
+                }
+            }
+            else if (state == State.Locked)
+            {
+                if (lockedTarget == null)
                 {
                     state = State.NoTarget;
                 }
-                
+                else
+                {
+                    turnSpeed += Time.deltaTime;
+                    lockedSpeed += Time.deltaTime * 3;
+                    Vector3 dirtoTarget = lockedTarget.transform.position - transform.position;
+                    if (Vector3.Dot(dirtoTarget, transform.forward) > -0.5f)
+                    {
+                        LookAtTarget(turnSpeed);
+                        rb.velocity = transform.forward * lockedSpeed;
+                    }
+                    else
+                    {
+                        state = State.NoTarget;
+                    }
+
+                }
+            }
+            else
+            {
+                rb.velocity = transform.forward * lockedSpeed;
             }
         }
-        else
-        {
-            rb.velocity = transform.forward * lockedSpeed;
-        }
+        
     }    
 
     public void FireMissile(GameObject target)
@@ -151,5 +158,11 @@ public class Missile : MonoBehaviour
     void RemoveParent()
     {
         transform.parent = null;
+    }
+
+    void CreateExplosion(GameObject target)
+    {
+        GameObject explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
+        explosion.GetComponent<Explosion>().SetTarget(lockedTarget);
     }
 }

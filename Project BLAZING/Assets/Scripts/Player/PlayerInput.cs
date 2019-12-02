@@ -72,108 +72,121 @@ public class PlayerInput : MonoBehaviour
         
         if (usingController) //---------------------------------CONTROLLER CONTROLS--------------------------------------
         {
-            SendAxisInput();
-
-            if (/*Input.GetButtonDown(evadeButton)*/gamepad.rightShoulder.wasPressedThisFrame)
+            if (!GameFunctions.isPaused)
             {
-                finder.playerMovement.EvadePressed();
-            }
+                SendAxisInput();
 
-            if (/*Input.GetButtonDown(specialButton)*/gamepad.bButton.wasPressedThisFrame)
-            {
-                if (finder.playerHealth.ReturnCanUseSpecial())
+                if (/*Input.GetButtonDown(evadeButton)*/gamepad.rightShoulder.wasPressedThisFrame)
                 {
-                    switch (finder.playerMovement.type)
+                    finder.playerMovement.EvadePressed();
+                }
+
+                if (/*Input.GetButtonDown(specialButton)*/gamepad.bButton.wasPressedThisFrame)
+                {
+                    if (finder.playerHealth.ReturnCanUseSpecial())
                     {
-                        case PlayerMovement.mechType.Normal:
-                            finder.playerGun.ShieldButtonPressed();
-                            finder.playerHealth.ResetSpecialCharge();
-                            break;
-                        case PlayerMovement.mechType.Fast:
-                            finder.playerMovement.CamoButtonPressed();
-                            finder.playerHealth.ResetSpecialCharge();
-                            break;
-                        case PlayerMovement.mechType.Slow:
-                            if (finder.lockOn.isLockedOn)
-                            {
-                                finder.playerGun.MissileBarragePressed();
+                        switch (finder.playerMovement.type)
+                        {
+                            case PlayerMovement.mechType.Normal:
+                                finder.playerGun.ShieldButtonPressed();
                                 finder.playerHealth.ResetSpecialCharge();
-                            }
-                            break;
-                        default:
-                            break;
+                                break;
+                            case PlayerMovement.mechType.Fast:
+                                finder.playerMovement.CamoButtonPressed();
+                                finder.playerHealth.ResetSpecialCharge();
+                                break;
+                            case PlayerMovement.mechType.Slow:
+                                if (finder.lockOn.isLockedOn)
+                                {
+                                    finder.playerGun.MissileBarragePressed();
+                                    finder.playerHealth.ResetSpecialCharge();
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+
                     }
 
                 }
 
-            }
+                if (gamepad.rightTrigger.isPressed)
+                {
+                    finder.playerGun.FireButtonPressed();
+                }
 
-            if (gamepad.rightTrigger.isPressed)
-            {
-                finder.playerGun.FireButtonPressed();
-            }
+                if (gamepad.leftTrigger.isPressed)
+                {
+                    finder.playerGun2.FireButtonPressed();
+                }
 
-            if (gamepad.leftTrigger.isPressed)
-            {
-                finder.playerGun2.FireButtonPressed();
+                if (gamepad.yButton.wasPressedThisFrame)
+                {
+                    finder.playerGun.MissileButtonPressed();
+                }
             }
+            
 
-            if (gamepad.yButton.wasPressedThisFrame)
+            if (gamepad.startButton.wasPressedThisFrame)
             {
-                finder.playerGun.MissileButtonPressed();
+                GameFunctions.PauseButtonPressed();
             }
         }
         else //---------------------------------------KEYBOARD CONTROLS------------------------------------------
         {
-            SendAxisInputKeyboard();
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (!GameFunctions.isPaused)
             {
-                finder.playerMovement.EvadePressed();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                if (finder.playerHealth.ReturnCanUseSpecial())
+                SendAxisInputKeyboard();
+                if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
-                    switch (finder.playerMovement.type)
+                    finder.playerMovement.EvadePressed();
+                }
+
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    if (finder.playerHealth.ReturnCanUseSpecial())
                     {
-                        case PlayerMovement.mechType.Normal:
-                            finder.playerGun.ShieldButtonPressed();
-                            finder.playerHealth.ResetSpecialCharge();
-                            break;
-                        case PlayerMovement.mechType.Fast:
-                            finder.playerMovement.CamoButtonPressed();
-                            finder.playerHealth.ResetSpecialCharge();
-                            break;
-                        case PlayerMovement.mechType.Slow:
-                            if (finder.lockOn.isLockedOn)
-                            {
-                                finder.playerGun.MissileBarragePressed();
+                        switch (finder.playerMovement.type)
+                        {
+                            case PlayerMovement.mechType.Normal:
+                                finder.playerGun.ShieldButtonPressed();
                                 finder.playerHealth.ResetSpecialCharge();
-                            }
-                            break;
-                        default:
-                            break;
+                                break;
+                            case PlayerMovement.mechType.Fast:
+                                finder.playerMovement.CamoButtonPressed();
+                                finder.playerHealth.ResetSpecialCharge();
+                                break;
+                            case PlayerMovement.mechType.Slow:
+                                if (finder.lockOn.isLockedOn)
+                                {
+                                    finder.playerGun.MissileBarragePressed();
+                                    finder.playerHealth.ResetSpecialCharge();
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+
                     }
 
                 }
 
-            }
+                if (Input.GetMouseButton(1))
+                {
+                    finder.playerGun.FireButtonPressed();
+                }
 
-            if (Input.GetMouseButton(1))
-            {
-                finder.playerGun.FireButtonPressed();
-            }
+                if (Input.GetMouseButton(0))
+                {
+                    finder.playerGun2.FireButtonPressed();
+                }
 
-            if (Input.GetMouseButton(0))
-            {
-                finder.playerGun2.FireButtonPressed();
+                if (Input.GetMouseButtonDown(2))
+                {
+                    finder.playerGun.MissileButtonPressed();
+                }
             }
-
-            if (Input.GetMouseButtonDown(2))
-            {
-                finder.playerGun.MissileButtonPressed();
-            }
+            
         }
 
     }
