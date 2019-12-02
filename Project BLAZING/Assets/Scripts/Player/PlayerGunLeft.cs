@@ -64,10 +64,7 @@ public class PlayerGunLeft : MonoBehaviour
         float randomY = Random.Range(-accuracy, accuracy);
         float randomZ = Random.Range(-accuracy, accuracy);
         newBullet.transform.Rotate(new Vector3(randomX, randomY, randomZ));
-        if (lockOn.isLockedOn)
-        {
-            newBullet.GetComponent<PlayerGunBullet>().SetCurving(lockOn.lockedTarget);
-        }
+        newBullet.GetComponent<PlayerGunBullet>().SetParent(finder.playerMovement.isPlayer1);
         firing = true;
         Invoke("CoolDown", fireTime);
     }
@@ -77,29 +74,32 @@ public class PlayerGunLeft : MonoBehaviour
         firing = false;
     }
 
-    
+
     public void SetStats(PlayerMovement.mechType t)
     {
         switch (t)
         {
             case PlayerMovement.mechType.Normal:
-                bulletPrefab = normalBullet;
+                //bulletPrefab = normalBullet;
                 fireTime = 0.2f;
+                accuracy = 1;
                 break;
             case PlayerMovement.mechType.Fast:
-                bulletPrefab = fastBullet;
-                fireTime = 0.3f;
+                //bulletPrefab = fastBullet;
+                fireTime = 0.1f;
+                accuracy = 3;
                 break;
             case PlayerMovement.mechType.Slow:
-                bulletPrefab = slowBullet;
+                //bulletPrefab = slowBullet;
                 fireTime = 0.25f;
+                accuracy = 0.1f;
                 break;
             default:
                 break;
         }
     }
 
-    
+
 
     public void SetFinder(CoreFinder f)
     {

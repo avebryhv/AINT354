@@ -43,7 +43,7 @@ public class MainUI : MonoBehaviour
 
     public void UpdateHealthBar(int current, int max)
     {
-        max = 5;
+        //max = 5;
         float amount = ((float)current / (float)max);
         healthBar.fillAmount = amount;
     }

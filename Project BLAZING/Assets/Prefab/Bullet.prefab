@@ -108,6 +108,8 @@ MonoBehaviour:
   moveSpeed: 70
   killTime: 3
   damage: 1
-  curving: 0
   target: {fileID: 0}
-  curveSpeed: 1
+  isP1Bullet: 0
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 524288

@@ -83,10 +83,7 @@ public class PlayerGun : MonoBehaviour
         float randomY = Random.Range(-accuracy, accuracy);
         float randomZ = Random.Range(-accuracy, accuracy);
         newBullet.transform.Rotate(new Vector3(randomX, randomY, randomZ));
-        if (lockOn.isLockedOn)
-        {
-            newBullet.GetComponent<PlayerGunBullet>().SetCurving(lockOn.lockedTarget);
-        }
+        newBullet.GetComponent<PlayerGunBullet>().SetParent(finder.playerMovement.isPlayer1);
         firing = true;
         Invoke("CoolDown", fireTime);
     }
@@ -101,7 +98,7 @@ public class PlayerGun : MonoBehaviour
         if (currentMissiles > 0)
         {
             GameObject newMissile = Instantiate(missilePrefab, transform.position, transform.rotation);
-            newMissile.GetComponent<Missile>().FireMissile(target, transform.forward);
+            newMissile.GetComponent<Missile>().FireMissile(target, transform.forward, finder.playerMovement.isPlayer1);
             currentMissiles--;
             finder.mainUI.UpdateMissileCounter(currentMissiles);
         }
@@ -130,7 +127,7 @@ public class PlayerGun : MonoBehaviour
             toLookAt += dir.y * transform.up;
             toLookAt += dir.z * transform.forward;
             Debug.Log(toLookAt);
-            missiles[i].GetComponent<Missile>().FireMissile(target, toLookAt, 1f);
+            missiles[i].GetComponent<Missile>().FireMissile(target, toLookAt, 1f, finder.playerMovement.isPlayer1);
         }
     }
 
@@ -146,19 +143,22 @@ public class PlayerGun : MonoBehaviour
         switch (t)
         {
             case PlayerMovement.mechType.Normal:
-                bulletPrefab = normalBullet;
+                //bulletPrefab = normalBullet;
                 fireTime = 0.2f;
-                SetMaxMissiles(5);
+                SetMaxMissiles(10);
+                accuracy = 1;
                 break;
             case PlayerMovement.mechType.Fast:
-                bulletPrefab = fastBullet;
-                fireTime = 0.3f;
-                SetMaxMissiles(2);
+                //bulletPrefab = fastBullet;
+                fireTime = 0.1f;
+                SetMaxMissiles(5);
+                accuracy = 3;
                 break;
             case PlayerMovement.mechType.Slow:
-                bulletPrefab = slowBullet;
+                //bulletPrefab = slowBullet;
                 fireTime = 0.25f;
-                SetMaxMissiles(10);
+                SetMaxMissiles(20);
+                accuracy = 0.1f;
                 break;
             default:
                 break;

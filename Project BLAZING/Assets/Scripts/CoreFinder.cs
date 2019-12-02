@@ -33,6 +33,7 @@ public class CoreFinder : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerMovement = player.GetComponent<PlayerMovement>();
         playerMovement.SetFinder(this);
+        playerMovement.isPlayer1 = true;
         playerHealth = player.GetComponent<PlayerHealth>();
         playerHealth.SetFinder(this);
         lockOn = player.GetComponent<LockOn>();
@@ -55,6 +56,7 @@ public class CoreFinder : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player2");
         playerMovement = player.GetComponent<PlayerMovement>();
         playerMovement.SetFinder(this);
+        playerMovement.isPlayer1 = false;
         playerHealth = player.GetComponent<PlayerHealth>();
         playerHealth.SetFinder(this);
         lockOn = player.GetComponent<LockOn>();
@@ -64,6 +66,8 @@ public class CoreFinder : MonoBehaviour
         lockOnSquare = GameObject.FindGameObjectWithTag("P2UI").GetComponentInChildren<DisplayLockOnSquares>();
         playerGun = player.GetComponentInChildren<PlayerGun>();
         playerGun.SetFinder(this);
+        playerGun2 = player.GetComponentInChildren<PlayerGunLeft>();
+        playerGun2.SetFinder(this);
         playerCam = GameObject.FindGameObjectWithTag("P2Camera").GetComponent<Camera>();
         playerInput = player.GetComponentInChildren<PlayerInput>();
         playerInput.SetFinder(this);

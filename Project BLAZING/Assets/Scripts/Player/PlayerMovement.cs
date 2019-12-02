@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public CoreFinder finder;
     Camera mainCam;
     Rigidbody rb;
+    public bool isPlayer1;
     public enum mechType { Normal, Fast, Slow};
     public mechType type;
     //Movement Variables
@@ -78,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (evasionCharge <= maxEvasionCharge)
                 {
-                    evasionCharge += Time.deltaTime;
+                    evasionCharge += Time.deltaTime * 0.5f;
                     evasionCharge = Mathf.Clamp(evasionCharge, 0, maxEvasionCharge);
                     finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
                 }
@@ -308,23 +309,24 @@ public class PlayerMovement : MonoBehaviour
         {
             case mechType.Normal:
                 moveSpeed = 20;
-                maxEvasionCharge = 3;
-                finder.playerHealth.SetMaxHealth(3);                
+                maxEvasionCharge = 2;
+                finder.playerHealth.SetMaxHealth(30);                
                 break;
             case mechType.Fast:
                 moveSpeed = 25;
-                maxEvasionCharge = 4;
-                finder.playerHealth.SetMaxHealth(2);
+                maxEvasionCharge = 3;
+                finder.playerHealth.SetMaxHealth(40);
                 break;
             case mechType.Slow:
                 moveSpeed = 15;
-                maxEvasionCharge = 2;
-                finder.playerHealth.SetMaxHealth(5);
+                maxEvasionCharge = 1;
+                finder.playerHealth.SetMaxHealth(50);
                 break;
             default:
                 break;
         }
         finder.playerGun.SetStats(t);
+        finder.playerGun2.SetStats(t);
         finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
         type = t;
     }

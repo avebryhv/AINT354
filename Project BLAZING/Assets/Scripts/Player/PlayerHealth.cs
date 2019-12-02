@@ -60,7 +60,7 @@ public class PlayerHealth : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-        Invoke("ResetCanTakeDamage", 2f);
+        Invoke("ResetCanTakeDamage", 0.1f);
         
     }
 

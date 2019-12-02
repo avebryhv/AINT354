@@ -8,9 +8,9 @@ public class PlayerGunBullet : MonoBehaviour
     public float killTime;
     public int damage = 1;
     //Curving Bullet Variables
-    public bool curving;
     public GameObject target;
-    public float curveSpeed;
+    public bool isP1Bullet;
+    public LayerMask hitLayer;
 
     // Use this for initialization
     void Start()
@@ -22,9 +22,12 @@ public class PlayerGunBullet : MonoBehaviour
     void FixedUpdate()
     {
         transform.position += transform.forward * moveSpeed * Time.deltaTime;
-        if (curving && target != null)
+        Vector3 toMove = transform.forward * moveSpeed * Time.deltaTime;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, toMove.magnitude, hitLayer))
         {
-            LookAtTarget(curveSpeed);
+            Debug.Log("hit wall");
+            Destroy(gameObject);
         }
     }
 
@@ -33,20 +36,24 @@ public class PlayerGunBullet : MonoBehaviour
         Destroy(gameObject);
     }    
 
-    public void SetCurving(GameObject t)
+    public void SetParent(bool b)
     {
-        target = t;
-        curving = true;
-
+        isP1Bullet = b;
     }
 
     void OnTriggerEnter(Collider col)
     {
 
-        if (col.tag == "Damageable")
+        if (col.tag == "Player" && !isP1Bullet)
         {
             Debug.Log("hit");
-            col.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
+            col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+            this.Destroy();
+        }
+        else if (col.tag == "Player2" && isP1Bullet)
+        {
+            Debug.Log("hit");
+            col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             this.Destroy();
         }
         else if (col.tag == "Wall")
@@ -55,17 +62,17 @@ public class PlayerGunBullet : MonoBehaviour
         }
     }
 
-    void LookAtTarget(float speed)
-    {
-        Vector3 targetDir = target.transform.position - transform.position;
+    //void LookAtTarget(float speed)
+    //{
+    //    Vector3 targetDir = target.transform.position - transform.position;
 
-        // The step size is equal to speed times frame time.
-        float step = speed * Time.deltaTime;
+    //    // The step size is equal to speed times frame time.
+    //    float step = speed * Time.deltaTime;
 
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-        Debug.DrawRay(transform.position, newDir, Color.red);
+    //    Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+    //    Debug.DrawRay(transform.position, newDir, Color.red);
 
-        // Move our position a step closer to the target.
-        transform.rotation = Quaternion.LookRotation(newDir);
-    }
+    //    // Move our position a step closer to the target.
+    //    transform.rotation = Quaternion.LookRotation(newDir);
+    //}
 }

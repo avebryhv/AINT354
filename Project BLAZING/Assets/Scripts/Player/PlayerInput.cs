@@ -16,7 +16,7 @@ public class PlayerInput : MonoBehaviour
     public string specialButton;
     public string evadeButton;
     public string lockOnButton;
-
+    public bool usingController;
 
     public Gamepad gamepad;
 
@@ -25,6 +25,12 @@ public class PlayerInput : MonoBehaviour
         if (Gamepad.all.Count >= num)
         {
             gamepad = Gamepad.all[num - 1];
+            usingController = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            usingController = false;
         }
         
     }
@@ -42,73 +48,132 @@ public class PlayerInput : MonoBehaviour
         //{
         //    Debug.Log("Controller " + i + " " + attachedControllers[i]);
         //}
-
-        List<string> gamePadNames = new List<string>();
-        for (int i = 0; i < Gamepad.all.Count; i++)
+        if (finder.playerMovement.isPlayer1)
         {
-            gamePadNames.Add(Gamepad.all[i].name);
-            Debug.Log(Gamepad.all[i].name);
+            Debug.Log("Connected Gamepads");
+            Debug.Log(Gamepad.all.Count);
+            List<string> gamePadNames = new List<string>();
+            for (int i = 0; i < Gamepad.all.Count; i++)
+            {
+                gamePadNames.Add(Gamepad.all[i].name);
+                Debug.Log(Gamepad.all[i].name);
+            }
+            Debug.Log("Unsupported Gamepads");
+            
+            Debug.Log(InputSystem.GetUnsupportedDevices().Count);
         }
+        
         //gamepad = Gamepad.all[0];
     }
 
     // Update is called once per frame
     void Update()
     {
-        SendAxisInput();
-
-        //if (/*Input.GetButtonDown(lockOnButton)*/gamepad.rightStickButton.wasPressedThisFrame)
-        //{
-        //    finder.lockOn.LockButtonPressed();
-        //}
-
-        if (/*Input.GetButtonDown(evadeButton)*/gamepad.rightShoulder.wasPressedThisFrame)
+        
+        if (usingController) //---------------------------------CONTROLLER CONTROLS--------------------------------------
         {
-            finder.playerMovement.EvadePressed();
-        }
+            SendAxisInput();
 
-        if (/*Input.GetButtonDown(specialButton)*/gamepad.bButton.wasPressedThisFrame)
-        {
-            if (finder.playerHealth.ReturnCanUseSpecial())
+            if (/*Input.GetButtonDown(evadeButton)*/gamepad.rightShoulder.wasPressedThisFrame)
             {
-                switch (finder.playerMovement.type)
-                {
-                    case PlayerMovement.mechType.Normal:
-                        finder.playerGun.ShieldButtonPressed();
-                        finder.playerHealth.ResetSpecialCharge();
-                        break;
-                    case PlayerMovement.mechType.Fast:
-                        finder.playerMovement.CamoButtonPressed();
-                        finder.playerHealth.ResetSpecialCharge();
-                        break;
-                    case PlayerMovement.mechType.Slow:
-                        if (finder.lockOn.isLockedOn)
-                        {
-                            finder.playerGun.MissileBarragePressed();
-                            finder.playerHealth.ResetSpecialCharge();
-                        }                        
-                        break;
-                    default:
-                        break;
-                }
-                
+                finder.playerMovement.EvadePressed();
             }
-            
-        }
 
-        if (gamepad.rightTrigger.isPressed)
-        {
-            finder.playerGun.FireButtonPressed();
-        }
+            if (/*Input.GetButtonDown(specialButton)*/gamepad.bButton.wasPressedThisFrame)
+            {
+                if (finder.playerHealth.ReturnCanUseSpecial())
+                {
+                    switch (finder.playerMovement.type)
+                    {
+                        case PlayerMovement.mechType.Normal:
+                            finder.playerGun.ShieldButtonPressed();
+                            finder.playerHealth.ResetSpecialCharge();
+                            break;
+                        case PlayerMovement.mechType.Fast:
+                            finder.playerMovement.CamoButtonPressed();
+                            finder.playerHealth.ResetSpecialCharge();
+                            break;
+                        case PlayerMovement.mechType.Slow:
+                            if (finder.lockOn.isLockedOn)
+                            {
+                                finder.playerGun.MissileBarragePressed();
+                                finder.playerHealth.ResetSpecialCharge();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
 
-        if (gamepad.leftTrigger.isPressed)
-        {
-            finder.playerGun2.FireButtonPressed();
-        }
+                }
 
-        if (gamepad.yButton.wasPressedThisFrame)
+            }
+
+            if (gamepad.rightTrigger.isPressed)
+            {
+                finder.playerGun.FireButtonPressed();
+            }
+
+            if (gamepad.leftTrigger.isPressed)
+            {
+                finder.playerGun2.FireButtonPressed();
+            }
+
+            if (gamepad.yButton.wasPressedThisFrame)
+            {
+                finder.playerGun.MissileButtonPressed();
+            }
+        }
+        else //---------------------------------------KEYBOARD CONTROLS------------------------------------------
         {
-            finder.playerGun.MissileButtonPressed();
+            SendAxisInputKeyboard();
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                finder.playerMovement.EvadePressed();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                if (finder.playerHealth.ReturnCanUseSpecial())
+                {
+                    switch (finder.playerMovement.type)
+                    {
+                        case PlayerMovement.mechType.Normal:
+                            finder.playerGun.ShieldButtonPressed();
+                            finder.playerHealth.ResetSpecialCharge();
+                            break;
+                        case PlayerMovement.mechType.Fast:
+                            finder.playerMovement.CamoButtonPressed();
+                            finder.playerHealth.ResetSpecialCharge();
+                            break;
+                        case PlayerMovement.mechType.Slow:
+                            if (finder.lockOn.isLockedOn)
+                            {
+                                finder.playerGun.MissileBarragePressed();
+                                finder.playerHealth.ResetSpecialCharge();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+
+            }
+
+            if (Input.GetMouseButton(1))
+            {
+                finder.playerGun.FireButtonPressed();
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                finder.playerGun2.FireButtonPressed();
+            }
+
+            if (Input.GetMouseButtonDown(2))
+            {
+                finder.playerGun.MissileButtonPressed();
+            }
         }
 
     }
@@ -120,6 +185,43 @@ public class PlayerInput : MonoBehaviour
         float verti = leftStick.y;
         float camAxis = gamepad.rightStick.ReadValue().x;
         finder.playerMovement.RecieveAxisInput(hori, verti, camAxis);
+    }
+
+    void SendAxisInputKeyboard()
+    {
+        float hori;
+        if (Input.GetKey(KeyCode.A))
+        {
+            hori = -1;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            hori = 1;
+        }
+        else
+        {
+            hori = 0;
+        }
+
+        float verti;
+        if (Input.GetKey(KeyCode.S))
+        {
+            verti = -1;
+        }
+        else if (Input.GetKey(KeyCode.W))
+        {
+            verti = 1;
+        }
+        else
+        {
+            verti = 0;
+        }
+
+        float cam;
+        cam = Input.GetAxis("Mouse X");
+        
+
+        finder.playerMovement.RecieveAxisInput(hori, verti, cam);
     }
 
     public void SetFinder(CoreFinder f)

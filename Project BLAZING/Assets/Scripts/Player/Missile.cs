@@ -14,6 +14,7 @@ public class Missile : MonoBehaviour
     public float turnSpeed;
     public enum State { Floating, Locked, NoTarget };
     public State state;
+    bool isP1Missile;
 
     Rigidbody rb;
 
@@ -95,6 +96,22 @@ public class Missile : MonoBehaviour
         lockedTarget = target;
         timeBeforeLockOn = t;
     }
+    public void FireMissile(GameObject target, Vector3 dir, float t, bool isP)
+    {
+        transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+        initialDirection = dir;
+        lockedTarget = target;
+        timeBeforeLockOn = t;
+        isP1Missile = isP;
+    }
+
+    public void FireMissile(GameObject target, Vector3 dir, bool isP)
+    {
+        transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+        initialDirection = dir;
+        lockedTarget = target;
+        isP1Missile = isP;
+    }
 
     void LookAtTarget(float speed)
     {
@@ -113,10 +130,16 @@ public class Missile : MonoBehaviour
     void OnTriggerEnter(Collider col)
     {
 
-        if (col.tag == "Damageable")
+        if (col.tag == "Player" && !isP1Missile)
         {
             Debug.Log("hit");
-            col.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
+            col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
+        else if (col.tag == "Player2" && isP1Missile)
+        {
+            Debug.Log("hit");
+            col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             Destroy(gameObject);
         }
         else if (col.tag == "Wall")

@@ -21,6 +21,7 @@ public class LockOn : MonoBehaviour
     public GameObject softLockTarget;
     public float timeSoftLocked;
     public float softLockActiveTime;
+    public LayerMask cancelLockMask;
 
     // Start is called before the first frame update
     void Start()
@@ -89,39 +90,56 @@ public class LockOn : MonoBehaviour
 
     void CheckSoftLock()
     {
-        if (GetLockedDistance(otherPlayer.transform.position) <= maxLockDistance)
+        if (otherPlayer != null)
         {
-            targetViewPos = finder.playerCam.WorldToViewportPoint(otherPlayer.transform.position);
-            if (targetViewPos.x >= 0.2f && targetViewPos.x <= 0.8f)
+            if (GetLockedDistance(otherPlayer.transform.position) <= maxLockDistance)
             {
-                if (otherPlayer.GetComponent<PlayerMovement>().targetable)
+                targetViewPos = finder.playerCam.WorldToViewportPoint(otherPlayer.transform.position);
+                if (targetViewPos.x >= 0.2f && targetViewPos.x <= 0.8f)
                 {
-                    Vector3 dirtoTarget = otherPlayer.transform.position - transform.position;
-                    if (Vector3.Dot(dirtoTarget, transform.forward) > 0)
+                    if (otherPlayer.GetComponent<PlayerMovement>().targetable)
                     {
-                        if (!isSoftLocked)
+                        Vector3 dirtoTarget = otherPlayer.transform.position - transform.position;
+                        if (Vector3.Dot(dirtoTarget, transform.forward) > 0)
                         {
-                            StartSoftLock();
+                            RaycastHit hit;
+                            if (!Physics.Raycast(transform.position, dirtoTarget, out hit, GetLockedDistance(otherPlayer.transform.position), cancelLockMask))
+                            {
+                                if (!isSoftLocked)
+                                {
+                                    StartSoftLock();
+                                }
+                            }
+                            else
+                            {
+                                EndSoftLock();
+                            }
+                            
                         }
-                    }                   
-                    
+
+                    }
+                    else if (isSoftLocked)
+                    {
+                        EndSoftLock();
+                    }
                 }
                 else if (isSoftLocked)
                 {
                     EndSoftLock();
                 }
+
+
             }
             else if (isSoftLocked)
             {
                 EndSoftLock();
             }
-
-
         }
-        else if (isSoftLocked)
+        else
         {
             EndSoftLock();
         }
+        
     }
 
     void StartSoftLock()
@@ -129,7 +147,6 @@ public class LockOn : MonoBehaviour
         isSoftLocked = true;
         softLockTarget = otherPlayer;
         finder.lockOnSquare.CreateNewLockOn(otherPlayer, finder.playerCam);
-        Debug.Log("Soft lock ON");
     }
 
     void EndSoftLock()
@@ -137,7 +154,6 @@ public class LockOn : MonoBehaviour
         isSoftLocked = false;
         softLockTarget = null;
         finder.lockOnSquare.RemoveLockOnSquare();
-        Debug.Log("Soft lock OFF");
         timeSoftLocked = 0;
         finder.lockOnSquare.UpdateColour(false);
         isLockedOn = false;
