@@ -268,11 +268,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f086897519ade4d9b02bc7405a57ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 5903971971352623562, guid: 865831bae3821d04caa872de03208286,
+    type: 3}
   damage: 10
   timeBeforeLockOn: 0.5
   initialDirection: {x: 0, y: 1, z: 0}
   lockedTarget: {fileID: 0}
   floatingSpeed: 10
   lockedSpeed: 15
-  turnSpeed: 1
+  turnSpeed: 3
   state: 0

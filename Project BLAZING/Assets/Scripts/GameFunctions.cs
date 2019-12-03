@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameFunctions : MonoBehaviour
 {
@@ -53,4 +54,23 @@ public class GameFunctions : MonoBehaviour
             foundBodies[i].velocity = new Vector3();
         }
     }
+
+    static void Player1Win()
+    {
+
+    }
+
+    static void Player2Win()
+    {
+
+    }
+
+    public static void ReloadScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+        SceneManager.LoadScene(sceneName);
+    }
+
+
 }

@@ -47,6 +47,16 @@ public class PlayerMovement : MonoBehaviour
     public Material speedCamoTest;
     Material baseMaterial;
 
+    //Boost Variables
+    bool inBoost;
+    public float boostSpeed;
+    public float boostChargeMax;
+    float boostCharge;
+    public float boostChargeCooldown;
+    bool canBoost;
+    public float boostChargeRate;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
         }
         //SetTypeStats(type);
         baseMaterial = mesh.material;
+        canBoost = true;
+        boostCharge = boostChargeMax;
     }
 
     // Update is called once per frame
@@ -85,7 +97,16 @@ public class PlayerMovement : MonoBehaviour
                         evasionCharge = Mathf.Clamp(evasionCharge, 0, maxEvasionCharge);
                         finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
                     }
-                    Move(xMove, zMove);
+                    HandleBoost();
+                    if (inBoost)
+                    {
+                        Boost(xMove, zMove);
+                    }
+                    else
+                    {
+                        Move(xMove, zMove);
+                    }
+                    
                 }
                 Rotate(cameraAxis);
             }
@@ -156,6 +177,15 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = (xVec + zVec);
     }
 
+    void Boost(float x, float z)
+    {
+        Vector3 xVec = x * transform.right * boostSpeed;
+        Vector3 zVec = z * transform.forward * boostSpeed;
+
+
+        rb.velocity = (xVec + zVec);
+    }
+
     void Rotate(float axis)
     {
         if (isLocked)
@@ -176,9 +206,29 @@ public class PlayerMovement : MonoBehaviour
 
     public void EvadePressed()
     {
-        if (!inEvade && evasionCharge >= 1.0f)
+        //if (!inEvade && evasionCharge >= 1.0f)
+        //{
+        //    evasionCharge -= 1.0f;
+        //    finder.playerHealth.canTakeDamage = false;
+        //    float x = xMove;
+        //    float z = zMove;
+        //    inEvade = true;
+        //    evadeParticles.Play();
+        //    Invoke("EndEvade", evadeTime);
+        //    if (x == 0 && z == 0)
+        //    {
+        //        z = -1 * moveSpeed;
+        //    }
+        //    evadeX = x;
+        //    evadeZ = z;
+        //    finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
+        //    mesh.material = speedCamoTest;
+        //}
+
+        //Evade adjusted for boost movement
+        if (!inEvade && boostCharge == boostChargeMax)
         {
-            evasionCharge -= 1.0f;
+            boostCharge = 0;
             finder.playerHealth.canTakeDamage = false;
             float x = xMove;
             float z = zMove;
@@ -354,6 +404,47 @@ public class PlayerMovement : MonoBehaviour
         targetable = true;
         mesh.material = baseMaterial;
     }
+
+    public void BoostButtonPressed()
+    {
+        if (canBoost)
+        {
+            inBoost = true;
+        }
+    }
+
+    public void BoostButtonReleased()
+    {
+        inBoost = false;
+    }
+
+    void HandleBoost()
+    {
+        if (inBoost)
+        {
+            evadeParticles.Play();
+            boostCharge -= Time.deltaTime;
+            if (boostCharge <= 0)
+            {
+                canBoost = false;
+                inBoost = false;
+                Invoke("SetBoostCooldown", boostChargeCooldown);
+            }
+        }
+        else
+        {
+            boostCharge += Time.deltaTime * boostChargeRate;
+            boostCharge = Mathf.Clamp(boostCharge, 0, boostChargeMax);
+            evadeParticles.Stop();
+        }
+        finder.mainUI.UpdateEvadeBar(boostCharge, boostChargeMax);
+    }
+
+    void SetBoostCooldown()
+    {
+        canBoost = true;
+    }
+
     public void SetFinder(CoreFinder f)
     {
         finder = f;

@@ -49,23 +49,17 @@ public class Explosion : MonoBehaviour
     {
         if (!hasDamaged)
         {
-            if (parent != null)
+            if (other.tag == "Player" && !P1Source)
             {
-                if (other.gameObject != parent)
-                {
-                    hasDamaged = true;
-                    other.GetComponent<PlayerHealth>().TakeDamage(10);
-                }
-
+                other.GetComponent<PlayerHealth>().TakeDamage(10);
+                hasDamaged = true;
             }
-            else if (target != null)
+            else if (other.tag == "Player2" && P1Source)
             {
-                if (other.gameObject == target)
-                {
-                    hasDamaged = true;
-                    other.GetComponent<PlayerHealth>().TakeDamage(10);
-                }
+                other.GetComponent<PlayerHealth>().TakeDamage(10);
+                hasDamaged = true;
             }
+            
         }
         
 

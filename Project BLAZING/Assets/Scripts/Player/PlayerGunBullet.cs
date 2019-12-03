@@ -16,6 +16,16 @@ public class PlayerGunBullet : MonoBehaviour
     public bool isP1Bullet;
     public LayerMask hitLayer;
 
+    public Material p1Mat;
+    public Material p2Mat;
+
+    MeshRenderer mesh;
+
+    void Awake()
+    {
+        mesh = GetComponent<MeshRenderer>();
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -59,6 +69,14 @@ public class PlayerGunBullet : MonoBehaviour
     public void SetParent(bool b)
     {
         isP1Bullet = b;
+        if (isP1Bullet)
+        {
+            mesh.material = p1Mat;
+        }
+        else
+        {
+            mesh.material = p2Mat;
+        }
     }
 
     public void SetCurving(GameObject t)

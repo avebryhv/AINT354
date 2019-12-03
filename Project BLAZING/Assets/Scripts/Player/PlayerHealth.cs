@@ -57,6 +57,7 @@ public class PlayerHealth : MonoBehaviour
             ui.UpdateHealthBar(currentHealth, maxHealth);
             if (currentHealth <= 0)
             {
+                GameFunctions.ReloadScene();
                 Destroy(gameObject);
             }
             GetComponentInChildren<Cinemachine.CinemachineImpulseSource>().GenerateImpulse();

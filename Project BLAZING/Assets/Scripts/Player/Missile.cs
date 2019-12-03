@@ -61,10 +61,10 @@ public class Missile : MonoBehaviour
                 }
                 else
                 {
-                    turnSpeed += Time.deltaTime;
-                    lockedSpeed += Time.deltaTime * 3;
+                    //turnSpeed += Time.deltaTime;
+                    //lockedSpeed += Time.deltaTime * 3;
                     Vector3 dirtoTarget = lockedTarget.transform.position - transform.position;
-                    if (Vector3.Dot(dirtoTarget, transform.forward) > -0.5f)
+                    if (Vector3.Dot(dirtoTarget, transform.forward) > 0)
                     {
                         LookAtTarget(turnSpeed);
                         rb.velocity = transform.forward * lockedSpeed;
@@ -141,16 +141,19 @@ public class Missile : MonoBehaviour
         {
             Debug.Log("hit");
             col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+            CreateExplosion();
             Destroy(gameObject);
         }
         else if (col.tag == "Player2" && isP1Missile)
         {
             Debug.Log("hit");
             col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+            CreateExplosion();
             Destroy(gameObject);
         }
         else if (col.tag == "Wall")
         {
+            CreateExplosion();
             Destroy(gameObject);
         }
     }
@@ -160,9 +163,9 @@ public class Missile : MonoBehaviour
         transform.parent = null;
     }
 
-    void CreateExplosion(GameObject target)
+    void CreateExplosion()
     {
         GameObject explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
-        explosion.GetComponent<Explosion>().SetTarget(lockedTarget);
+        explosion.GetComponent<Explosion>().SetParent(isP1Missile);
     }
 }

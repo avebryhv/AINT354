@@ -8,6 +8,7 @@ public class Crosshair : MonoBehaviour
     CoreFinder finder;
     public LayerMask crosshairLocationMask;
     public Image hitMarker;
+    public float baseDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -35,13 +36,14 @@ public class Crosshair : MonoBehaviour
             transform.position = transform.position + transform.forward * 2f;
             //}
             Debug.Log(hit.distance);
+            Resize(hit.distance);
 
         }
     }
 
     public void ShowHitMarker()
     {
-        hitMarker.color = new Color(1, 1, 1, 1);
+        hitMarker.color = new Color(1, 0, 0, 1);
         Invoke("FadeHitMarker", 0.5f);
     }
 
@@ -58,6 +60,19 @@ public class Crosshair : MonoBehaviour
     public void SetPosition(Vector3 newPos)
     {
         transform.position = newPos;
+    }
+
+    public void Resize(float dist)
+    {
+        if (dist <= 20)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            float scale = 1 + ( (dist - 20) * (1.5f / 100.0f));
+            transform.localScale = new Vector3(scale, scale, scale);
+        }
     }
 
 }

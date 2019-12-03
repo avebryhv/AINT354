@@ -4858,7 +4858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
-  killTime: 0.1
+  killTime: 0.2
 --- !u!135 &5903971971352623561
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4890,7 +4890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5903971971946430204
 Transform:
   m_ObjectHideFlags: 0
