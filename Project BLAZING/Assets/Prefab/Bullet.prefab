@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1473246905414506411}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -105,12 +105,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99f3c496c9d02142ad9d0b86e5f380e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 60
+  moveSpeed: 100
   killTime: 3
   damage: 1
   target: {fileID: 0}
   isCurving: 0
-  curveSpeed: 0.2
+  curveSpeed: 0.5
   isP1Bullet: 0
   hitLayer:
     serializedVersion: 2

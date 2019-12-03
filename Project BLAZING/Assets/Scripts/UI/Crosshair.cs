@@ -35,7 +35,6 @@ public class Crosshair : MonoBehaviour
             //{
             transform.position = transform.position + transform.forward * 2f;
             //}
-            Debug.Log(hit.distance);
             Resize(hit.distance);
 
         }

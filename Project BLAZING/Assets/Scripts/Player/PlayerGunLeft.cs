@@ -85,7 +85,7 @@ public class PlayerGunLeft : MonoBehaviour
         {
             case PlayerMovement.mechType.Normal:
                 //bulletPrefab = normalBullet;
-                fireTime = 0.2f;
+                fireTime = 0.4f;
                 accuracy = 1;
                 break;
             case PlayerMovement.mechType.Fast:

@@ -15,6 +15,9 @@ public class PlayerHealth : MonoBehaviour
     public float specialCharge;
     public bool canSpecialCharge;
 
+    public bool isMissileFollowing;
+    public List<Missile> missilesFollowing;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
         ui.UpdateHealthBar(currentHealth, maxHealth);
         canSpecialCharge = true;
         canTakeDamage = true;
+        missilesFollowing = new List<Missile>();
 
         //Set charge to full for test
         specialCharge = maxSpecialCharge;
@@ -39,6 +43,17 @@ public class PlayerHealth : MonoBehaviour
             specialCharge = Mathf.Clamp(specialCharge, 0, maxSpecialCharge);
         }
         ui.UpdateSpecialBar(specialCharge, maxSpecialCharge);
+
+
+        CheckMissiles();
+        if (missilesFollowing.Count > 0)
+        {
+            ui.ShowMissileApproaching();
+        }
+        else
+        {
+            ui.HideMissileApproaching();
+        }
     }
 
     public void SetMaxHealth(int amount)
@@ -50,21 +65,35 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (canTakeDamage)
+        if (canTakeDamage && !GameFunctions.isPaused)
         {
             canTakeDamage = false;
             currentHealth -= damage;
             ui.UpdateHealthBar(currentHealth, maxHealth);
             if (currentHealth <= 0)
             {
-                GameFunctions.ReloadScene();
-                Destroy(gameObject);
+                OnDeath();
             }
             GetComponentInChildren<Cinemachine.CinemachineImpulseSource>().GenerateImpulse();
             finder.lockOn.otherPlayer.GetComponent<PlayerHealth>().DisplayDamageMarker();
         }
         Invoke("ResetCanTakeDamage", 0.1f);
         
+    }
+
+    void OnDeath()
+    {
+        //GameFunctions.ReloadScene();
+        if (finder.playerMovement.isPlayer1)
+        {
+            FindObjectOfType<WinScreen>().Player2Win();
+        }
+        else
+        {
+            FindObjectOfType<WinScreen>().Player1Win();
+        }
+        
+        Destroy(gameObject);
     }
 
     public void ResetSpecialCharge()
@@ -97,5 +126,30 @@ public class PlayerHealth : MonoBehaviour
     public void SetFinder(CoreFinder f)
     {
         finder = f;
+    }
+
+    public void AddMissile(Missile m)
+    {
+        missilesFollowing.Add(m);
+    }
+
+    public void RemoveMissile(Missile m)
+    {
+        missilesFollowing.Remove(m);
+    }
+
+    void CheckMissiles()
+    {
+        for (int i = 0; i < missilesFollowing.Count; i++)
+        {
+            if (missilesFollowing[i] == null)
+            {
+                missilesFollowing.RemoveAt(i);
+            }
+            else if (missilesFollowing[i].state != Missile.State.Locked)
+            {
+                missilesFollowing.RemoveAt(i);
+            }
+        }
     }
 }

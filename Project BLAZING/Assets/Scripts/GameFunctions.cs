@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 public class GameFunctions : MonoBehaviour
 {
     public static bool isPaused;
-
+    public static bool allowPause;
 
     // Start is called before the first frame update
     void Start()
     {
         isPaused = false;
+        allowPause = true;
     }
 
     // Update is called once per frame
@@ -22,15 +23,32 @@ public class GameFunctions : MonoBehaviour
 
     public static void PauseButtonPressed()
     {
-        if (isPaused)
+        if (allowPause)
         {
-            Resume();
+            if (isPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
         }
-        else
-        {
-            Pause();
-        }
+        
 
+    }
+
+    public static void ForcePause()
+    {
+        allowPause = false;
+        isPaused = true;
+        FreezeBodies();
+    }
+
+    public static void ForceResume()
+    {
+        allowPause = true;
+        isPaused = false;
     }
 
     static void Pause()
@@ -55,15 +73,7 @@ public class GameFunctions : MonoBehaviour
         }
     }
 
-    static void Player1Win()
-    {
-
-    }
-
-    static void Player2Win()
-    {
-
-    }
+    
 
     public static void ReloadScene()
     {

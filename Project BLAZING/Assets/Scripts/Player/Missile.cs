@@ -34,7 +34,7 @@ public class Missile : MonoBehaviour
     {
         if (!GameFunctions.isPaused)
         {
-            if (state == State.Floating)
+            if (state == State.Floating) //State before lock-on
             {
                 if (lockedTarget == null)
                 {
@@ -51,9 +51,10 @@ public class Missile : MonoBehaviour
                 if (floatTimer >= timeBeforeLockOn)
                 {
                     state = State.Locked;
+                    lockedTarget.GetComponent<PlayerHealth>().AddMissile(this);
                 }
             }
-            else if (state == State.Locked)
+            else if (state == State.Locked) //State when locked on
             {
                 if (lockedTarget == null)
                 {
@@ -76,7 +77,7 @@ public class Missile : MonoBehaviour
 
                 }
             }
-            else
+            else //State if lockon is lost
             {
                 rb.velocity = transform.forward * lockedSpeed;
             }
@@ -140,14 +141,14 @@ public class Missile : MonoBehaviour
         if (col.tag == "Player" && !isP1Missile)
         {
             Debug.Log("hit");
-            col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+            //col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             CreateExplosion();
             Destroy(gameObject);
         }
         else if (col.tag == "Player2" && isP1Missile)
         {
             Debug.Log("hit");
-            col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+            //col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             CreateExplosion();
             Destroy(gameObject);
         }

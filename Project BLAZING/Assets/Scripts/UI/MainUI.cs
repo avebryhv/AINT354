@@ -9,6 +9,7 @@ public class MainUI : MonoBehaviour
     public TextMeshProUGUI lockStatus;
     public TextMeshProUGUI lockDistance;
     public TextMeshProUGUI missileCount;
+    public TextMeshProUGUI missileApproaching;
 
     public Image healthBar;
     public Image evadeBar;
@@ -63,6 +64,16 @@ public class MainUI : MonoBehaviour
     {
         float amount = current / max;
         specialBar.fillAmount = amount;
+    }
+
+    public void ShowMissileApproaching()
+    {
+        missileApproaching.enabled = true;
+    }
+
+    public void HideMissileApproaching()
+    {
+        missileApproaching.enabled = false;
     }
 
     

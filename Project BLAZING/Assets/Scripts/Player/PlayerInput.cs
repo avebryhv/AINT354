@@ -29,7 +29,7 @@ public class PlayerInput : MonoBehaviour
         }
         else
         {
-            //Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Locked;
             usingController = false;
         }
         

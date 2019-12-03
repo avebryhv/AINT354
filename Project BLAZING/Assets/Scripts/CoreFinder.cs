@@ -75,5 +75,7 @@ public class CoreFinder : MonoBehaviour
         playerInput = player.GetComponentInChildren<PlayerInput>();
         playerInput.SetFinder(this);
         playerInput.SetInputString(false);
+        crosshair = player.GetComponentInChildren<Crosshair>();
+        crosshair.SetFinder(this);
     }
 }

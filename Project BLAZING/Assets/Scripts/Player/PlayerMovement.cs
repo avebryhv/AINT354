@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     public float boostChargeCooldown;
     bool canBoost;
     public float boostChargeRate;
+    public float boostDrainRate;
 
 
     // Start is called before the first frame update
@@ -364,7 +365,7 @@ public class PlayerMovement : MonoBehaviour
             case mechType.Normal:
                 moveSpeed = 20;
                 maxEvasionCharge = 2;
-                finder.playerHealth.SetMaxHealth(30);                
+                finder.playerHealth.SetMaxHealth(15);                
                 break;
             case mechType.Fast:
                 moveSpeed = 25;
@@ -423,7 +424,7 @@ public class PlayerMovement : MonoBehaviour
         if (inBoost)
         {
             evadeParticles.Play();
-            boostCharge -= Time.deltaTime;
+            boostCharge -= Time.deltaTime * boostDrainRate;
             if (boostCharge <= 0)
             {
                 canBoost = false;

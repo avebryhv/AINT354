@@ -51,12 +51,12 @@ public class Explosion : MonoBehaviour
         {
             if (other.tag == "Player" && !P1Source)
             {
-                other.GetComponent<PlayerHealth>().TakeDamage(10);
+                other.GetComponent<PlayerHealth>().TakeDamage(5);
                 hasDamaged = true;
             }
             else if (other.tag == "Player2" && P1Source)
             {
-                other.GetComponent<PlayerHealth>().TakeDamage(10);
+                other.GetComponent<PlayerHealth>().TakeDamage(5);
                 hasDamaged = true;
             }
             
