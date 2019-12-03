@@ -42,6 +42,7 @@ public class GameFunctions : MonoBehaviour
     {
         allowPause = false;
         isPaused = true;
+        Cursor.lockState = CursorLockMode.None;
         FreezeBodies();
     }
 
@@ -56,12 +57,14 @@ public class GameFunctions : MonoBehaviour
         isPaused = true;
         FreezeBodies();
         GameObject.FindObjectOfType<GameUI>().TogglePauseCanvas();
+        Cursor.lockState = CursorLockMode.None;
     }
 
     static void Resume()
     {
         isPaused = false;
         GameObject.FindObjectOfType<GameUI>().TogglePauseCanvas();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     static void FreezeBodies()
