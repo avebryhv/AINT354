@@ -252,7 +252,7 @@ public class PlayerInput : MonoBehaviour
         }
 
         float cam;
-        cam = Input.GetAxis("Mouse X");
+        cam = Input.GetAxis("Mouse X") * 2;
         
 
         finder.playerMovement.RecieveAxisInput(hori, verti, cam);

@@ -14,7 +14,8 @@ public class PlayerGunBullet : MonoBehaviour
     public float curveSpeed;
 
     public bool isP1Bullet;
-    public LayerMask hitLayer;
+    public LayerMask wallLayer;
+    
 
     public Material p1Mat;
     public Material p2Mat;
@@ -46,7 +47,7 @@ public class PlayerGunBullet : MonoBehaviour
                 LookAtTarget(curveSpeed);
             }
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, toMove.magnitude, hitLayer))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, toMove.magnitude, wallLayer))
             {
                 Debug.Log("hit wall");
                 Destroy(gameObject);

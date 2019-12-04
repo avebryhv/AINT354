@@ -18,6 +18,10 @@ public class PlayerHealth : MonoBehaviour
     public bool isMissileFollowing;
     public List<Missile> missilesFollowing;
 
+    //Fire damage
+    bool canTakeFireDamage;
+    public float fireDamageCooldown;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,9 +33,11 @@ public class PlayerHealth : MonoBehaviour
         canSpecialCharge = true;
         canTakeDamage = true;
         missilesFollowing = new List<Missile>();
+        canTakeFireDamage = true;
 
         //Set charge to full for test
         specialCharge = maxSpecialCharge;
+
     }
 
     // Update is called once per frame

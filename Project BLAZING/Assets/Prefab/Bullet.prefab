@@ -112,7 +112,7 @@ MonoBehaviour:
   isCurving: 0
   curveSpeed: 0.5
   isP1Bullet: 0
-  hitLayer:
+  wallLayer:
     serializedVersion: 2
     m_Bits: 524288
   p1Mat: {fileID: 2100000, guid: db323913faa68a543a78fd1df0ce35bd, type: 2}
