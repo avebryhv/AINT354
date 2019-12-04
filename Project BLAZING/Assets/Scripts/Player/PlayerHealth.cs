@@ -82,6 +82,7 @@ public class PlayerHealth : MonoBehaviour
             }
             GetComponentInChildren<Cinemachine.CinemachineImpulseSource>().GenerateImpulse();
             finder.lockOn.otherPlayer.GetComponent<PlayerHealth>().DisplayDamageMarker();
+            finder.playerMovement.DamageMaterial();
         }
         Invoke("ResetCanTakeDamage", 0.1f);
         
@@ -145,6 +146,7 @@ public class PlayerHealth : MonoBehaviour
     void ResetCanTakeDamage()
     {
         canTakeDamage = true;
+        finder.playerMovement.ResetMaterial();
     }
 
     public void DisplayDamageMarker()

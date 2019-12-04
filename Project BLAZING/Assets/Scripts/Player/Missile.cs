@@ -63,7 +63,7 @@ public class Missile : MonoBehaviour
                 else
                 {
                     //turnSpeed += Time.deltaTime;
-                    //lockedSpeed += Time.deltaTime * 3;
+                    lockedSpeed += Time.deltaTime;
                     Vector3 dirtoTarget = lockedTarget.transform.position - transform.position;
                     if (Vector3.Dot(dirtoTarget, transform.forward) > 0)
                     {

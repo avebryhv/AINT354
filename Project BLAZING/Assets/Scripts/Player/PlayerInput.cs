@@ -69,18 +69,23 @@ public class PlayerInput : MonoBehaviour
             {
                 SendAxisInput();
 
-                if (/*Input.GetButtonDown(evadeButton)*/gamepad.leftShoulder.wasPressedThisFrame)
+                if (gamepad.leftShoulder.wasPressedThisFrame)
                 {
                     finder.playerMovement.EvadePressed();                    
                 }
 
-                if (/*Input.GetButtonDown(evadeButton)*/gamepad.rightShoulder.wasPressedThisFrame)
+                if (gamepad.buttonSouth.wasPressedThisFrame)
+                {
+                    finder.playerMovement.EvadePressed();
+                }
+
+                if (/*Input.GetButtonDown(evadeButton)*/gamepad.leftTrigger.wasPressedThisFrame)
                 {
                     //finder.playerMovement.EvadePressed();
                     finder.playerMovement.BoostButtonPressed();
                 }
 
-                if (gamepad.rightShoulder.wasReleasedThisFrame)
+                if (gamepad.leftTrigger.wasReleasedThisFrame)
                 {
                     finder.playerMovement.BoostButtonReleased();
                 }
@@ -114,22 +119,23 @@ public class PlayerInput : MonoBehaviour
 
                 //}
 
-                if (gamepad.rightTrigger.wasPressedThisFrame)
+                if (gamepad.rightTrigger.isPressed)
                 {
                     finder.playerGun.FireButtonPressed();
+                    finder.playerGun2.FireButtonPressed();
                 }
 
-                if (gamepad.leftTrigger.isPressed)
+                if (gamepad.rightShoulder.wasPressedThisFrame)
                 {
-                    finder.playerGun2.FireButtonPressed();                    
-                }
+                    finder.playerGun.MissileButtonPressed();
+                }                
 
-                if (gamepad.yButton.wasPressedThisFrame)
+                if (gamepad.rightStickButton.wasPressedThisFrame)
                 {
                     finder.playerGun.MissileButtonPressed();
                 }
 
-                if (gamepad.rightStickButton.wasPressedThisFrame)
+                if (gamepad.buttonNorth.wasPressedThisFrame)
                 {
                     finder.playerGun.MissileButtonPressed();
                 }

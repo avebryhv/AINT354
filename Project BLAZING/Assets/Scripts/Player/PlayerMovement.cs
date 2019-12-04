@@ -44,8 +44,10 @@ public class PlayerMovement : MonoBehaviour
     public float dashAttackSpeed;
     public int dashDirection;
 
+    //Materials
     public Material speedCamoTest;
     Material baseMaterial;
+    public Material damageMaterial;
 
     //Boost Variables
     bool inBoost;
@@ -262,7 +264,7 @@ public class PlayerMovement : MonoBehaviour
         inEvade = false;
         evadeParticles.Stop();
         finder.playerHealth.canTakeDamage = true;
-        mesh.material = baseMaterial;
+        ResetMaterial();
     }
 
     public void SetLockOn(GameObject target)
@@ -403,7 +405,17 @@ public class PlayerMovement : MonoBehaviour
     {
         finder.playerHealth.canSpecialCharge = true;
         targetable = true;
+        ResetMaterial();
+    }
+
+    public void ResetMaterial()
+    {
         mesh.material = baseMaterial;
+    }
+
+    public void DamageMaterial()
+    {
+        mesh.material = damageMaterial;
     }
 
     public void BoostButtonPressed()

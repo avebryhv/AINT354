@@ -15,16 +15,18 @@ public class PlayerGunBullet : MonoBehaviour
 
     public bool isP1Bullet;
     public LayerMask wallLayer;
-    
+    public GameObject hitEffect;
 
     public Material p1Mat;
     public Material p2Mat;
 
     MeshRenderer mesh;
+    public Light light;
 
     void Awake()
     {
         mesh = GetComponent<MeshRenderer>();
+        light = GetComponent<Light>();
     }
 
     // Use this for initialization
@@ -33,6 +35,7 @@ public class PlayerGunBullet : MonoBehaviour
         //isCurving = false;
         //Invoke("Destroy", killTime);
         killCounter = 0;
+        
     }
 
     // Update is called once per frame
@@ -55,17 +58,17 @@ public class PlayerGunBullet : MonoBehaviour
                 {
                     Debug.Log("hit");
                     hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
-                    this.Destroy();
+                    Destroy();
                 }
                 else if (hit.collider.gameObject.tag == "Player2" && isP1Bullet)
                 {
                     Debug.Log("hit");
                     hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
-                    this.Destroy();
+                    Destroy();
                 }
                 else if (hit.collider.gameObject.tag == "Wall")
                 {
-                    this.Destroy();
+                    Destroy();
                 }
 
             }
@@ -81,6 +84,8 @@ public class PlayerGunBullet : MonoBehaviour
 
     void Destroy()
     {
+        ParticleSystemRenderer hitImpact = Instantiate(hitEffect, transform.position, transform.rotation).GetComponent<ParticleSystemRenderer>();
+        hitImpact.material = mesh.material;
         Destroy(gameObject);
     }    
 
@@ -95,6 +100,7 @@ public class PlayerGunBullet : MonoBehaviour
         {
             mesh.material = p2Mat;
         }
+        light.color = mesh.material.color;
     }
 
     public void SetCurving(GameObject t)
