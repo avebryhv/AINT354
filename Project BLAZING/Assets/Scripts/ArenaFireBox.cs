@@ -33,7 +33,7 @@ public class ArenaFireBox : MonoBehaviour
 
         if (col.tag == "Player" || col.tag == "Player2")
         {
-            col.GetComponent<PlayerHealth>().TakeDamage(1);
+            col.GetComponent<PlayerHealth>().TakeFireDamage(1);
         }
     }
 }

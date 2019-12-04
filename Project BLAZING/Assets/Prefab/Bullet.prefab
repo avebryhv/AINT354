@@ -114,6 +114,6 @@ MonoBehaviour:
   isP1Bullet: 0
   wallLayer:
     serializedVersion: 2
-    m_Bits: 524288
+    m_Bits: 557056
   p1Mat: {fileID: 2100000, guid: db323913faa68a543a78fd1df0ce35bd, type: 2}
   p2Mat: {fileID: 2100000, guid: 7dd61e32df7acc645b427125287dd112, type: 2}

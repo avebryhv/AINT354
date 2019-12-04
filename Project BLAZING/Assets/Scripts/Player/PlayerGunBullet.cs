@@ -49,8 +49,25 @@ public class PlayerGunBullet : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward, out hit, toMove.magnitude, wallLayer))
             {
-                Debug.Log("hit wall");
-                Destroy(gameObject);
+                //Debug.Log("hit wall");
+                //Destroy(gameObject);
+                if (hit.collider.gameObject.tag == "Player" && !isP1Bullet)
+                {
+                    Debug.Log("hit");
+                    hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+                    this.Destroy();
+                }
+                else if (hit.collider.gameObject.tag == "Player2" && isP1Bullet)
+                {
+                    Debug.Log("hit");
+                    hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+                    this.Destroy();
+                }
+                else if (hit.collider.gameObject.tag == "Wall")
+                {
+                    this.Destroy();
+                }
+
             }
 
             killCounter += Time.deltaTime;
@@ -86,26 +103,26 @@ public class PlayerGunBullet : MonoBehaviour
         target = t;
     }
 
-    void OnTriggerEnter(Collider col)
-    {
+    //void OnTriggerEnter(Collider col)
+    //{
 
-        if (col.tag == "Player" && !isP1Bullet)
-        {
-            Debug.Log("hit");
-            col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
-            this.Destroy();
-        }
-        else if (col.tag == "Player2" && isP1Bullet)
-        {
-            Debug.Log("hit");
-            col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
-            this.Destroy();
-        }
-        else if (col.tag == "Wall")
-        {
-            this.Destroy();
-        }
-    }
+    //    if (col.tag == "Player" && !isP1Bullet)
+    //    {
+    //        Debug.Log("hit");
+    //        col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+    //        this.Destroy();
+    //    }
+    //    else if (col.tag == "Player2" && isP1Bullet)
+    //    {
+    //        Debug.Log("hit");
+    //        col.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
+    //        this.Destroy();
+    //    }
+    //    else if (col.tag == "Wall")
+    //    {
+    //        this.Destroy();
+    //    }
+    //}
 
     void LookAtTarget(float speed)
     {

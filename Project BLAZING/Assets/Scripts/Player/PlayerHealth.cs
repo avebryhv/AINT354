@@ -87,6 +87,29 @@ public class PlayerHealth : MonoBehaviour
         
     }
 
+    public void TakeFireDamage(int damage)
+    {
+        if (canTakeFireDamage && !GameFunctions.isPaused)
+        {
+            canTakeFireDamage = false;
+            currentHealth -= damage;
+            ui.UpdateHealthBar(currentHealth, maxHealth);
+            if (currentHealth <= 0)
+            {
+                OnDeath();
+            }
+            GetComponentInChildren<Cinemachine.CinemachineImpulseSource>().GenerateImpulse();
+            finder.lockOn.otherPlayer.GetComponent<PlayerHealth>().DisplayDamageMarker();
+        }
+        Invoke("ResetCanTakeFireDamage", 0.5f);
+
+    }
+
+    void ResetCanTakeFireDamage()
+    {
+        canTakeFireDamage = true;
+    }
+
     void OnDeath()
     {
         //GameFunctions.ReloadScene();

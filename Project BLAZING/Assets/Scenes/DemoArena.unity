@@ -22384,6 +22384,7 @@ MonoBehaviour:
   canSpecialCharge: 0
   isMissileFollowing: 0
   missilesFollowing: []
+  fireDamageCooldown: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -28764,7 +28765,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1354608251}
-  m_LocalRotation: {x: 0.0000000048844773, y: 0.9951334, z: -0.09853762, w: 0.0000000078252835}
+  m_LocalRotation: {x: 0.0000000032428402, y: 0.9951334, z: -0.0985376, w: -0.000000008753642}
   m_LocalPosition: {x: 0, y: 2, z: 83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -38870,14 +38871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finder: {fileID: 0}
-  horizontalAxis: 
-  verticalAxis: 
-  cameraAxis: 
-  shootButton: 
-  missileButton: 
-  specialButton: 
-  evadeButton: 
-  lockOnButton: 
+  cameraSensitivity: 1
   usingController: 0
 --- !u!114 &1570607848
 MonoBehaviour:
@@ -49253,14 +49247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finder: {fileID: 0}
-  horizontalAxis: 
-  verticalAxis: 
-  cameraAxis: 
-  shootButton: 
-  missileButton: 
-  specialButton: 
-  evadeButton: 
-  lockOnButton: 
+  cameraSensitivity: 1
   usingController: 0
 --- !u!114 &1632694477
 MonoBehaviour:
@@ -56487,7 +56474,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2010102891}
-  m_LocalRotation: {x: 0.0000000048844773, y: 0.9951334, z: -0.09853762, w: 0.0000000078252835}
+  m_LocalRotation: {x: 0.0000000032428402, y: 0.9951334, z: -0.0985376, w: -0.000000008753642}
   m_LocalPosition: {x: 0, y: 2, z: 83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -56554,6 +56541,7 @@ MonoBehaviour:
   canSpecialCharge: 0
   isMissileFollowing: 0
   missilesFollowing: []
+  fireDamageCooldown: 0
 --- !u!114 &2013501307
 MonoBehaviour:
   m_ObjectHideFlags: 0

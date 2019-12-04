@@ -8,14 +8,7 @@ public class PlayerInput : MonoBehaviour
     public CoreFinder finder;
     PlayerMovement playerMovement;
 
-    public string horizontalAxis;
-    public string verticalAxis;
-    public string cameraAxis;
-    public string shootButton;
-    public string missileButton;
-    public string specialButton;
-    public string evadeButton;
-    public string lockOnButton;
+    public float cameraSensitivity;
     public bool usingController;
 
     public Gamepad gamepad;
@@ -121,17 +114,22 @@ public class PlayerInput : MonoBehaviour
 
                 //}
 
-                if (gamepad.rightTrigger.isPressed)
+                if (gamepad.rightTrigger.wasPressedThisFrame)
                 {
                     finder.playerGun.FireButtonPressed();
                 }
 
                 if (gamepad.leftTrigger.isPressed)
                 {
-                    finder.playerGun2.FireButtonPressed();
+                    finder.playerGun2.FireButtonPressed();                    
                 }
 
                 if (gamepad.yButton.wasPressedThisFrame)
+                {
+                    finder.playerGun.MissileButtonPressed();
+                }
+
+                if (gamepad.rightStickButton.wasPressedThisFrame)
                 {
                     finder.playerGun.MissileButtonPressed();
                 }
@@ -217,7 +215,7 @@ public class PlayerInput : MonoBehaviour
         Vector2 leftStick = gamepad.leftStick.ReadValue();
         float hori = leftStick.x;
         float verti = leftStick.y;
-        float camAxis = gamepad.rightStick.ReadValue().x;
+        float camAxis = gamepad.rightStick.ReadValue().x * cameraSensitivity;
         finder.playerMovement.RecieveAxisInput(hori, verti, camAxis);
     }
 
@@ -271,27 +269,11 @@ public class PlayerInput : MonoBehaviour
     public void SetInputString(bool isP1)
     {
         if (isP1)
-        {
-            horizontalAxis = "Horizontal";
-            verticalAxis = "Vertical";
-            cameraAxis = "CameraX";
-            shootButton = "Shoot";
-            missileButton = "Missile";
-            specialButton = "Special";
-            evadeButton = "Evade";
-            lockOnButton = "LockOn";
+        {            
             SetGamePadNum(1);
         }
         else
-        {
-            horizontalAxis = "Horizontal" + "P2";
-            verticalAxis = "Vertical" + "P2";
-            cameraAxis = "CameraX" + "P2";
-            shootButton = "Shoot" + "P2";
-            missileButton = "Missile" + "P2";
-            specialButton = "Special" + "P2";
-            evadeButton = "Evade" + "P2";
-            lockOnButton = "LockOn" + "P2";
+        {            
             SetGamePadNum(2);
         }
     }
