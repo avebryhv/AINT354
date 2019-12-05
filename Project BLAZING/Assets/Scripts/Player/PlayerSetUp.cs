@@ -18,6 +18,7 @@ public class PlayerSetUp : MonoBehaviour
 
     void Awake()
     {
+        RetrieveTypes();
         SetUpPlayer1();
         SetUpPlayer2();
     }
@@ -32,6 +33,53 @@ public class PlayerSetUp : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void RetrieveTypes()
+    {
+        if (PlayerPrefs.HasKey("Player1Character"))
+        {
+            switch (PlayerPrefs.GetInt("Player1Character"))
+            {
+                case 0:
+                    p1Type = PlayerMovement.mechType.Normal;
+                    break;
+                case 1:
+                    p1Type = PlayerMovement.mechType.Fast;
+                    break;
+                case 2:
+                    p1Type = PlayerMovement.mechType.Slow;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            p1Type = PlayerMovement.mechType.Normal;
+        }
+
+        if (PlayerPrefs.HasKey("Player2Character"))
+        {
+            switch (PlayerPrefs.GetInt("Player2Character"))
+            {
+                case 0:
+                    p2Type = PlayerMovement.mechType.Normal;
+                    break;
+                case 1:
+                    p2Type = PlayerMovement.mechType.Fast;
+                    break;
+                case 2:
+                    p2Type = PlayerMovement.mechType.Slow;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            p2Type = PlayerMovement.mechType.Normal;
+        }
     }
 
     void SetUpPlayer1()

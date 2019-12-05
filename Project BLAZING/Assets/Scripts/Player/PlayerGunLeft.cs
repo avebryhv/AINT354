@@ -63,7 +63,7 @@ public class PlayerGunLeft : MonoBehaviour
         float randomX = Random.Range(-accuracy, accuracy);
         float randomY = Random.Range(-accuracy, accuracy);
         float randomZ = Random.Range(-accuracy, accuracy);
-        newBullet.transform.Rotate(new Vector3(randomX, randomY, randomZ));
+        newBullet.transform.Rotate(new Vector3(0, randomY, 0));
         newBullet.GetComponent<PlayerGunBullet>().SetParent(finder.playerMovement.isPlayer1);
         if (finder.lockOn.isLockedOn)
         {

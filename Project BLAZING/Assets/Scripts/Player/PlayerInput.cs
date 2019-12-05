@@ -221,7 +221,8 @@ public class PlayerInput : MonoBehaviour
         Vector2 leftStick = gamepad.leftStick.ReadValue();
         float hori = leftStick.x;
         float verti = leftStick.y;
-        float camAxis = gamepad.rightStick.ReadValue().x * cameraSensitivity;
+        //float camAxis = gamepad.rightStick.ReadValue().x * cameraSensitivity;
+        float camAxis = Mathf.Pow(gamepad.rightStick.ReadValue().x, 2) * Mathf.Sign(gamepad.rightStick.ReadValue().x);
         finder.playerMovement.RecieveAxisInput(hori, verti, camAxis);
     }
 

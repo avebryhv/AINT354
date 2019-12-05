@@ -19,7 +19,7 @@ public class PlayerHealth : MonoBehaviour
     public List<Missile> missilesFollowing;
 
     //Fire damage
-    bool canTakeFireDamage;
+    public bool canTakeFireDamage;
     public float fireDamageCooldown;
 
     // Start is called before the first frame update
@@ -100,9 +100,11 @@ public class PlayerHealth : MonoBehaviour
                 OnDeath();
             }
             GetComponentInChildren<Cinemachine.CinemachineImpulseSource>().GenerateImpulse();
-            finder.lockOn.otherPlayer.GetComponent<PlayerHealth>().DisplayDamageMarker();
+            Invoke("ResetCanTakeFireDamage", 0.5f);
+            finder.playerMovement.DamageMaterial();
+            Invoke("ResetCanTakeDamage", 0.1f);
         }
-        Invoke("ResetCanTakeFireDamage", 0.5f);
+        
 
     }
 

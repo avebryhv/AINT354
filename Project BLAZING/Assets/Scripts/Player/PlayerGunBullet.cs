@@ -22,11 +22,13 @@ public class PlayerGunBullet : MonoBehaviour
 
     MeshRenderer mesh;
     public Light light;
+    TrailRenderer trail;
 
     void Awake()
     {
         mesh = GetComponent<MeshRenderer>();
         light = GetComponent<Light>();
+        trail = GetComponentInChildren<TrailRenderer>();
     }
 
     // Use this for initialization
@@ -101,6 +103,7 @@ public class PlayerGunBullet : MonoBehaviour
             mesh.material = p2Mat;
         }
         light.color = mesh.material.color;
+        trail.startColor = mesh.material.color;
     }
 
     public void SetCurving(GameObject t)

@@ -29,7 +29,7 @@ public class LockOnSquare : MonoBehaviour
         {
             Vector3 screenPos = cam.ScreenToWorldPoint(target.transform.position);
             transform.position = worldToUISpace(canvas, target.transform.position);
-            transform.Rotate(new Vector3(0, 0, deltaRotate));
+            //transform.Rotate(new Vector3(0, 0, deltaRotate));
         }
         
     }
