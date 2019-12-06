@@ -13,6 +13,8 @@ public class StartMenu : MonoBehaviour
         PlayerPrefs.SetInt("Player1Character", 0);
         PlayerPrefs.SetInt("Player2Character", 0);
         startButton.Select();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame

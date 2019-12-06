@@ -55,6 +55,7 @@ public class CSSSelected : CSSElement
         SetStatBars(item);
         locked = true;
         backgroundColour.color = lockedColour;
+
     }
 
     public void Unlock()

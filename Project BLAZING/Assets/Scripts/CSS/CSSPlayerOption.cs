@@ -32,12 +32,12 @@ public class CSSPlayerOption : CSSElement
         if (player == 1)
         {
             css.SetP1Selection(characterIndex, model, statObject);
-            css.SetPlayer1Ready();
+            css.CheckReady();
         }
         else if (player == 2)
-        {
-            css.SetPlayer2Ready();
+        {            
             css.SetP2Selection(characterIndex, model, statObject);
+            css.CheckReady();
         }
         
     }

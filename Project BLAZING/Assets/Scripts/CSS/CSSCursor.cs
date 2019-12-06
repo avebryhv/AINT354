@@ -36,7 +36,14 @@ public class CSSCursor : MonoBehaviour
 
     public void BackPressed()
     {
-
+        if (player == 1)
+        {
+            FindObjectOfType<CSS>().RemoveP1Lock();
+        }
+        else if (player == 2)
+        {
+            FindObjectOfType<CSS>().RemoveP2Lock();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

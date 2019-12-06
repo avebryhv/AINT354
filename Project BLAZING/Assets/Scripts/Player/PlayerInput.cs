@@ -23,6 +23,7 @@ public class PlayerInput : MonoBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             usingController = false;
         }
         

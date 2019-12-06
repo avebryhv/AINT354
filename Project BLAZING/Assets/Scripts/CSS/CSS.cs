@@ -50,6 +50,14 @@ public class CSS : MonoBehaviour
         }
     }
 
+    public void CheckReady()
+    {
+        if (p1SelectionBox.locked && p2SelectionBox.locked)
+        {
+            LoadArena();
+        }
+    }
+
     public void LoadArena()
     {
         PlayerPrefs.SetInt("Player1Character", p1Selection);
@@ -75,6 +83,11 @@ public class CSS : MonoBehaviour
         p1SelectionBox.Clear();
     }
 
+    public void RemoveP1Lock()
+    {
+        p1SelectionBox.Unlock();
+    }
+
     public void SetP2Selection(int num, Image im, CSSItem item)
     {
         p2SelectionBox.LockSelection(item);
@@ -96,6 +109,11 @@ public class CSS : MonoBehaviour
     public void SetP2Selection(int num)
     {
         p2Selection = num;
+    }
+
+    public void RemoveP2Lock()
+    {
+        p2SelectionBox.Unlock();
     }
 
 
