@@ -9,6 +9,8 @@ public class WinScreen : MonoBehaviour
 {
     public TextMeshProUGUI winText;
     Canvas canvas;
+    public Button firstButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,7 @@ public class WinScreen : MonoBehaviour
     {
         canvas.enabled = true;
         GameFunctions.ForcePause();
+        firstButton.Select();
     }
 
     public void Player1Win()

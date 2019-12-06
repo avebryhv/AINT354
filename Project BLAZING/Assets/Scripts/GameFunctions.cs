@@ -43,7 +43,6 @@ public class GameFunctions : MonoBehaviour
         allowPause = false;
         isPaused = true;
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = false;
         FreezeBodies();
     }
 
@@ -58,8 +57,8 @@ public class GameFunctions : MonoBehaviour
         isPaused = true;
         FreezeBodies();
         GameObject.FindObjectOfType<GameUI>().TogglePauseCanvas();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.None;
+        //Cursor.visible = true;
     }
 
     static void Resume()
@@ -67,7 +66,6 @@ public class GameFunctions : MonoBehaviour
         isPaused = false;
         GameObject.FindObjectOfType<GameUI>().TogglePauseCanvas();
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     static void FreezeBodies()

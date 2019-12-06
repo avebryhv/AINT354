@@ -148,7 +148,7 @@ public class PlayerGun : MonoBehaviour
         {
             case PlayerMovement.mechType.Normal:
                 //bulletPrefab = normalBullet;
-                fireTime = 0.4f;
+                //fireTime = 0.4f;
                 SetMaxMissiles(10);
                 accuracy = 1;
                 break;

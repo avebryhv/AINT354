@@ -9,6 +9,8 @@ public class GameUI : MonoBehaviour
     public Canvas pauseCanvas;
     public Canvas startCanvas;
     public TextMeshProUGUI countdownNumber;
+    public Button firstButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,15 @@ public class GameUI : MonoBehaviour
     public void TogglePauseCanvas()
     {
         pauseCanvas.enabled = !pauseCanvas.enabled;
+        if (pauseCanvas.enabled)
+        {
+            firstButton.Select();
+        }
+    }
+
+    public void SetUp()
+    {
+
     }
 
     public void StartCountdown()
