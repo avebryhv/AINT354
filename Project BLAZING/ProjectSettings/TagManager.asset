@@ -16,6 +16,7 @@ TagManager:
   - P2UI
   - PlayerGun2
   - GameUI
+  - CSSElement
   layers:
   - Default
   - TransparentFX
