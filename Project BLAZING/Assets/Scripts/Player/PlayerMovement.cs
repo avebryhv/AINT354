@@ -372,18 +372,19 @@ public class PlayerMovement : MonoBehaviour
             case mechType.Fast:
                 moveSpeed = 25;
                 maxEvasionCharge = 3;
-                finder.playerHealth.SetMaxHealth(40);
+                finder.playerHealth.SetMaxHealth(10);
                 break;
             case mechType.Slow:
                 moveSpeed = 15;
                 maxEvasionCharge = 1;
-                finder.playerHealth.SetMaxHealth(50);
+                finder.playerHealth.SetMaxHealth(20);
                 break;
             default:
                 break;
         }
         finder.playerGun.SetStats(t);
         finder.playerGun2.SetStats(t);
+        finder.shoulderWeapon.SetStats(t);
         finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
         type = t;
     }

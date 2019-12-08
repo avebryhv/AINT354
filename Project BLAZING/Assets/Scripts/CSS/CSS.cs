@@ -14,6 +14,8 @@ public class CSS : MonoBehaviour
     int p1Selection;
     int p2Selection;
 
+    public GameObject readyPanel;
+
     bool p1Ready;
     bool p2Ready;    
 
@@ -22,6 +24,7 @@ public class CSS : MonoBehaviour
     {
         p1Selection = 0;
         p2Selection = 0;
+        readyPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -30,31 +33,36 @@ public class CSS : MonoBehaviour
         
     }
 
-    public void SetPlayer1Ready()
-    {
-        p1Ready = !p1Ready;
-        //p1ReadyTick.enabled = !p1ReadyTick.enabled;
-        if (p1Ready && p2Ready)
-        {
-            LoadArena();
-        }
-    }
+    //public void SetPlayer1Ready()
+    //{
+    //    p1Ready = !p1Ready;
+    //    //p1ReadyTick.enabled = !p1ReadyTick.enabled;
+    //    if (p1Ready && p2Ready)
+    //    {
+    //        LoadArena();
+    //    }
+    //}
 
-    public void SetPlayer2Ready()
-    {
-        p2Ready = !p2Ready;
-        //p2ReadyTick.enabled = !p2ReadyTick.enabled;
-        if (p1Ready && p2Ready)
-        {
-            LoadArena();
-        }
-    }
+    //public void SetPlayer2Ready()
+    //{
+    //    p2Ready = !p2Ready;
+    //    //p2ReadyTick.enabled = !p2ReadyTick.enabled;
+    //    if (p1Ready && p2Ready)
+    //    {
+    //        LoadArena();
+    //    }
+    //}
 
     public void CheckReady()
     {
         if (p1SelectionBox.locked && p2SelectionBox.locked)
         {
-            LoadArena();
+            readyPanel.SetActive(true);
+            //LoadArena();
+        }
+        else
+        {
+            readyPanel.SetActive(false);
         }
     }
 
@@ -86,6 +94,7 @@ public class CSS : MonoBehaviour
     public void RemoveP1Lock()
     {
         p1SelectionBox.Unlock();
+        CheckReady();
     }
 
     public void SetP2Selection(int num, Image im, CSSItem item)
@@ -114,6 +123,16 @@ public class CSS : MonoBehaviour
     public void RemoveP2Lock()
     {
         p2SelectionBox.Unlock();
+        CheckReady();
+    }
+
+    public void StartPressed()
+    {
+        if (p1SelectionBox.locked && p2SelectionBox.locked)
+        {
+            LoadArena();
+        }
+        
     }
 
 

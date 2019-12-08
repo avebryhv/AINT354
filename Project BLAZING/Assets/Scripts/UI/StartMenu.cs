@@ -13,8 +13,7 @@ public class StartMenu : MonoBehaviour
         PlayerPrefs.SetInt("Player1Character", 0);
         PlayerPrefs.SetInt("Player2Character", 0);
         startButton.Select();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        
     }
 
     // Update is called once per frame
@@ -25,7 +24,7 @@ public class StartMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("CharSelect");
+        SceneManager.LoadScene("ControllerSelect");
     }
 
     public void Quit()

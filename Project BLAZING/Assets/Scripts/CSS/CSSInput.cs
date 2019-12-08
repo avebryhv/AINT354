@@ -6,15 +6,20 @@ using UnityEngine.InputSystem;
 public class CSSInput : MonoBehaviour
 {
 
-    Gamepad gamePad1;
-    Gamepad gamePad2;
+    Gamepad player1GamePad;
+    Gamepad player2GamePad;
 
     public CSSCursor cursor1;
     public CSSCursor cursor2;
 
+    bool p1UsingKeyboard;
+    bool p2UsingKeyboard;
+
     // Start is called before the first frame update
     void Start()
     {
+        p1UsingKeyboard = false;
+        p2UsingKeyboard = false;
         AssignGamepads();
     }
 
@@ -26,55 +31,139 @@ public class CSSInput : MonoBehaviour
     }
 
     void AssignGamepads()
-    {
-        if (Gamepad.all.Count < 2)
+    {       
+
+        string p1String = PlayerPrefs.GetString("Player1Controller");
+        string p2String = PlayerPrefs.GetString("Player2Controller");
+
+        switch (p1String)
         {
-            Debug.Log("Connect Two Controllers");
+            case "Controller1":
+                player1GamePad = Gamepad.all[0];
+                p1UsingKeyboard = false;
+                break;
+            case "Controller2":
+                player1GamePad = Gamepad.all[1];
+                p1UsingKeyboard = false;
+                break;
+            case "Keyboard":
+                p1UsingKeyboard = true;
+                break;
+            default:
+                break;
         }
-        else
+
+        switch (p2String)
         {
-            gamePad1 = Gamepad.all[0];
-            gamePad2 = Gamepad.all[1];
+            case "Controller1":
+                player2GamePad = Gamepad.all[0];
+                p2UsingKeyboard = false;
+                break;
+            case "Controller2":
+                player2GamePad = Gamepad.all[1];
+                p2UsingKeyboard = false;
+                break;
+            case "Keyboard":
+                p2UsingKeyboard = true;
+                break;
+            default:
+                break;
         }
     }
 
     void GetPlayer1Input()
     {
-        Gamepad currentGamePad = gamePad1;
-        CSSCursor currentCursor = cursor1;
-
-        Vector2 cursorInput = currentGamePad.leftStick.ReadValue();
-        currentCursor.RecieveMovement(cursorInput);
-
-        if (currentGamePad.buttonSouth.wasPressedThisFrame)
+        if (p1UsingKeyboard)
         {
-            currentCursor.ClickPressed();
-        }
+            CSSCursor currentCursor = cursor1;
+            Vector2 cursorPos = Input.mousePosition;
+            currentCursor.RecieveNewPosition(cursorPos);
 
-        if (currentGamePad.buttonEast.wasPressedThisFrame)
-        {
-            currentCursor.BackPressed();
+            if (Input.GetMouseButtonDown(0))
+            {
+                currentCursor.ClickPressed();
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                currentCursor.BackPressed();
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                FindObjectOfType<CSS>().StartPressed();
+            }
         }
+        else
+        {
+            Gamepad currentGamePad = player1GamePad;
+            CSSCursor currentCursor = cursor1;
+
+            Vector2 cursorInput = currentGamePad.leftStick.ReadValue();
+            currentCursor.RecieveMovement(cursorInput);
+
+            if (currentGamePad.buttonSouth.wasPressedThisFrame)
+            {
+                currentCursor.ClickPressed();
+            }
+
+            if (currentGamePad.buttonEast.wasPressedThisFrame)
+            {
+                currentCursor.BackPressed();
+            }
+
+            if (currentGamePad.startButton.wasPressedThisFrame)
+            {
+                FindObjectOfType<CSS>().StartPressed();
+            }
+        }
+        
 
     }
 
     void GetPlayer2Input()
     {
-        Gamepad currentGamePad = gamePad2;
-        CSSCursor currentCursor = cursor2;
-
-        Vector2 cursorInput = currentGamePad.leftStick.ReadValue();
-        currentCursor.RecieveMovement(cursorInput);
-
-        if (currentGamePad.buttonSouth.wasPressedThisFrame)
+        if (p2UsingKeyboard)
         {
-            currentCursor.ClickPressed();
-        }
+            CSSCursor currentCursor = cursor2;
+            Vector2 cursorPos = Input.mousePosition;
+            currentCursor.RecieveNewPosition(cursorPos);
 
-        if (currentGamePad.buttonEast.wasPressedThisFrame)
-        {
-            currentCursor.BackPressed();
+            if (Input.GetMouseButtonDown(0))
+            {
+                currentCursor.ClickPressed();
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                currentCursor.BackPressed();
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                FindObjectOfType<CSS>().StartPressed();
+            }
         }
+        else
+        {
+            Gamepad currentGamePad = player2GamePad;
+            CSSCursor currentCursor = cursor2;
+
+            Vector2 cursorInput = currentGamePad.leftStick.ReadValue();
+            currentCursor.RecieveMovement(cursorInput);
+
+            if (currentGamePad.buttonSouth.wasPressedThisFrame)
+            {
+                currentCursor.ClickPressed();
+            }
+
+            if (currentGamePad.buttonEast.wasPressedThisFrame)
+            {
+                currentCursor.BackPressed();
+            }
+
+            if (currentGamePad.startButton.wasPressedThisFrame)
+            {
+                FindObjectOfType<CSS>().StartPressed();
+            }
+        }
+        
 
     }
 }

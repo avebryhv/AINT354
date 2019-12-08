@@ -112,6 +112,11 @@ public class PlayerGunBullet : MonoBehaviour
         target = t;
     }
 
+    public void SetKillTime(float t)
+    {
+        killTime = t;
+    }
+
     //void OnTriggerEnter(Collider col)
     //{
 

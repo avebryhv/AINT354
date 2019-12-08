@@ -55,9 +55,9 @@ public class MainUI : MonoBehaviour
         evadeBar.fillAmount = amount;
     }
 
-    public void UpdateMissileCounter(float amount)
+    public void UpdateMissileCounter(string text)
     {
-        missileCount.text = "Missiles: " + amount.ToString();
+        missileCount.text = text;
     }
 
     public void UpdateSpecialBar(float current, float max)

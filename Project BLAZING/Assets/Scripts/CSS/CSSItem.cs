@@ -9,4 +9,7 @@ public class CSSItem : ScriptableObject
     public int health;
     public int fireRate;
     public int fireRange;
+    public string leftWeapon;
+    public string rightWeapon;
+    public string backWeapon;
 }

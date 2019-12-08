@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CSSSelected : CSSElement
 {
@@ -16,8 +17,9 @@ public class CSSSelected : CSSElement
 
     public Image healthImage;
     public Image speedImage;
-    public Image fireRateImage;
-    public Image fireRangeImage;
+    public TextMeshProUGUI leftWepText;
+    public TextMeshProUGUI rightWepText;
+    public TextMeshProUGUI backWepText;
     CSS css;
 
     // Start is called before the first frame update
@@ -45,8 +47,9 @@ public class CSSSelected : CSSElement
         int maxFill = 5;
         healthImage.fillAmount = ((float)item.health / (float)maxFill);
         speedImage.fillAmount = ((float)item.moveSpeed / (float)maxFill);
-        fireRateImage.fillAmount = ((float)item.fireRate / (float)maxFill);
-        fireRangeImage.fillAmount = ((float)item.fireRange / (float)maxFill);
+        leftWepText.text = item.leftWeapon;
+        rightWepText.text = item.rightWeapon;
+        backWepText.text = item.backWeapon;
     }
 
     public void LockSelection(CSSItem item)
@@ -71,8 +74,9 @@ public class CSSSelected : CSSElement
             int maxFill = 5;
             healthImage.fillAmount = ((float)item.health / (float)maxFill);
             speedImage.fillAmount = ((float)item.moveSpeed / (float)maxFill);
-            fireRateImage.fillAmount = ((float)item.fireRate / (float)maxFill);
-            fireRangeImage.fillAmount = ((float)item.fireRange / (float)maxFill);
+            leftWepText.text = item.leftWeapon;
+            rightWepText.text = item.rightWeapon;
+            backWepText.text = item.backWeapon;
         }
     }
 
@@ -82,8 +86,9 @@ public class CSSSelected : CSSElement
         {
             healthImage.fillAmount = 0;
             speedImage.fillAmount = 0;
-            fireRateImage.fillAmount = 0;
-            fireRangeImage.fillAmount = 0;
+            leftWepText.text = "---";
+            rightWepText.text = "---";
+            backWepText.text = "---";
             selected.sprite = OGImage;
         }
     }

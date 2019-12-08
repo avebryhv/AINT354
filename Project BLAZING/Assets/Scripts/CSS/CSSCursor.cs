@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CSSCursor : MonoBehaviour
 {
-    RectTransform canvasTransform;
+    public RectTransform canvasTransform;
     RectTransform rectTransform;
     public float moveSpeed;
     public int player;
@@ -14,7 +14,8 @@ public class CSSCursor : MonoBehaviour
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        canvasTransform = GetComponentInParent<RectTransform>();
+        //canvasTransform = GetComponentInParent<RectTransform>();
+
     }
 
     // Update is called once per frame
@@ -25,7 +26,18 @@ public class CSSCursor : MonoBehaviour
 
     public void RecieveMovement(Vector2 input)
     {
-        rectTransform.transform.position += new Vector3(input.x, input.y, 0) * moveSpeed;
+        Vector3 newPosition = rectTransform.transform.position + new Vector3(input.x, input.y, 0) * moveSpeed;
+
+        if (newPosition.x > 0 && newPosition.x < canvasTransform.rect.width && newPosition.y > 0 && newPosition.y < canvasTransform.rect.height)
+        {
+            rectTransform.transform.position = newPosition;
+        }
+        //rectTransform.transform.position = newPosition;
+    }
+
+    public void RecieveNewPosition(Vector2 pos)
+    {
+        rectTransform.transform.position = pos;
     }
 
     public void ClickPressed()

@@ -15,18 +15,59 @@ public class PlayerInput : MonoBehaviour
 
     public void SetGamePadNum(int num)
     {
-        if (Gamepad.all.Count >= num)
-        {
-            gamepad = Gamepad.all[num - 1];
-            usingController = true;
+        //if (Gamepad.all.Count >= num)
+        //{
+        //    gamepad = Gamepad.all[num - 1];
+        //    usingController = true;
+        //}
+        //else
+        //{
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //    Cursor.visible = false;
+        //    usingController = false;
+        //}
+
+        if (num == 1)
+        {            
+            string controllerString = PlayerPrefs.GetString("Player1Controller");
+            switch (controllerString)
+            {
+                case "Controller1":
+                    gamepad = Gamepad.all[0];
+                    usingController = true;
+                    break;
+                case "Controller2":
+                    gamepad = Gamepad.all[1];
+                    usingController = true;
+                    break;
+                case "Keyboard":
+                    usingController = false;
+                    break;
+                default:
+                    break;
+            }
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            usingController = false;
+            string controllerString = PlayerPrefs.GetString("Player2Controller");
+            switch (controllerString)
+            {
+                case "Controller1":
+                    gamepad = Gamepad.all[0];
+                    usingController = true;
+                    break;
+                case "Controller2":
+                    gamepad = Gamepad.all[1];
+                    usingController = true;
+                    break;
+                case "Keyboard":
+                    usingController = false;
+                    break;
+                default:
+                    break;
+            }
         }
-        
+
     }
 
 
@@ -128,17 +169,17 @@ public class PlayerInput : MonoBehaviour
 
                 if (gamepad.rightShoulder.wasPressedThisFrame)
                 {
-                    finder.playerGun.MissileButtonPressed();
+                    finder.shoulderWeapon.ShoulderWeaponPressed();
                 }                
 
                 if (gamepad.rightStickButton.wasPressedThisFrame)
                 {
-                    finder.playerGun.MissileButtonPressed();
+                    finder.shoulderWeapon.ShoulderWeaponPressed();
                 }
 
                 if (gamepad.buttonNorth.wasPressedThisFrame)
                 {
-                    finder.playerGun.MissileButtonPressed();
+                    finder.shoulderWeapon.ShoulderWeaponPressed();
                 }
             }
             
@@ -209,7 +250,7 @@ public class PlayerInput : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(2))
                 {
-                    finder.playerGun.MissileButtonPressed();
+                    finder.shoulderWeapon.ShoulderWeaponPressed();
                 }
             }
             
