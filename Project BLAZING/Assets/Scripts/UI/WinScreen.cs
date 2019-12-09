@@ -34,12 +34,14 @@ public class WinScreen : MonoBehaviour
     public void Player1Win()
     {
         ShowCanvas();
+        FindObjectOfType<DataToSheet>().RecieveWinner("Player 1");
         winText.text = "Player 1 Win";
     }
 
     public void Player2Win()
     {
         ShowCanvas();
+        FindObjectOfType<DataToSheet>().RecieveWinner("Player 2");
         winText.text = "Player 2 Win";
     }
 

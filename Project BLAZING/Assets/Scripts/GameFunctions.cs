@@ -7,18 +7,23 @@ public class GameFunctions : MonoBehaviour
 {
     public static bool isPaused;
     public static bool allowPause;
+    static float gameTime;
 
     // Start is called before the first frame update
     void Start()
     {
         isPaused = false;
         allowPause = true;
+        gameTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!isPaused)
+        {
+            gameTime += Time.deltaTime;
+        }
     }
 
     public static void PauseButtonPressed()
@@ -84,6 +89,11 @@ public class GameFunctions : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         string sceneName = currentScene.name;
         SceneManager.LoadScene(sceneName);
+    }
+
+    public static float ReturnGameTime()
+    {
+        return gameTime;
     }
 
 

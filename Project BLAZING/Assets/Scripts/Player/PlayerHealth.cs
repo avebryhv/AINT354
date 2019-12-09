@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     public CoreFinder finder;
     MainUI ui;
     public bool canTakeDamage;
+    public ParticleSystem hitEffect;
 
     //Special Data
     public float maxSpecialCharge; //Charge required for special move
@@ -80,9 +81,11 @@ public class PlayerHealth : MonoBehaviour
             {
                 OnDeath();
             }
+            GetComponentInChildren<Cinemachine.CinemachineImpulseSource>().m_ImpulseDefinition.m_AmplitudeGain = (1.5f * damage);
             GetComponentInChildren<Cinemachine.CinemachineImpulseSource>().GenerateImpulse();
             finder.lockOn.otherPlayer.GetComponent<PlayerHealth>().DisplayDamageMarker();
             finder.playerMovement.DamageMaterial();
+            hitEffect.Play();
         }
         Invoke("ResetCanTakeDamage", 0.1f);
         

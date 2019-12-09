@@ -23,6 +23,9 @@ public class ShoulderWeapon : MonoBehaviour
 
     //Railgun Data
     public LayerMask railgunCollisionLayer;
+    public ParticleSystem railgunChargeEmber;
+    public ParticleSystem railgunExplosion;
+    public GameObject railgunBulletLine;
 
     //Bomb Data
     public GameObject bombPrefab;
@@ -101,7 +104,7 @@ public class ShoulderWeapon : MonoBehaviour
                     DropProximityBomb();
                     break;
                 case shoulderType.Railgun:
-                    FireRailgun();
+                    StartCoroutine("FireRailgunCo");
                     break;
                 default:
                     break;
@@ -156,12 +159,12 @@ public class ShoulderWeapon : MonoBehaviour
             if (hit.collider.gameObject.tag == "Player" && !finder.playerMovement.isPlayer1)
             {
                 Debug.Log("hit");
-                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(10);                
+                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(8);                
             }
             else if (hit.collider.gameObject.tag == "Player2" && finder.playerMovement.isPlayer1)
             {
                 Debug.Log("hit");
-                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(10);                
+                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(8);                
             }
             else if (hit.collider.gameObject.tag == "Wall")
             {
@@ -169,6 +172,18 @@ public class ShoulderWeapon : MonoBehaviour
             }
 
         }
+    }
+
+    IEnumerator FireRailgunCo()
+    {
+        currentCharges--;
+        railgunChargeEmber.Play();
+        yield return new WaitForSecondsRealtime(1.5f);
+        railgunExplosion.Play();
+        FireRailgun();
+        railgunBulletLine.SetActive(true);
+        yield return new WaitForSecondsRealtime(0.1f);
+        railgunBulletLine.SetActive(false);
     }
 
     void DropProximityBomb()
@@ -194,6 +209,7 @@ public class ShoulderWeapon : MonoBehaviour
                 break;
             case PlayerMovement.mechType.Slow:
                 SetMaxCharges(1, false);
+                chargeUpTime = 5f;
                 type = shoulderType.Railgun;
                 break;
             default:

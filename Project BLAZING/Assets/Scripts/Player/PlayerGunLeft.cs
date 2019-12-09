@@ -12,7 +12,7 @@ public class PlayerGunLeft : MonoBehaviour
 
     public float accuracy;
 
-    public enum FireType { Rifle, Shotgun}
+    public enum FireType { Rifle, Shotgun, Rocket, None}
     public FireType type;
     public GameObject fastBullet;
     public GameObject normalBullet;
@@ -60,6 +60,9 @@ public class PlayerGunLeft : MonoBehaviour
                     break;
                 case FireType.Shotgun:
                     ShootShotgun();
+                    break;
+                case FireType.Rocket:
+                    ShootRocket();
                     break;
                 default:
                     break;
@@ -118,6 +121,11 @@ public class PlayerGunLeft : MonoBehaviour
         Invoke("CoolDown", fireTime);
     }
 
+    void ShootRocket()
+    {
+
+    }
+
     void CoolDown()
     {
         firing = false;
@@ -143,9 +151,9 @@ public class PlayerGunLeft : MonoBehaviour
                 break;
             case PlayerMovement.mechType.Slow: //Flamethrower
                 bulletPrefab = slowBullet;
-                fireTime = 0.1f;
-                accuracy = 10f;
-                type = FireType.Rifle;
+                fireTime = 2f;
+                accuracy = 0.5f;
+                type = FireType.None;
                 break;
             default:
                 break;
