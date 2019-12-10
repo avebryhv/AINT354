@@ -39,7 +39,11 @@ public class CSSSelected : CSSElement
 
     public void SetSelectionImage(Image im)
     {
-        selected.sprite = im.sprite;
+        if (!locked)
+        {
+            selected.sprite = im.sprite;
+        }
+        
     }
 
     public void SetStatBars(CSSItem item)

@@ -42,18 +42,22 @@ public class ShoulderWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentCharges < maxCharges)
+        if (!GameFunctions.isPaused)
         {
-            chargeTimer += Time.deltaTime;
-            if (chargeTimer >= chargeUpTime)
+            if (currentCharges < maxCharges)
             {
-                chargeTimer = 0;
-                currentCharges++;
-                if (currentCharges > maxCharges)
+                chargeTimer += Time.deltaTime;
+                if (chargeTimer >= chargeUpTime)
                 {
-                    currentCharges = maxCharges;
+                    chargeTimer = 0;
+                    currentCharges++;
+                    if (currentCharges > maxCharges)
+                    {
+                        currentCharges = maxCharges;
+                    }
+                    UpdateUI();
                 }
-                UpdateUI();
+                finder.mainUI.UpdateSpecialBar(chargeTimer, chargeUpTime);
             }
         }
         
@@ -149,7 +153,7 @@ public class ShoulderWeapon : MonoBehaviour
         UpdateUI();
     }
 
-    void FireRailgun()
+    float FireRailgun()
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, railgunCollisionLayer))
@@ -172,6 +176,7 @@ public class ShoulderWeapon : MonoBehaviour
             }
 
         }
+        return hit.distance;
     }
 
     IEnumerator FireRailgunCo()
@@ -180,9 +185,10 @@ public class ShoulderWeapon : MonoBehaviour
         railgunChargeEmber.Play();
         yield return new WaitForSecondsRealtime(1.5f);
         railgunExplosion.Play();
-        FireRailgun();
+        float dist = FireRailgun();
         railgunBulletLine.SetActive(true);
-        yield return new WaitForSecondsRealtime(0.1f);
+        railgunBulletLine.GetComponent<LineRenderer>().SetPosition(1, new Vector3(0, 0, dist));
+        yield return new WaitForSecondsRealtime(0.2f);
         railgunBulletLine.SetActive(false);
     }
 
@@ -205,11 +211,11 @@ public class ShoulderWeapon : MonoBehaviour
             case PlayerMovement.mechType.Fast:
                 type = shoulderType.Bomb;
                 SetMaxCharges(1, true);
-                chargeUpTime = 30f;
+                chargeUpTime = 20f;
                 break;
             case PlayerMovement.mechType.Slow:
                 SetMaxCharges(1, false);
-                chargeUpTime = 5f;
+                chargeUpTime = 8f;
                 type = shoulderType.Railgun;
                 break;
             default:

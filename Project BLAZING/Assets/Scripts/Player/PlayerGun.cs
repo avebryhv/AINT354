@@ -117,7 +117,7 @@ public class PlayerGun : MonoBehaviour
                 break;
             case PlayerMovement.mechType.Slow:
                 //bulletPrefab = slowBullet;
-                fireTime = 0.4f;
+                fireTime = 0.3f;
                 accuracy = 0.1f;
                 break;
             default:

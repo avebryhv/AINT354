@@ -44,12 +44,7 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canSpecialCharge && specialCharge < maxSpecialCharge)
-        {
-            specialCharge += Time.deltaTime;
-            specialCharge = Mathf.Clamp(specialCharge, 0, maxSpecialCharge);
-        }
-        ui.UpdateSpecialBar(specialCharge, maxSpecialCharge);
+        
 
 
         CheckMissiles();
