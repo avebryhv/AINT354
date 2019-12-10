@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem evadeParticles;
     public MeshRenderer mesh;
     public LayerMask wallLayer;
+    WallTransparency currentHidingWall;
     //LockOn Variables
     GameObject lockedTarget;
     public bool isLocked;
@@ -119,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
                 SpecialMovement();
             }
 
+            HideWalls();
 
         }
 
@@ -387,6 +389,7 @@ public class PlayerMovement : MonoBehaviour
         finder.playerGun2.SetStats(t);
         finder.shoulderWeapon.SetStats(t);
         finder.mainUI.UpdateEvadeBar(evasionCharge, maxEvasionCharge);
+        finder.model.SetModel(t);
         type = t;
     }
 
@@ -473,23 +476,24 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, rayDirection, out hit, rayLength, wallLayer))
         {
-            //Debug.Log("hit wall");
-            //Destroy(gameObject);
-            if (hit.collider.gameObject.tag == "Player" && !finder.playerMovement.isPlayer1)
+            if (currentHidingWall == null)
             {
-                Debug.Log("hit");
-                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(8);
+                if (hit.collider.tag == "Wall")
+                {
+                    currentHidingWall = hit.collider.GetComponent<WallTransparency>();
+                    currentHidingWall.SetTransparent();
+                }
             }
-            else if (hit.collider.gameObject.tag == "Player2" && finder.playerMovement.isPlayer1)
-            {
-                Debug.Log("hit");
-                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(8);
-            }
-            else if (hit.collider.gameObject.tag == "Wall")
-            {
+            
 
+        }
+        else
+        {
+            if (currentHidingWall != null)
+            {
+                currentHidingWall.RemoveTransparent();
+                currentHidingWall = null;
             }
-
         }
     }
 

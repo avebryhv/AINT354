@@ -57,5 +57,10 @@ public class WinScreen : MonoBehaviour
         SceneManager.LoadScene("Main Menu");
     }
 
+    public void MechSelect()
+    {
+        SceneManager.LoadScene("CharSelect");
+    }
+
 
 }

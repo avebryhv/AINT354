@@ -116,7 +116,7 @@ MonoBehaviour:
   isP1Bullet: 0
   wallLayer:
     serializedVersion: 2
-    m_Bits: 557056
+    m_Bits: 753664
   hitEffect: {fileID: 8247899984404201066, guid: 179a89250d6db9c4397256c4d089c50d,
     type: 3}
   p1Mat: {fileID: 2100000, guid: db323913faa68a543a78fd1df0ce35bd, type: 2}
