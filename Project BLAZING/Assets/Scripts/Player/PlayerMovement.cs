@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     float evasionCharge;
     public ParticleSystem evadeParticles;
     public MeshRenderer mesh;
+    public LayerMask wallLayer;
     //LockOn Variables
     GameObject lockedTarget;
     public bool isLocked;
@@ -464,5 +465,32 @@ public class PlayerMovement : MonoBehaviour
         finder = f;
     }
 
+    public void HideWalls()
+    {
+        Vector3 camLocation = finder.playerCam.transform.position;
+        Vector3 rayDirection = camLocation - transform.position;
+        float rayLength = Vector3.Distance(transform.position, camLocation);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, rayDirection, out hit, rayLength, wallLayer))
+        {
+            //Debug.Log("hit wall");
+            //Destroy(gameObject);
+            if (hit.collider.gameObject.tag == "Player" && !finder.playerMovement.isPlayer1)
+            {
+                Debug.Log("hit");
+                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(8);
+            }
+            else if (hit.collider.gameObject.tag == "Player2" && finder.playerMovement.isPlayer1)
+            {
+                Debug.Log("hit");
+                hit.collider.gameObject.GetComponent<PlayerHealth>().TakeDamage(8);
+            }
+            else if (hit.collider.gameObject.tag == "Wall")
+            {
+
+            }
+
+        }
+    }
 
 }

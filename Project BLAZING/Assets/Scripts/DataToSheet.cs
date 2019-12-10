@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DataToSheet : MonoBehaviour
 {
+    public bool sendingEnabled;
+
     CoreFinder finder;
 
     string gameTime;
@@ -14,6 +16,8 @@ public class DataToSheet : MonoBehaviour
     string p2Type;
 
     string winner;
+
+
 
     string url;
 
@@ -31,8 +35,12 @@ public class DataToSheet : MonoBehaviour
 
     public void RecieveWinner(string w)
     {
-        winner = w;
-        RetrieveData();
+        if (sendingEnabled)
+        {
+            winner = w;
+            RetrieveData();
+        }
+        
     }
     
 
