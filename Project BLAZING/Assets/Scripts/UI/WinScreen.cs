@@ -36,6 +36,7 @@ public class WinScreen : MonoBehaviour
         ShowCanvas();
         FindObjectOfType<DataToSheet>().RecieveWinner("Player 1");
         winText.text = "Player 1 Win";
+        PlayerPrefs.SetInt("Player1Score", PlayerPrefs.GetInt("Player1Score") + 1);
     }
 
     public void Player2Win()
@@ -43,7 +44,9 @@ public class WinScreen : MonoBehaviour
         ShowCanvas();
         FindObjectOfType<DataToSheet>().RecieveWinner("Player 2");
         winText.text = "Player 2 Win";
+        PlayerPrefs.SetInt("Player2Score", PlayerPrefs.GetInt("Player2Score") + 1);
     }
+
 
     public void Rematch()
     {

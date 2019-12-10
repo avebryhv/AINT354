@@ -9,7 +9,8 @@ public class PlayerGun : MonoBehaviour
     public GameObject bulletPrefab;
     public float fireTime;
     bool firing;
-
+    public enum FireType { Normal, Burst}
+    public FireType type;
     public float accuracy;
 
     public GameObject fastBullet;
@@ -50,7 +51,18 @@ public class PlayerGun : MonoBehaviour
     {
         if (!firing && !finder.playerMovement.inSpecialMovement)
         {
-            Fire();
+            switch (type)
+            {
+                case FireType.Normal:
+                    Fire();
+                    break;
+                case FireType.Burst:
+                    ShootBurst();
+                    break;
+                default:
+                    break;
+            }
+            //Fire();
         }
     }    
 
@@ -65,6 +77,25 @@ public class PlayerGun : MonoBehaviour
         if (finder.lockOn.isLockedOn)
         {
             newBullet.GetComponent<PlayerGunBullet>().SetCurving(finder.lockOn.softLockTarget);
+        }
+        firing = true;
+        Invoke("CoolDown", fireTime);
+    }
+
+    void ShootBurst()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject newBullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+            float randomX = Random.Range(-accuracy, accuracy);
+            float randomY = Random.Range(-accuracy, accuracy);
+            float randomZ = Random.Range(-accuracy, accuracy);
+            newBullet.transform.Rotate(new Vector3(0, randomY, 0));
+            newBullet.GetComponent<PlayerGunBullet>().SetParent(finder.playerMovement.isPlayer1);
+            if (finder.lockOn.isLockedOn)
+            {
+                newBullet.GetComponent<PlayerGunBullet>().SetCurving(finder.lockOn.softLockTarget);
+            }
         }
         firing = true;
         Invoke("CoolDown", fireTime);
@@ -109,16 +140,19 @@ public class PlayerGun : MonoBehaviour
                 //bulletPrefab = normalBullet;
                 fireTime = 0.4f;
                 accuracy = 1;
+                type = FireType.Normal;
                 break;
             case PlayerMovement.mechType.Fast:
                 //bulletPrefab = fastBullet;
                 fireTime = 0.4f;
                 accuracy = 1;
+                type = FireType.Normal;
                 break;
             case PlayerMovement.mechType.Slow:
                 //bulletPrefab = slowBullet;
-                fireTime = 0.3f;
-                accuracy = 0.1f;
+                fireTime = 0.4f;
+                accuracy = 3f;
+                type = FireType.Burst;
                 break;
             default:
                 break;

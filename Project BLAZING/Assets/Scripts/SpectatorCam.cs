@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SpectatorCam : MonoBehaviour
 {
+    public bool eSportsMode;
     public Canvas spectatorUI;
     public CoreFinder p1Finder;
     public CoreFinder p2Finder;
@@ -14,28 +16,40 @@ public class SpectatorCam : MonoBehaviour
     public RectTransform p2Follower;
     public Image p1Health;
     public Image p2Health;
+    public TextMeshProUGUI p1ScoreText;
+    public TextMeshProUGUI p2ScoreText;
 
     // Start is called before the first frame update
     void Start()
     {
-        cam = GetComponent<Camera>();
-        Debug.Log("displays connected: " + Display.displays.Length);
-        // Display.displays[0] is the primary, default display and is always ON.
-        // Check if additional displays are available and activate each.
-        if (Display.displays.Length > 1)
+        if (eSportsMode)
         {
-            Display.displays[1].Activate();
+            cam = GetComponent<Camera>();
+            Debug.Log("displays connected: " + Display.displays.Length);
+            // Display.displays[0] is the primary, default display and is always ON.
+            // Check if additional displays are available and activate each.
+            if (Display.displays.Length > 1)
+            {
+                Display.displays[1].Activate();
+            }
+            if (Display.displays.Length > 2)
+            {
+                Display.displays[2].Activate();
+            }
+            p1ScoreText.text = PlayerPrefs.GetInt("Player1Score").ToString();
+            p2ScoreText.text = PlayerPrefs.GetInt("Player2Score").ToString();
         }
-        if (Display.displays.Length > 2)
-        {
-            Display.displays[2].Activate();
-        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateTrackerPositions();
+        if (eSportsMode)
+        {
+            UpdateTrackerPositions();
+        }
+        
     }
 
     void UpdateTrackerPositions()

@@ -17,5 +17,5 @@ MonoBehaviour:
   fireRate: 3
   fireRange: 3
   leftWeapon: '---'
-  rightWeapon: Rifle
+  rightWeapon: Spread Rifle
   backWeapon: Railgun

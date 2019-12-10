@@ -181,7 +181,7 @@ public class ShoulderWeapon : MonoBehaviour
 
     IEnumerator FireRailgunCo()
     {
-        currentCharges--;
+        
         railgunChargeEmber.Play();
         yield return new WaitForSecondsRealtime(1.5f);
         railgunExplosion.Play();
@@ -190,6 +190,7 @@ public class ShoulderWeapon : MonoBehaviour
         railgunBulletLine.GetComponent<LineRenderer>().SetPosition(1, new Vector3(0, 0, dist));
         yield return new WaitForSecondsRealtime(0.2f);
         railgunBulletLine.SetActive(false);
+        currentCharges--;
     }
 
     void DropProximityBomb()

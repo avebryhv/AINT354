@@ -65,6 +65,7 @@ public class ControllerAssignment : MonoBehaviour
             firstGamepad = Gamepad.all[0];
             secondGamepad = Gamepad.all[1];
             isTwoGamepads = true;
+            keyboardImage.SetActive(false);
         }
     }
 

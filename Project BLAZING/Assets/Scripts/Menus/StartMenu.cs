@@ -13,7 +13,8 @@ public class StartMenu : MonoBehaviour
         PlayerPrefs.SetInt("Player1Character", 0);
         PlayerPrefs.SetInt("Player2Character", 0);
         startButton.Select();
-        
+        PlayerPrefs.SetInt("Player1Score", 0);
+        PlayerPrefs.SetInt("Player2Score", 0);
     }
 
     // Update is called once per frame
