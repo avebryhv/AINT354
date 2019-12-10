@@ -12,6 +12,8 @@ public class SpectatorCam : MonoBehaviour
 
     public RectTransform p1Follower;
     public RectTransform p2Follower;
+    public Image p1Health;
+    public Image p2Health;
 
     // Start is called before the first frame update
     void Start()
@@ -33,15 +35,19 @@ public class SpectatorCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateTrackerPositions();
     }
 
     void UpdateTrackerPositions()
     {
-        Vector3 p1CamPos = cam.WorldToScreenPoint(p1Finder.player.transform.position);
-        Vector3 p2CamPos = cam.WorldToScreenPoint(p2Finder.player.transform.position);
+        Vector2 p1CamPos = cam.WorldToScreenPoint(p1Finder.player.transform.position);
+        Vector2 p2CamPos = cam.WorldToScreenPoint(p2Finder.player.transform.position);
+        Debug.Log(p1CamPos);
+        p1Follower.localPosition = new Vector2(p1CamPos.x - spectatorUI.pixelRect.width / 2.0f, p1CamPos.y - spectatorUI.pixelRect.height / 2.0f);
+        p2Follower.localPosition = new Vector2(p2CamPos.x - spectatorUI.pixelRect.width / 2.0f, p2CamPos.y - spectatorUI.pixelRect.height / 2.0f);
+        //p1Follower.localPosition = p1CamPos;
 
-        p1Follower.transform.position = p1CamPos;
-        p2Follower.transform.position = p2CamPos;
+        p1Health.fillAmount = ((float)p1Finder.playerHealth.currentHealth / (float)p1Finder.playerHealth.maxHealth);
+        p2Health.fillAmount = ((float)p2Finder.playerHealth.currentHealth / (float)p2Finder.playerHealth.maxHealth);
     }
 }

@@ -73,11 +73,11 @@ public class ShoulderWeapon : MonoBehaviour
             case shoulderType.Bomb:
                 if (currentCharges >= 1)
                 {
-                    finder.mainUI.UpdateMissileCounter("Proximity Bomb: READY");
+                    finder.mainUI.UpdateMissileCounter("Bomb: READY");
                 }
                 else
                 {
-                    finder.mainUI.UpdateMissileCounter("Proximity Bomb: CHARGING");
+                    finder.mainUI.UpdateMissileCounter("Bomb: CHARGING");
                 }
                 break;
             case shoulderType.Railgun:
