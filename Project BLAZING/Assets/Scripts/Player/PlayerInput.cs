@@ -170,7 +170,16 @@ public class PlayerInput : MonoBehaviour
                 if (gamepad.rightShoulder.wasPressedThisFrame)
                 {
                     finder.shoulderWeapon.ShoulderWeaponPressed();
-                }                
+                }
+
+                if (gamepad.rightShoulder.ReadValue() == 1)
+                {
+                    finder.shoulderWeapon.ShoulderWeaponHeld();
+                }
+                else
+                {
+                    finder.shoulderWeapon.ShoulderWeaponReleased();
+                }
 
                 if (gamepad.rightStickButton.wasPressedThisFrame)
                 {

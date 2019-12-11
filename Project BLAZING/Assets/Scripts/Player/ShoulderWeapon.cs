@@ -7,7 +7,7 @@ public class ShoulderWeapon : MonoBehaviour
     CoreFinder finder;
     LockOn lockOn;
 
-    public enum shoulderType { HomingMissile, Bomb, Railgun};
+    public enum shoulderType { HomingMissile, Bomb, Railgun, FlameThrower};
     public shoulderType type;
     
 
@@ -30,7 +30,8 @@ public class ShoulderWeapon : MonoBehaviour
     //Bomb Data
     public GameObject bombPrefab;
 
-    
+    //Flamethrower Data
+    FlameThrower flame;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,7 @@ public class ShoulderWeapon : MonoBehaviour
         UpdateUI();
         chargeTimer = 0;
         //currentCharges = 0;
+        flame = GetComponentInChildren<FlameThrower>();
     }
 
     // Update is called once per frame
@@ -118,6 +120,20 @@ public class ShoulderWeapon : MonoBehaviour
         }
         
         UpdateUI();
+    }
+
+    public void ShoulderWeaponHeld()
+    {
+        if (chargeTimer > 0)
+        {
+            chargeTimer -= Time.deltaTime;
+            flame.FlameThrowerHeld();
+        }
+    }
+
+    public void ShoulderWeaponReleased()
+    {
+        flame.Released();
     }
 
     public void MissileButtonPressed()
