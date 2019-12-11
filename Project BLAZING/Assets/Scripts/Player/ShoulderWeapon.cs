@@ -7,7 +7,7 @@ public class ShoulderWeapon : MonoBehaviour
     CoreFinder finder;
     LockOn lockOn;
 
-    public enum shoulderType { HomingMissile, Bomb, Railgun };
+    public enum shoulderType { HomingMissile, Bomb, Railgun};
     public shoulderType type;
     
 
@@ -29,6 +29,8 @@ public class ShoulderWeapon : MonoBehaviour
 
     //Bomb Data
     public GameObject bombPrefab;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -228,4 +230,6 @@ public class ShoulderWeapon : MonoBehaviour
     {
         finder = f;
     }
+
+
 }
