@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class GameFunctions : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class GameFunctions : MonoBehaviour
         isPaused = true;
         Cursor.lockState = CursorLockMode.None;
         FreezeBodies();
+        RumbleOffAll();
     }
 
     public static void ForceResume()
@@ -64,6 +66,7 @@ public class GameFunctions : MonoBehaviour
         GameObject.FindObjectOfType<GameUI>().TogglePauseCanvas();
         //Cursor.lockState = CursorLockMode.None;
         //Cursor.visible = true;
+        RumbleOffAll();
     }
 
     static void Resume()
@@ -94,6 +97,15 @@ public class GameFunctions : MonoBehaviour
     public static float ReturnGameTime()
     {
         return gameTime;
+    }
+
+    public static void RumbleOffAll()
+    {
+        Gamepad[] pads = Gamepad.all.ToArray();
+        for (int i = 0; i < pads.Length; i++)
+        {
+            pads[i].SetMotorSpeeds(0, 0);
+        }
     }
 
 

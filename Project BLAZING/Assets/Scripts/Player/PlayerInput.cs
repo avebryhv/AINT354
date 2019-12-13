@@ -172,14 +172,14 @@ public class PlayerInput : MonoBehaviour
                     finder.shoulderWeapon.ShoulderWeaponPressed();
                 }
 
-                if (gamepad.rightShoulder.ReadValue() == 1)
-                {
-                    finder.shoulderWeapon.ShoulderWeaponHeld();
-                }
-                else
-                {
-                    finder.shoulderWeapon.ShoulderWeaponReleased();
-                }
+                //if (gamepad.rightShoulder.ReadValue() == 1)
+                //{
+                //    finder.shoulderWeapon.ShoulderWeaponHeld();
+                //}
+                //else
+                //{
+                //    finder.shoulderWeapon.ShoulderWeaponReleased();
+                //}
 
                 if (gamepad.rightStickButton.wasPressedThisFrame)
                 {
@@ -334,5 +334,16 @@ public class PlayerInput : MonoBehaviour
         {            
             SetGamePadNum(2);
         }
+    }
+
+    public void Rumble(float t)
+    {
+        gamepad.SetMotorSpeeds(0.25f, 0.75f);
+        Invoke("RumbleOff", t);
+    }
+
+    public void RumbleOff()
+    {
+        gamepad.SetMotorSpeeds(0, 0);
     }
 }

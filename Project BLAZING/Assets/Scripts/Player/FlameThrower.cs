@@ -35,7 +35,7 @@ public class FlameThrower : MonoBehaviour
         {
             if (other.tag == targetTag)
             {
-                other.GetComponent<PlayerHealth>().TakeFireDamage(1);
+                collisionEvents[i].colliderComponent.GetComponent<PlayerHealth>().TakeFireDamage(1);
             }
             i++;
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class WinScreen : MonoBehaviour
 {
@@ -33,6 +34,12 @@ public class WinScreen : MonoBehaviour
 
     public void Player1Win()
     {
+        GameFunctions.RumbleOffAll();
+        Gamepad[] pads = Gamepad.all.ToArray();
+        for (int i = 0; i < pads.Length; i++)
+        {
+            pads[i].SetMotorSpeeds(0, 0);
+        }
         ShowCanvas();
         FindObjectOfType<DataToSheet>().RecieveWinner("Player 1");
         winText.text = "Player 1 Win";
@@ -41,6 +48,12 @@ public class WinScreen : MonoBehaviour
 
     public void Player2Win()
     {
+        GameFunctions.RumbleOffAll();
+        Gamepad[] pads = Gamepad.all.ToArray();
+        for (int i = 0; i < pads.Length; i++)
+        {
+            pads[i].SetMotorSpeeds(0, 0);
+        }
         ShowCanvas();
         FindObjectOfType<DataToSheet>().RecieveWinner("Player 2");
         winText.text = "Player 2 Win";

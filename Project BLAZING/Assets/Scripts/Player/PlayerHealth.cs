@@ -76,11 +76,16 @@ public class PlayerHealth : MonoBehaviour
             {
                 OnDeath();
             }
+            else
+            {
+                finder.playerInput.Rumble(0.1f);
+            }
             GetComponentInChildren<Cinemachine.CinemachineImpulseSource>().m_ImpulseDefinition.m_AmplitudeGain = (1.5f * damage);
             GetComponentInChildren<Cinemachine.CinemachineImpulseSource>().GenerateImpulse();
             finder.lockOn.otherPlayer.GetComponent<PlayerHealth>().DisplayDamageMarker();
             finder.playerMovement.DamageMaterial();
             hitEffect.Play();
+            
         }
         Invoke("ResetCanTakeDamage", 0.1f);
         
@@ -97,10 +102,16 @@ public class PlayerHealth : MonoBehaviour
             {
                 OnDeath();
             }
+            else
+            {
+                finder.playerInput.Rumble(0.1f);
+            }
             GetComponentInChildren<Cinemachine.CinemachineImpulseSource>().GenerateImpulse();
             Invoke("ResetCanTakeFireDamage", 0.5f);
             finder.playerMovement.DamageMaterial();
             Invoke("ResetCanTakeDamage", 0.1f);
+            
+            hitEffect.Play();
         }
         
 
@@ -122,7 +133,7 @@ public class PlayerHealth : MonoBehaviour
         {
             FindObjectOfType<WinScreen>().Player1Win();
         }
-        
+        GameFunctions.RumbleOffAll();
         Destroy(gameObject);
     }
 
