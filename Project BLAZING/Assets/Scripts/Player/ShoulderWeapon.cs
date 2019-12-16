@@ -174,7 +174,7 @@ public class ShoulderWeapon : MonoBehaviour
     float FireRailgun()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, railgunCollisionLayer))
+        if (Physics.SphereCast(transform.position, 0.15f, transform.forward, out hit, Mathf.Infinity, railgunCollisionLayer))
         {
             //Debug.Log("hit wall");
             //Destroy(gameObject);
@@ -199,16 +199,15 @@ public class ShoulderWeapon : MonoBehaviour
 
     IEnumerator FireRailgunCo()
     {
-        
+        currentCharges--;
+        UpdateUI();
         railgunChargeEmber.Play();
         yield return new WaitForSecondsRealtime(1.5f);
         railgunExplosion.Play();
         float dist = FireRailgun();
-        railgunBulletLine.SetActive(true);
-        railgunBulletLine.GetComponent<LineRenderer>().SetPosition(1, new Vector3(0, 0, dist));
-        yield return new WaitForSecondsRealtime(0.2f);
-        railgunBulletLine.SetActive(false);
-        currentCharges--;
+        RailgunLine newLine = Instantiate(railgunBulletLine, transform.position, transform.rotation).GetComponent<RailgunLine>();
+        newLine.SetLocations(new Vector3(0,0,0), new Vector3(0, 0, dist));      
+        
     }
 
     void DropProximityBomb()

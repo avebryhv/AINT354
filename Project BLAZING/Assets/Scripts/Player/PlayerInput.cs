@@ -338,8 +338,12 @@ public class PlayerInput : MonoBehaviour
 
     public void Rumble(float t)
     {
-        gamepad.SetMotorSpeeds(0.25f, 0.75f);
-        Invoke("RumbleOff", t);
+        if (usingController)
+        {
+            gamepad.SetMotorSpeeds(0.25f, 0.75f);
+            Invoke("RumbleOff", t);
+        }
+        
     }
 
     public void RumbleOff()
