@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -97,7 +98,31 @@ public class PlayerInput : MonoBehaviour
             
             Debug.Log(InputSystem.GetUnsupportedDevices().Count);
         }
-        
+
+
+        if (playerMovement.isPlayer1)
+        {
+            if (PlayerPrefs.HasKey("P1Sensitive"))
+            {
+                cameraSensitivity = PlayerPrefs.GetFloat("P1Sensitive");
+            }
+            else
+            {
+                cameraSensitivity = 1;
+            }
+        }
+        else
+        {
+            if (PlayerPrefs.HasKey("P2Sensitive"))
+            {
+                cameraSensitivity = PlayerPrefs.GetFloat("P2Sensitive");
+            }
+            else
+            {
+                cameraSensitivity = 1;
+            }
+        }
+
         //gamepad = Gamepad.all[0];
     }
 
@@ -273,8 +298,25 @@ public class PlayerInput : MonoBehaviour
         float hori = leftStick.x;
         float verti = leftStick.y;
         //float camAxis = gamepad.rightStick.ReadValue().x * cameraSensitivity;
-        float camAxis = Mathf.Pow(gamepad.rightStick.ReadValue().x, 2) * Mathf.Sign(gamepad.rightStick.ReadValue().x);
+        float camAxis = Mathf.Pow(gamepad.rightStick.ReadValue().x, 2) * cameraSensitivity;
         finder.playerMovement.RecieveAxisInput(hori, verti, camAxis);
+    }
+
+    public void SetCameraSensitivity(Slider sl)
+    {
+        if (playerMovement != null)
+        {
+            cameraSensitivity = sl.value;
+            if (playerMovement.isPlayer1)
+            {
+                PlayerPrefs.SetFloat("P1Sensitive", sl.value);
+            }
+            else
+            {
+                PlayerPrefs.SetFloat("P2Sensitive", sl.value);
+            }
+        }
+        
     }
 
     void SendAxisInputKeyboard()

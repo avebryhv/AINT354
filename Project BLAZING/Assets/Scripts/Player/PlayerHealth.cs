@@ -85,6 +85,7 @@ public class PlayerHealth : MonoBehaviour
             finder.lockOn.otherPlayer.GetComponent<PlayerHealth>().DisplayDamageMarker();
             finder.playerMovement.DamageMaterial();
             hitEffect.Play();
+            finder.sfx.PlayHitImpact();
             
         }
         Invoke("ResetCanTakeDamage", 0.1f);

@@ -80,6 +80,7 @@ public class PlayerGun : MonoBehaviour
         }
         firing = true;
         Invoke("CoolDown", fireTime);
+        finder.sfx.PlayBulletSounds();
     }
 
     void ShootBurst()
@@ -96,6 +97,7 @@ public class PlayerGun : MonoBehaviour
             {
                 newBullet.GetComponent<PlayerGunBullet>().SetCurving(finder.lockOn.softLockTarget);
             }
+            finder.sfx.PlayBulletSounds();
         }
         firing = true;
         Invoke("CoolDown", fireTime);

@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ControllerSelect.unity
     guid: 0ddc4ce51861c2944ad3442488b0e702
   - enabled: 1
+    path: Assets/Scenes/StageSelect.unity
+    guid: 0d9d41ae94b6afa45a75f2102c3a3c92
+  - enabled: 1
     path: Assets/Scenes/CharSelect.unity
     guid: 75cdab51d9a2b844480bc01e8b644e4c
   - enabled: 1

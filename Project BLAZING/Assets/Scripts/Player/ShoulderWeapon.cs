@@ -152,7 +152,7 @@ public class ShoulderWeapon : MonoBehaviour
             GameObject newMissile = Instantiate(missilePrefab, transform.position, transform.rotation);
             newMissile.GetComponent<Missile>().FireMissile(target, transform.forward, finder.playerMovement.isPlayer1);
             currentCharges--;
-            
+            finder.sfx.PlayMissileLaunch();
         }
 
     }    
@@ -202,7 +202,9 @@ public class ShoulderWeapon : MonoBehaviour
         currentCharges--;
         UpdateUI();
         railgunChargeEmber.Play();
+        finder.sfx.PlayRailGunCharge();
         yield return new WaitForSecondsRealtime(1.5f);
+        finder.sfx.PlayRailGunFire();
         railgunExplosion.Play();
         float dist = FireRailgun();
         RailgunLine newLine = Instantiate(railgunBulletLine, transform.position, transform.rotation).GetComponent<RailgunLine>();

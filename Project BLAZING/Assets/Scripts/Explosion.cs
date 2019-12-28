@@ -14,7 +14,8 @@ public class Explosion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        killCounter = 0;    
+        killCounter = 0;
+        GetComponent<AudioSource>().Play();
     }
 
     // Update is called once per frame

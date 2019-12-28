@@ -8,7 +8,6 @@ public class CoreFinder : MonoBehaviour
     public PlayerMovement playerMovement;
     public PlayerHealth playerHealth;
     public LockOn lockOn;
-    public EnemyList enemyList;
     public MainUI mainUI;
     public DisplayLockOnSquares lockOnSquare;
     public PlayerGun playerGun;
@@ -18,6 +17,7 @@ public class CoreFinder : MonoBehaviour
     public Crosshair crosshair;
     public ShoulderWeapon shoulderWeapon;
     public PlayerModel model;
+    public PlayerSFX sfx;
 
     // Start is called before the first frame update
     void Awake()
@@ -41,7 +41,6 @@ public class CoreFinder : MonoBehaviour
         playerHealth.SetFinder(this);
         lockOn = player.GetComponent<LockOn>();
         lockOn.SetFinder(this);
-        enemyList = GetComponent<EnemyList>();
         mainUI = GameObject.FindGameObjectWithTag("MainUI").GetComponent<MainUI>();
         lockOnSquare = GameObject.FindGameObjectWithTag("MainUI").GetComponentInChildren<DisplayLockOnSquares>();
         playerGun = player.GetComponentInChildren<PlayerGun>();
@@ -57,6 +56,7 @@ public class CoreFinder : MonoBehaviour
         shoulderWeapon = player.GetComponentInChildren<ShoulderWeapon>();
         shoulderWeapon.SetFinder(this);
         model = player.GetComponentInChildren<PlayerModel>();
+        sfx = GetComponentInChildren<PlayerSFX>();
     }
 
     public void Player2Pointers()
@@ -69,7 +69,6 @@ public class CoreFinder : MonoBehaviour
         playerHealth.SetFinder(this);
         lockOn = player.GetComponent<LockOn>();
         lockOn.SetFinder(this);
-        enemyList = GetComponent<EnemyList>();
         mainUI = GameObject.FindGameObjectWithTag("P2UI").GetComponent<MainUI>();
         lockOnSquare = GameObject.FindGameObjectWithTag("P2UI").GetComponentInChildren<DisplayLockOnSquares>();
         playerGun = player.GetComponentInChildren<PlayerGun>();
@@ -85,5 +84,6 @@ public class CoreFinder : MonoBehaviour
         shoulderWeapon = player.GetComponentInChildren<ShoulderWeapon>();
         shoulderWeapon.SetFinder(this);
         model = player.GetComponentInChildren<PlayerModel>();
+        sfx = GetComponentInChildren<PlayerSFX>();
     }
 }

@@ -210,6 +210,6 @@ public class ControllerAssignment : MonoBehaviour
         Debug.Log(p2String);
         PlayerPrefs.SetString("Player1Controller", p1String);
         PlayerPrefs.SetString("Player2Controller", p2String);
-        SceneManager.LoadScene("CharSelect");
+        SceneManager.LoadScene("StageSelect");
     }
 }

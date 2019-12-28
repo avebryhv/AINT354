@@ -14,6 +14,7 @@ public class StartMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     // Start is called before the first frame update
     void Start()
     {
+        thisButton = GetComponent<Selectable>();
         rectTransform = GetComponent<RectTransform>();
         originalRight = rectTransform.offsetMax.x;
     }
@@ -52,6 +53,11 @@ public class StartMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
         float targetRight = originalRight;
         Vector2 targetVector = new Vector2(targetRight, rectTransform.offsetMax.y);
         rectTransform.offsetMax = Vector2.Lerp(rectTransform.offsetMax, targetVector, Time.deltaTime * 2);
+    }
+
+    public void Hover()
+    {
+        thisButton.Select();
     }
 
 
