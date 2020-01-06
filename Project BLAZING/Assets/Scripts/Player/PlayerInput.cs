@@ -16,18 +16,6 @@ public class PlayerInput : MonoBehaviour
 
     public void SetGamePadNum(int num)
     {
-        //if (Gamepad.all.Count >= num)
-        //{
-        //    gamepad = Gamepad.all[num - 1];
-        //    usingController = true;
-        //}
-        //else
-        //{
-        //    Cursor.lockState = CursorLockMode.Locked;
-        //    Cursor.visible = false;
-        //    usingController = false;
-        //}
-
         if (num == 1)
         {            
             string controllerString = PlayerPrefs.GetString("Player1Controller");
@@ -71,8 +59,6 @@ public class PlayerInput : MonoBehaviour
 
     }
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -86,17 +72,17 @@ public class PlayerInput : MonoBehaviour
         //}
         if (finder.playerMovement.isPlayer1)
         {
-            Debug.Log("Connected Gamepads");
-            Debug.Log(Gamepad.all.Count);
+            //Debug.Log("Connected Gamepads");
+            //Debug.Log(Gamepad.all.Count);
             List<string> gamePadNames = new List<string>();
             for (int i = 0; i < Gamepad.all.Count; i++)
             {
                 gamePadNames.Add(Gamepad.all[i].name);
-                Debug.Log(Gamepad.all[i].name);
+                //Debug.Log(Gamepad.all[i].name);
             }
-            Debug.Log("Unsupported Gamepads");
+            //Debug.Log("Unsupported Gamepads");
             
-            Debug.Log(InputSystem.GetUnsupportedDevices().Count);
+           //Debug.Log(InputSystem.GetUnsupportedDevices().Count);
         }
 
 
@@ -105,6 +91,7 @@ public class PlayerInput : MonoBehaviour
             if (PlayerPrefs.HasKey("P1Sensitive"))
             {
                 cameraSensitivity = PlayerPrefs.GetFloat("P1Sensitive");
+                //Debug.Log("p1 sens loaded " + cameraSensitivity);
             }
             else
             {
@@ -155,36 +142,7 @@ public class PlayerInput : MonoBehaviour
                 if (gamepad.leftTrigger.wasReleasedThisFrame)
                 {
                     finder.playerMovement.BoostButtonReleased();
-                }
-
-                //if (/*Input.GetButtonDown(specialButton)*/gamepad.bButton.wasPressedThisFrame)
-                //{
-                //    if (finder.playerHealth.ReturnCanUseSpecial())
-                //    {
-                //        switch (finder.playerMovement.type)
-                //        {
-                //            case PlayerMovement.mechType.Normal:
-                //                finder.playerGun.ShieldButtonPressed();
-                //                finder.playerHealth.ResetSpecialCharge();
-                //                break;
-                //            case PlayerMovement.mechType.Fast:
-                //                finder.playerMovement.CamoButtonPressed();
-                //                finder.playerHealth.ResetSpecialCharge();
-                //                break;
-                //            case PlayerMovement.mechType.Slow:
-                //                if (finder.lockOn.isLockedOn)
-                //                {
-                //                    finder.playerGun.MissileBarragePressed();
-                //                    finder.playerHealth.ResetSpecialCharge();
-                //                }
-                //                break;
-                //            default:
-                //                break;
-                //        }
-
-                //    }
-
-                //}
+                }                
 
                 if (gamepad.rightTrigger.isPressed)
                 {
@@ -241,50 +199,27 @@ public class PlayerInput : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     finder.playerMovement.EvadePressed();
-                }
-
-                //if (Input.GetKeyDown(KeyCode.Q))
-                //{
-                //    if (finder.playerHealth.ReturnCanUseSpecial())
-                //    {
-                //        switch (finder.playerMovement.type)
-                //        {
-                //            case PlayerMovement.mechType.Normal:
-                //                finder.playerGun.ShieldButtonPressed();
-                //                finder.playerHealth.ResetSpecialCharge();
-                //                break;
-                //            case PlayerMovement.mechType.Fast:
-                //                finder.playerMovement.CamoButtonPressed();
-                //                finder.playerHealth.ResetSpecialCharge();
-                //                break;
-                //            case PlayerMovement.mechType.Slow:
-                //                if (finder.lockOn.isLockedOn)
-                //                {
-                //                    finder.playerGun.MissileBarragePressed();
-                //                    finder.playerHealth.ResetSpecialCharge();
-                //                }
-                //                break;
-                //            default:
-                //                break;
-                //        }
-
-                //    }
-
-                //}
+                }                
 
                 if (Input.GetMouseButton(1))
                 {
-                    finder.playerGun.FireButtonPressed();
+                    
                 }
 
                 if (Input.GetMouseButton(0))
                 {
                     finder.playerGun2.FireButtonPressed();
+                    finder.playerGun.FireButtonPressed();
                 }
 
                 if (Input.GetMouseButtonDown(2))
                 {
                     finder.shoulderWeapon.ShoulderWeaponPressed();
+                }
+
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    GameFunctions.PauseButtonPressed();
                 }
             }
             
@@ -298,7 +233,7 @@ public class PlayerInput : MonoBehaviour
         float hori = leftStick.x;
         float verti = leftStick.y;
         //float camAxis = gamepad.rightStick.ReadValue().x * cameraSensitivity;
-        float camAxis = Mathf.Pow(gamepad.rightStick.ReadValue().x, 2) * cameraSensitivity;
+        float camAxis = Mathf.Pow(gamepad.rightStick.ReadValue().x, 2) * cameraSensitivity * Mathf.Sign(gamepad.rightStick.ReadValue().x);
         finder.playerMovement.RecieveAxisInput(hori, verti, camAxis);
     }
 

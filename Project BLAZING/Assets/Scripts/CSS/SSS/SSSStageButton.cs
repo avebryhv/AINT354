@@ -29,6 +29,7 @@ public class SSSStageButton : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             GetComponent<Selectable>().Select();
         }
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame

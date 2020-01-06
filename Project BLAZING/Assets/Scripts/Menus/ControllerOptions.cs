@@ -8,6 +8,8 @@ public class ControllerOptions : MonoBehaviour
     public Slider p1SenSlider;
     public Slider p2SenSlider;
     public Canvas optionsPanel;
+    public Selectable returnButton;
+    public Selectable selectOnReturn;
 
     // Start is called before the first frame update
     void Start()
@@ -42,10 +44,12 @@ public class ControllerOptions : MonoBehaviour
     public void ShowPanel()
     {
         optionsPanel.enabled = true;
+        returnButton.Select();
     }
 
     public void HidePanel()
     {
         optionsPanel.enabled = false;
+        selectOnReturn.Select();
     }
 }

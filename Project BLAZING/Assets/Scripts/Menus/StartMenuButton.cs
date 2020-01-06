@@ -17,6 +17,7 @@ public class StartMenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
         thisButton = GetComponent<Selectable>();
         rectTransform = GetComponent<RectTransform>();
         originalRight = rectTransform.offsetMax.x;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame

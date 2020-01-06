@@ -78,5 +78,10 @@ public class WinScreen : MonoBehaviour
         SceneManager.LoadScene("CharSelect");
     }
 
+    public void StageSelect()
+    {
+        SceneManager.LoadScene("StageSelect");
+    }
+
 
 }

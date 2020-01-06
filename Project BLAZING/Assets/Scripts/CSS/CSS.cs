@@ -25,6 +25,7 @@ public class CSS : MonoBehaviour
         p1Selection = 0;
         p2Selection = 0;
         readyPanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame

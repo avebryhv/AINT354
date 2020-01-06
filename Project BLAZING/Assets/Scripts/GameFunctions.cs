@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class GameFunctions : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class GameFunctions : MonoBehaviour
         isPaused = false;
         allowPause = true;
         gameTime = 0;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     // Update is called once per frame
@@ -74,6 +76,7 @@ public class GameFunctions : MonoBehaviour
         isPaused = false;
         GameObject.FindObjectOfType<GameUI>().TogglePauseCanvas();
         Cursor.lockState = CursorLockMode.Locked;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     static void FreezeBodies()

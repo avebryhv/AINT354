@@ -17,8 +17,6 @@ public class DataToSheet : MonoBehaviour
 
     string winner;
 
-
-
     string url;
 
     // Start is called before the first frame update
@@ -40,8 +38,7 @@ public class DataToSheet : MonoBehaviour
             winner = w;
             RetrieveData();
         }
-        
-    }
+            }
     
 
     void RetrieveData()

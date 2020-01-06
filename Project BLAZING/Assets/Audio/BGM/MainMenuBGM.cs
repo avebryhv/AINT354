@@ -10,10 +10,18 @@ public class MainMenuBGM : MonoBehaviour
     //bool markedForDestroy;
     void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        
         SceneManager.sceneLoaded += OnSceneLoaded;
         aud = GetComponent<AudioSource>();
-        
+        //Debug.Log(FindObjectsOfType<AudioSource>().Length);
+        if (FindObjectsOfType<AudioSource>().Length > 1)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
 

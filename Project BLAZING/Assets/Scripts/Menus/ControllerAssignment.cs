@@ -35,7 +35,8 @@ public class ControllerAssignment : MonoBehaviour
         p2Set = false;
         readyToStart = false;
         readyBanner.SetActive(false);
-        CheckControllers();   
+        CheckControllers();
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame
@@ -56,7 +57,7 @@ public class ControllerAssignment : MonoBehaviour
         }
         else if (count == 1)
         {
-            c2Image.SetActive(false);
+            //c2Image.SetActive(false);
             firstGamepad = Gamepad.all[0];
             isTwoGamepads = false;
         }
@@ -65,7 +66,7 @@ public class ControllerAssignment : MonoBehaviour
             firstGamepad = Gamepad.all[0];
             secondGamepad = Gamepad.all[1];
             isTwoGamepads = true;
-            keyboardImage.SetActive(false);
+            //keyboardImage.SetActive(false);
         }
     }
 

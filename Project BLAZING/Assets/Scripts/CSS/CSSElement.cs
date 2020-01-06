@@ -18,16 +18,16 @@ public class CSSElement : MonoBehaviour
 
     public virtual void Select(int player)
     {
-        Debug.Log(name + " Selected by player " + player);
+        //Debug.Log(name + " Selected by player " + player);
     }
 
     public virtual void Deselect(int player)
     {
-        Debug.Log(name + "Deselected by player " + player);
+        //Debug.Log(name + "Deselected by player " + player);
     }
 
     public virtual void OnPress(int player)
     {
-        Debug.Log(name + " Pressed by player " + player);
+        //Debug.Log(name + " Pressed by player " + player);
     }
 }
