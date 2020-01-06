@@ -66,8 +66,8 @@ public class GameFunctions : MonoBehaviour
         isPaused = true;
         FreezeBodies();
         GameObject.FindObjectOfType<GameUI>().TogglePauseCanvas();
-        //Cursor.lockState = CursorLockMode.None;
-        //Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         RumbleOffAll();
     }
 

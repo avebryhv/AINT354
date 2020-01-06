@@ -201,7 +201,7 @@ public class PlayerInput : MonoBehaviour
                     finder.playerMovement.EvadePressed();
                 }                
 
-                if (Input.GetMouseButton(1))
+                if (Input.GetMouseButton(2))
                 {
                     
                 }
@@ -212,17 +212,19 @@ public class PlayerInput : MonoBehaviour
                     finder.playerGun.FireButtonPressed();
                 }
 
-                if (Input.GetMouseButtonDown(2))
+                if (Input.GetMouseButtonDown(1))
                 {
                     finder.shoulderWeapon.ShoulderWeaponPressed();
                 }
 
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    GameFunctions.PauseButtonPressed();
-                }
+                
             }
-            
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameFunctions.PauseButtonPressed();
+            }
+
         }
 
     }
@@ -285,7 +287,7 @@ public class PlayerInput : MonoBehaviour
         }
 
         float cam;
-        cam = Input.GetAxis("Mouse X") * 2;
+        cam = Input.GetAxis("Mouse X") * 2 * cameraSensitivity;
         
 
         finder.playerMovement.RecieveAxisInput(hori, verti, cam);
