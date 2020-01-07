@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Rendering.PostProcessing;
+
 
 public class GameUI : MonoBehaviour
 {
@@ -10,18 +12,26 @@ public class GameUI : MonoBehaviour
     public Canvas startCanvas;
     public TextMeshProUGUI countdownNumber;
     public Button firstButton;
+    public PostProcessVolume volume;
+    ColorGrading grading;
 
     // Start is called before the first frame update
     void Start()
-    {
+    {        
+        volume.profile.TryGetSettings(out grading);
         pauseCanvas.enabled = false;
-        StartCountdown();
+        grading.enabled.value = false;
+        grading.active = false;
+        StartCountdown();        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.V) && Input.GetKeyDown(KeyCode.P))
+        {
+            ColourShift();
+        }
     }
 
     public void TogglePauseCanvas()
@@ -62,5 +72,25 @@ public class GameUI : MonoBehaviour
     {
         startCanvas.enabled = false;
         GameFunctions.ForceResume();
+    }
+
+    public void Resume()
+    {
+        GameFunctions.PauseButtonPressed();
+    }
+
+    public void ColourShift()
+    {
+        if (grading.active)
+        {
+            grading.enabled.value = false;
+            grading.active = false;
+        }
+        else
+        {
+            grading.enabled.value = true;
+            grading.active = true;
+        }
+        
     }
 }

@@ -51,6 +51,7 @@ public class GameFunctions : MonoBehaviour
         allowPause = false;
         isPaused = true;
         Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Locked;
         FreezeBodies();
         RumbleOffAll();
     }

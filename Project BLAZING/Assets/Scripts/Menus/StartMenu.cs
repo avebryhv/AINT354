@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class StartMenu : MonoBehaviour
 {
     public Button startButton;
-    public GameObject creditsImage;
+    public Button creditsBackButton;
+    public GameObject creditsScreen;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,7 @@ public class StartMenu : MonoBehaviour
         startButton.Select();
         PlayerPrefs.SetInt("Player1Score", 0);
         PlayerPrefs.SetInt("Player2Score", 0);
-        creditsImage.SetActive(false);
+        creditsScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,14 +38,13 @@ public class StartMenu : MonoBehaviour
 
     public void ShowCredits()
     {
-        if (creditsImage.active)
-        {
-            creditsImage.SetActive(false);
-        }
-        else
-        {
-            creditsImage.SetActive(true);
-        }
-        
+        creditsScreen.SetActive(true);
+        creditsBackButton.Select();
+    }
+
+    public void CloseCredits()
+    {
+        creditsScreen.SetActive(false);
+        startButton.Select();
     }
 }

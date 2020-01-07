@@ -128,10 +128,10 @@ public class PlayerInput : MonoBehaviour
                     finder.playerMovement.EvadePressed();                    
                 }
 
-                if (gamepad.buttonSouth.wasPressedThisFrame)
-                {
-                    finder.playerMovement.EvadePressed();
-                }
+                //if (gamepad.buttonSouth.wasPressedThisFrame)
+                //{
+                //    finder.playerMovement.EvadePressed();
+                //}
 
                 if (/*Input.GetButtonDown(evadeButton)*/gamepad.leftTrigger.wasPressedThisFrame)
                 {
