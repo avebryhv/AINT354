@@ -28,7 +28,7 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V) && Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.PageDown))
         {
             ColourShift();
         }
